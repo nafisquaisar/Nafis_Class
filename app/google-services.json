@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997019209453",
+    "project_id": "nafis-coaching-center",
+    "storage_bucket": "nafis-coaching-center.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997019209453:android:ab6ad55528e8206ba4c6e4",
+        "android_client_info": {
+          "package_name": "com.example.nafisquaisarcoachingcenter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSnsYfEnA9sZO_91kZ5YMSyrr7AcP2_RY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

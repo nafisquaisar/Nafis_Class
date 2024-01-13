@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="welcome_green">#34A671</color>
+    <color name="welcome_blue">#021029</color>
+
+    <color name="selectedIconColor">#04E1F8</color>
+    <color name="defaultIconColor">#F6F6F6</color>
+    <color name="countTextColor">#fff</color>
+<!--    <color name="defaultIconColor">#F45E0B</color>-->
+<!--    <color name="defaultIconColor">#fff</color>-->
+<!--    <color name="defaultIconColor">#2E2E2E</color>-->
+</resources>
