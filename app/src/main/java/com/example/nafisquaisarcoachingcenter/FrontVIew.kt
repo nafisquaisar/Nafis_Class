@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -22,7 +23,15 @@ class FrontVIew : AppCompatActivity() {
             startActivity(Intent(this,Main_dashboard::class.java))
             finish()
         }
+
+        val acct = GoogleSignIn.getLastSignedInAccount(applicationContext)
+        if (acct != null) {
+            startActivity(Intent(this, Main_dashboard::class.java))
+            finish()
+        }
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_view)

@@ -13,6 +13,26 @@
         android:theme="@style/Theme.NafisCoachingCenter"
         tools:targetApi="31">
         <activity
+            android:name=".coursecclass.PDFViewerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".coursecclass.ClassMainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_class_main"
+            android:theme="@style/Theme.NafisCoachingCenter" />
+        <activity
+            android:name=".SubjectTestActivity.ScienceTest"
+            android:exported="false" />
+        <activity
+            android:name=".Test_home_activity"
+            android:exported="false" />
+        <activity
+            android:name=".Note_home_activity"
+            android:exported="false" />
+        <activity
+            android:name=".Video_Home_Activity"
+            android:exported="false" />
+        <activity
             android:name=".coursecclass.class5th"
             android:exported="false" />
         <activity
@@ -38,13 +58,7 @@
             android:exported="true" />
         <activity
             android:name=".FrontVIew"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".SignUp"
             android:exported="false" />
@@ -54,7 +68,11 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

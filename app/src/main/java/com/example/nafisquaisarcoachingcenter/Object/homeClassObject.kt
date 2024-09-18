@@ -4,9 +4,10 @@ import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.model.categoryClass
 
 object homeClassObject {
-    private var categoryList=ArrayList<categoryClass>()
+    private lateinit var categoryList:ArrayList<categoryClass>
     fun getData():ArrayList<categoryClass>{
 
+        categoryList=ArrayList<categoryClass>()
         categoryList.add(categoryClass(R.drawable.class10th,"Class 10"))
         categoryList.add(categoryClass(R.drawable.class9,"Class 9"))
         categoryList.add(categoryClass(R.drawable.class8th,"Class 8"))

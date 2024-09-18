@@ -15,7 +15,6 @@ class PYQActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val toolbar= binding.toolbarforActivity.toolbarForAll
-
         setSupportActionBar(toolbar)
 
 

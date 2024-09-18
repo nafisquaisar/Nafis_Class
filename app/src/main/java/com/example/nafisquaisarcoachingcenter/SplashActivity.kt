@@ -9,6 +9,8 @@ import android.os.Handler
 import android.os.Looper
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.text.set
 import com.example.nafisquaisarcoachingcenter.databinding.ActivitySplashBinding
 
@@ -37,13 +39,17 @@ class SplashActivity : AppCompatActivity() {
         binding.coachingTitle.text=spannableStringtitle
 
 
+        val animation=AnimationUtils.loadAnimation(this,R.anim.splashanim)
+        binding.welcome.animation = animation
+        binding.coachingTitle.animation = animation
 
 
 //        method 1  for spalishing
 
         Handler(Looper.getMainLooper()).postDelayed({
           startActivity(Intent(this,FrontVIew::class.java))
-        },2000)
+            finish()
+        },3000)
 
 
         // method 2

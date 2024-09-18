@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/white_background"
+    android:background="#ffffff"
     tools:context=".coursecclass.class6th">
 
     <include layout="@layout/toolbar"
@@ -18,14 +18,11 @@
         android:layout_height="match_parent"
         android:gravity="center"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Content Upload soon...."
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="25sp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/class6ththsubjectRecyler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/all_subject_layout"
             />
 
     </LinearLayout>

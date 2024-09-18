@@ -14,7 +14,7 @@
         android:id="@+id/ProfileHolder"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:cardBackgroundColor="@color/welcome_green"
+        app:cardBackgroundColor="@color/welcome_blue"
         android:layout_margin="10dp"
 
         app:cardCornerRadius="40dp"
@@ -30,9 +30,10 @@
             >
 
             <ImageView
+                android:id="@+id/profilePhoto"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
 
+                android:layout_height="100dp"
                 android:layout_marginStart="108dp"
                 android:src="@drawable/profile" />
 
@@ -60,7 +61,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#ffffff"
         app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/ProfileHolder"
         app:layout_constraintEnd_toEndOf="@+id/ProfileHolder"
@@ -71,17 +71,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@drawable/user_name_bg"
             android:padding="8dp"
             >
 
             <TextView
+                android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="USER NAME "
-                android:textSize="25sp"
-                android:textStyle="bold"
                 android:textColor="#00897B"
-                 />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -92,7 +93,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_detail"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
@@ -111,36 +112,74 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="20dp"
                 android:text="Email"
-                android:textStyle="normal"
                 android:textSize="18dp"
-                android:layout_margin="16dp"
-                />
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:padding="10dp"
+                android:background="@drawable/search_bar_bg"
+                android:text="Email"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="10dp"
                 android:text="Number"
-                android:textStyle="normal"
                 android:textSize="18dp"
-                android:layout_margin="16dp"
-                />
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/profile_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:text="Number"
+                android:background="@drawable/search_bar_bg"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:textStyle="normal" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Id"
-                android:textStyle="normal"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="10dp"
+                android:text="Course"
                 android:textSize="18dp"
-                android:layout_margin="16dp"
-                />
+                android:textStyle="normal|bold" />
+
+
+            <TextView
+                android:id="@+id/profile_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:padding="10dp"
+                android:text="Course"
+                android:background="@drawable/search_bar_bg"
+                android:textSize="18dp"
+                android:textStyle="normal" />
 
             <Button
                 android:id="@+id/profile_edit_button"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
+                android:layout_margin="10dp"
                 android:backgroundTint="@color/welcome_green"
                 android:text="Edit"
                 android:textSize="20sp"
@@ -170,21 +209,23 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="10dp"
+            android:background="@drawable/logout_button_bg"
             android:id="@+id/logout_button"
             >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginTop="6dp"
+
                 android:layout_marginStart="20dp"
-                android:src="@drawable/on_off_button" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/baseline_logout_24" />
 
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
 
             android:textStyle="bold"

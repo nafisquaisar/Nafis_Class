@@ -14,13 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:scaleType="centerCrop"
+        android:scaleType="fitEnd"
         android:src="@drawable/login"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/L_signUp_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -96,29 +97,49 @@
         android:id="@+id/Login_button"
         android:layout_width="160dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="128dp"
         android:backgroundTint="@color/welcome_green"
         android:text="Login"
         android:textSize="20sp"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/L_signUp_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
     <Button
         android:id="@+id/L_signUp_button"
         android:layout_width="160dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="21dp"
         android:backgroundTint="@color/welcome_blue"
         android:text="Sign Up"
         android:textSize="20sp"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/google_login_Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Login_button" />
+        app:layout_constraintStart_toEndOf="@+id/Login_button"
+        app:layout_constraintTop_toTopOf="@+id/Login_button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/google_login_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/google"
+        android:text="Login with Google"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Login_button"
+        app:layout_constraintVertical_bias="0.032" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

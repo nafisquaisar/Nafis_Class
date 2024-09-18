@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.NoteFragmentView">
+
+    <TextView
+         android:id="@+id/note_warning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="@dimen/_20sdp"
+        android:gravity="center"
+        android:text="@string/note_upload_soon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/note_recyler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        />
+</LinearLayout>

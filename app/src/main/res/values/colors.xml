@@ -4,11 +4,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="welcome_green">#34A671</color>
-    <color name="welcome_blue">#021029</color>
+    <color name="deep_green">#6BD3B4</color>
 
+    <color name="welcome_blue">#4631C9</color>
+    <color name="deep_black">#272727</color>
     <color name="selectedIconColor">#04E1F8</color>
     <color name="defaultIconColor">#F6F6F6</color>
     <color name="countTextColor">#fff</color>
+
 <!--    <color name="defaultIconColor">#F45E0B</color>-->
 <!--    <color name="defaultIconColor">#fff</color>-->
 <!--    <color name="defaultIconColor">#2E2E2E</color>-->

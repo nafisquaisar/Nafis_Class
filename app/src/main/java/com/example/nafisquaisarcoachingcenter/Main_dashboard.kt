@@ -1,5 +1,6 @@
 package com.example.nafisquaisarcoachingcenter
 
+//import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -7,13 +8,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityMainDashboardBinding
 import com.example.nafisquaisarcoachingcenter.fragment.Home
 import com.example.nafisquaisarcoachingcenter.fragment.Note
 import com.example.nafisquaisarcoachingcenter.fragment.Profile
 import com.example.nafisquaisarcoachingcenter.fragment.Test
 import com.example.nafisquaisarcoachingcenter.fragment.Video
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -21,6 +27,8 @@ class Main_dashboard : AppCompatActivity() {
     private lateinit var binding: ActivityMainDashboardBinding
     private val drawer by lazy { binding.drawerlayout }
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+
 
 
 
@@ -51,13 +59,28 @@ class Main_dashboard : AppCompatActivity() {
         navigation.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val id = item.itemId
             if (id == R.id.Video_menu_drawer) {
-                loadfragment(Video(), 0)
+                var intent=Intent(this,Video_Home_Activity::class.java)
+                startActivity(intent)
+
             } else if (id == R.id.Note_menu_drawer) {
-                loadfragment(Note(), 1)
+                var intent=Intent(this,Note_home_activity::class.java)
+                startActivity(intent)
+
             } else if (id == R.id.Pyq_menu_drawer) {
               var intent=Intent(this,PYQActivity::class.java)
                 startActivity(intent)
             } else if (id == R.id.Logout_menu_drawer) {
+                //  ******************** Logout through using Google Start ********************************
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+                googleSignInClient = GoogleSignIn.getClient(this, gso)
+                googleSignInClient.signOut().addOnCompleteListener(OnCompleteListener<Void?> {
+                    finish()
+                    startActivity(Intent(this, FrontVIew::class.java))
+                })
+                //   ******************** Logout through using Google End ********************************
+
+
+                //        ******************** Logout through using Email and password Start ********************************
                 if (auth.getCurrentUser() != null) {
                     auth.signOut()
                     val intent = Intent(this, FrontVIew::class.java)
@@ -66,6 +89,7 @@ class Main_dashboard : AppCompatActivity() {
                     finish()
                     Toast.makeText(this,"LogOut Successfully", Toast.LENGTH_SHORT).show()
                 }
+                //        ******************** Logout through using Email and password End ********************************
             }
             drawer.closeDrawer(GravityCompat.START)
             true
@@ -74,62 +98,46 @@ class Main_dashboard : AppCompatActivity() {
 
 //   ********************* BUTTOM NAVIGATION START****************************************
 
-        val bottomNavigation=binding.toolbarIn.mainContent.bottomNavigation
-        bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.baseline_home_24))
-        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.video_logo1))
-        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.baseline_menu_book_24))
-        bottomNavigation.add(MeowBottomNavigation.Model(4, R.drawable.test_logo_1))
-        bottomNavigation.add(MeowBottomNavigation.Model(5, R.drawable.profile_dashboard))
+//        bottomNavigation=binding.toolbarIn.mainContent.bottomNavigation
+//        bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.baseline_home_24))
+//        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.video_logo1))
+//        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.baseline_menu_book_24))
+//        bottomNavigation.add(MeowBottomNavigation.Model(4, R.drawable.test_logo_1))
+//        bottomNavigation.add(MeowBottomNavigation.Model(5, R.drawable.profile_dashboard))
+//
+//
 
-
-
-        bottomNavigation.setOnShowListener {
-            // YOUR CODES
-
-        }
-
-
-
-        bottomNavigation.setOnClickMenuListener{
-            // Handle click events here
-            when (it.id)
+        binding.toolbarIn.mainContent.BottomNavigationBar.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
+            val id = item.itemId
+            when (id)
             {
-                1 -> {
-                    // Handle Home button click
+                R.id.Home -> {
                     loadfragment(Home(), 0)
                 }
-
-                2 -> {
-                    // Handle Search button click
-
+                 R.id.Video-> {
                     loadfragment(Video(), 1)
                 }
 
-                3 -> {
-                    // Handle Profile button click
-
+                R.id.Note-> {
                     loadfragment(Note(), 1)
                 }
 
-                4 -> {
-                    // Handle Search button click
-
+                R.id.Test-> {
                     loadfragment(Test(), 1)
                 }
 
-                5 -> {
-
+                R.id.Profile -> {
                     loadfragment(Profile(), 1)
                 }
             }
+            true
+        })
+        //   ********************* BUTTOM NAVIGATION End****************************************
 
-        }
 
-        //   ********************* BUTTOM NAVIGATION START****************************************
+        binding.toolbarIn.mainContent.BottomNavigationBar.setSelectedItemId(R.id.Home)
 
 
-        bottomNavigation.show(1, true)
-        loadfragment(Home(), 0)
     }
 
 
@@ -144,7 +152,7 @@ class Main_dashboard : AppCompatActivity() {
 
 
     //  ***************** Fragment Load Function *****************************
-    private fun loadfragment(fragment: Fragment, flag:Int){
+     fun loadfragment(fragment: Fragment, flag:Int){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -155,4 +163,7 @@ class Main_dashboard : AppCompatActivity() {
         }
         fragmentTransaction.commit()
     }
+
+
+
 }

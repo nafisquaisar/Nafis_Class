@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coursebtn"
+    app:cardCornerRadius="20dp"
+    android:elevation="70dp"
+    android:layout_margin="10dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/categoryImage"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
 
             android:scaleType="fitCenter"
             android:src="@drawable/class10th"
@@ -29,9 +32,10 @@
             android:id="@+id/categoryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="2dp"
             android:text="ClassName"
-            android:textSize="25sp"
+
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
