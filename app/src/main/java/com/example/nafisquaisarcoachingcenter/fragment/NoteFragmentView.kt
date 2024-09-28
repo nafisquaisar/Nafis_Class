@@ -30,15 +30,8 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
         object : NoteItemCallback {
             override fun onNoteClick(item: NoteModel, position: Int) {
                 Toast.makeText(requireContext(), "Note name is ${item.title}", Toast.LENGTH_SHORT).show()
+                openPdf(item.pdfUrl);
 
-                item.pdfUrl?.let { pdfUrl ->
-                    val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl)
-                    storageReference.downloadUrl.addOnSuccessListener { uri ->
-                        openPdf(uri.toString())
-                    }.addOnFailureListener {
-                        Toast.makeText(requireContext(), "Failed to fetch PDF URL", Toast.LENGTH_SHORT).show()
-                    }
-                } ?: Toast.makeText(requireContext(), "No PDF URL available for this note", Toast.LENGTH_SHORT).show()
 
             }
         }
@@ -63,6 +56,7 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
 
 
     private fun getNoteItem() {
+        binding.progressbar.visibility=View.VISIBLE
         if (isAdded) { // Check if the fragment is attached
             firestore = FirebaseFirestore.getInstance()
 
@@ -104,6 +98,7 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                             if (list.isEmpty()) {
                                 if (isAdded) {
                                     binding.noteWarning.visibility = View.VISIBLE
+                                    binding.progressbar.visibility=View.GONE
                                     binding.noteRecylerView.visibility = View.GONE
                                     Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
                                 }
@@ -113,12 +108,14 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                                     adapter.submitList(ArrayList(list))
                                     binding.noteRecylerView.visibility = View.VISIBLE
                                     binding.noteWarning.visibility = View.GONE
+                                    binding.progressbar.visibility=View.GONE
                                 }
                             }
                         } else {
                             if (isAdded) {
                                 binding.noteWarning.visibility = View.VISIBLE
                                 binding.noteRecylerView.visibility = View.GONE
+                                binding.progressbar.visibility=View.GONE
                                 Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -135,16 +132,16 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
 
 
 //===================== Open PDF in a viewer========================
-    fun openPdf(pdfUrl: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf")
-        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-        try {
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            // Handle the case where no PDF reader is installed
-            Toast.makeText(requireContext(), "No PDF reader installed", Toast.LENGTH_SHORT).show()
+        fun openPdf(pdfUrl: String? ){
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf")
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // Handle the case where no PDF reader is installed
+                Toast.makeText(requireContext(), "No PDF reader installed", Toast.LENGTH_SHORT).show()
+            }
         }
-    }
 
 }

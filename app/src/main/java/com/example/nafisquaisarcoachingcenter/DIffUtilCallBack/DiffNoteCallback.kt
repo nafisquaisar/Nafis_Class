@@ -13,6 +13,7 @@ class DiffNoteCallback :DiffUtil.ItemCallback<NoteModel>() {
                            oldItem.clasname==newItem.clasname &&
                            oldItem.subname==newItem.subname &&
                            oldItem.chapname==newItem.chapname &&
-                           oldItem.date==newItem.date
+                           oldItem.date==newItem.date &&
+                           oldItem.pdfUrl==newItem.pdfUrl
     }
 }

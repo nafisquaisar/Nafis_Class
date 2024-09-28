@@ -1,248 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".fragment.Profile">
 
-    <!-- TODO: Update blank fragment layout -->
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/ProfileHolder"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:cardBackgroundColor="@color/welcome_blue"
-        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        app:cardCornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:layout_gravity="center"
-            >
+            android:background="@color/white"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/profilePhoto"
-                android:layout_width="100dp"
-
-                android:layout_height="100dp"
-                android:layout_marginStart="108dp"
-                android:src="@drawable/profile" />
-
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-<!--    <ImageView-->
-<!--       -->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/profile_header"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ProfileHolder"
-        app:layout_constraintEnd_toEndOf="@+id/ProfileHolder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileHolder" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:background="@drawable/user_name_bg"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="USER NAME "
-                android:textColor="#00897B"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-<!--    all detail of the user -->
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#ffffff"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-
-            <TextView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ProfileHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="20dp"
-                android:text="Email"
-                android:textSize="18dp"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:padding="10dp"
-                android:background="@drawable/search_bar_bg"
-                android:text="Email"
-                android:textSize="18dp"
-                android:textStyle="normal" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="10dp"
-                android:text="Number"
-                android:textSize="18dp"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/profile_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:text="Number"
-                android:background="@drawable/search_bar_bg"
-                android:padding="10dp"
-                android:textSize="18dp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="10dp"
-                android:text="Course"
-                android:textSize="18dp"
-                android:textStyle="normal|bold" />
-
-
-            <TextView
-                android:id="@+id/profile_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:padding="10dp"
-                android:text="Course"
-                android:background="@drawable/search_bar_bg"
-                android:textSize="18dp"
-                android:textStyle="normal" />
-
-            <Button
-                android:id="@+id/profile_edit_button"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:backgroundTint="@color/welcome_green"
-                android:text="Edit"
-                android:textSize="20sp"
-                app:cornerRadius="15dp" />
+                app:cardCornerRadius="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/user_name_bg"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profilePhoto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/profile" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/personName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nafis Quaisar"
+                            android:textSize="@dimen/_23sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/profileEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                           android:singleLine="true"
+                        android:text="nafisnafis391@gmail.com"
+                            android:textSize="@dimen/_15sdp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
-<!--    // Logout card view here-->
+            </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_Logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#ffffff"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView_detail"
-        app:layout_constraintStart_toStartOf="@+id/cardView_detail"
-        app:layout_constraintTop_toBottomOf="@+id/cardView_detail" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:background="@drawable/logout_button_bg"
-            android:id="@+id/logout_button"
-            >
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/baseline_logout_24" />
-
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-
-            android:textStyle="bold"
-            android:text="LogOut"
-            />
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ProfileHolder"
+                app:layout_constraintEnd_toEndOf="@+id/ProfileHolder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProfileHolder">
 
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#ffffff"
+                app:cardCornerRadius="5dp"
+                app:elevation="@dimen/_90sdp"
+                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintStart_toStartOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/user_name_bg"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/profile_edit_button"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="@color/welcome_green"
+                        android:text="Edit"
+                        android:textSize="20sp"
+                        app:cornerRadius="5dp" />
+
+                    <LinearLayout
+                        android:id="@+id/llMydoubt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/mydoubt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Doubt"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llSetting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/settings" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Setting"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llHelpcare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/help_care" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Help and Care"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/rating" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rating"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llShare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/share" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
 
-    <!--    <ImageView-->
-<!--        android:id="@+id/imageView4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:layout_editor_absoluteX="16dp"-->
-<!--        tools:layout_editor_absoluteY="304dp"-->
-<!--        tools:src="@tools:sample/backgrounds/scenic" />-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView_Logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginVertical="10dp"
+                        app:cardCornerRadius="5dp"
+                        app:layout_constraintEnd_toEndOf="@+id/cardView_detail"
+                        app:layout_constraintStart_toStartOf="@+id/cardView_detail"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView_detail">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:id="@+id/logout_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/logout_button_bg"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginEnd="15dp"
+                                android:src="@drawable/baseline_logout_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="LogOut"
+                                android:textColor="@color/white"
+
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -18,7 +18,7 @@ class ViewPagerAdapter(fragmentmanager:FragmentManager,lifecycle:Lifecycle,
 
     override fun createFragment(position: Int): Fragment {
         return if(position==0){
-            VideoFragmentView()
+            VideoFragmentView(classname,subName,chapterName)
         }else if(position==1){
             NoteFragmentView(classname,subName,chapterName)
         }else{

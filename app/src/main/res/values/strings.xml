@@ -49,5 +49,6 @@
     </string>
     <string name="video_upload_soon">Video Upload soon</string>
     <string name="note_upload_soon">Note Upload Soon</string>
+    <string name="logout_button">LogOut Button\n</string>
 
 </resources>

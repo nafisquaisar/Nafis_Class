@@ -348,7 +348,7 @@ class ChapterFragment (private val subject: String?, private val clas:String?) :
 
             "English Grammar" -> {
                 when (clas) {
-                    "Class 12", "Class 11", "Class 10", "Class 9", "Class 8", "Class 7", "Class 6" -> {
+                    "Class 12", "Class 11", "Class 10", "Class 9", "Class 8", "Class 7", "Class 6" ,"Class 5" -> {
                         list.add(ChapterModel("All Chapter", "Improve Your Ability", clas, subject))
                         list.add(ChapterModel("Tenses", "Master time forms", clas, subject))
                         list.add(ChapterModel("Verb Agreement", "Match subject & verb", clas, subject))

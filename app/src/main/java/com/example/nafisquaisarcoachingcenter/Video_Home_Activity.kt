@@ -30,7 +30,7 @@ class Video_Home_Activity : AppCompatActivity() {
 
 
         binding.CourseRecyclerView.layoutManager= GridLayoutManager(this,2)
-        adapter= categoryAdapter(homeClassObject.getData(),this)
+        adapter= categoryAdapter(homeClassObject.getData(),this,"")
         binding.CourseRecyclerView.adapter=adapter
 
 

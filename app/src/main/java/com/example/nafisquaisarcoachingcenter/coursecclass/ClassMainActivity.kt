@@ -17,6 +17,7 @@ class ClassMainActivity() : AppCompatActivity() {
         setContentView(binding.root)
         // Retrieve the intent that started this activity
         val className = intent.getStringExtra("className")
+        val BoardName = intent.getStringExtra("BoardName")
         val toolbar= binding.toolbarforActivity.toolbarForAll
         setSupportActionBar(toolbar)
         if (supportActionBar != null) {
@@ -28,7 +29,7 @@ class ClassMainActivity() : AppCompatActivity() {
         if (className != null) {
             // Replace the fragment with SubjectFragment and pass the className as argument
             supportFragmentManager.beginTransaction()
-                .replace(R.id.wrapper, SubjectFragment(className))
+                .replace(R.id.wrapper, SubjectFragment(className,BoardName))
                 .commit()
         } else {
 

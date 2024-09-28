@@ -13,7 +13,7 @@ import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 
 class categoryAdapter(
     private var categoryList: ArrayList<categoryClass>,
-    private val context: Context
+    private val context: Context,private var BoardName:String=""
 ) : RecyclerView.Adapter<categoryAdapter.MyCategoryViewHolder>() {
 
     inner class MyCategoryViewHolder(val binding: CourseBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -22,6 +22,7 @@ class categoryAdapter(
                 val datalist = categoryList[adapterPosition]
                 val intent = Intent(context, ClassMainActivity::class.java)
                 intent.putExtra("className", datalist.catText)
+                intent.putExtra("BoardName", BoardName)
                 context.startActivity(intent)
             }
         }

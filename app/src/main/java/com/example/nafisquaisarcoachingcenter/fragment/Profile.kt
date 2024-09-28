@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.nafisquaisarcoachingcenter.FrontVIew
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentProfileBinding
@@ -41,8 +42,8 @@ class Profile : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -126,19 +127,57 @@ class Profile : Fragment() {
             val personName = acct.displayName
             val personEmail = acct.email
             val personid=acct.id
+
             binding.profileEmail.setText(personEmail)
-            binding.profileId.setText(personid)
-            binding.profileName.setText(personName)
+
+            // List of titles to check for
+            val titles = listOf("MD", "Mr.", "Dr.", "Ms.", "Mrs.", "Prof.", "Sr.", "Jr.")
+
+            if (personName?.length ?: 0 > 13) {
+                val nameParts = personName?.split(" ") ?: listOf("")
+                var firstName = ""
+
+                if (nameParts.size >= 3) {
+                    // Combine the first two parts and check their length
+                    val combinedFirstTwo = "${nameParts[0]} ${nameParts[1]}"
+                    if (combinedFirstTwo.length <= 13) {
+                        firstName = combinedFirstTwo // Use first two parts
+                    } else {
+                        // Handle the title case
+                        if (titles.contains(nameParts[0])) {
+                            firstName = nameParts.getOrElse(1) { "" } // Get the second part if it exists
+                        } else {
+                            firstName = nameParts.firstOrNull() ?: "" // Use the first part if no title
+                        }
+                    }
+                } else if (nameParts.size == 2) {
+                    // If only two parts, use both as long as they are <= 13
+                    firstName = nameParts.joinToString(" ")
+                } else {
+                    firstName = nameParts.firstOrNull() ?: "" // Use the first part if only one part
+                }
+
+                binding.personName.setText(firstName) // Set the extracted firstName
+            } else {
+                binding.personName.setText(personName) // Set the full name if it's short
+            }
+
+            // Get the profile image URL
+            val profileImageUrl = acct.photoUrl
+
+            // Load the profile image into an ImageView using Glide
+            if (profileImageUrl != null) {
+                Glide.with(requireContext())
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.profile) // Optional placeholder image
+                    .into(binding.profilePhoto) // Assuming you have an ImageView in your layout
+            } else {
+                // Handle the case where there is no profile image
+                binding.profilePhoto.setImageResource(R.drawable.profile) // Set a default image
+            }
         }
 
-        if (auth.getCurrentUser() != null) {
-//            val number= auth.currentUser?.phoneNumber
-            val personEmail = auth.currentUser?.email
-//            val personid=auth.currentUser?.tenantId
-            binding.profileEmail.setText(personEmail)
-//            binding.profileId.setText(personid)
-//            binding.profileNumber.setText(number)
-        }
+
 
 
 

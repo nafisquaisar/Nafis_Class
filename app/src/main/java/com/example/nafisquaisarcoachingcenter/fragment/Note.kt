@@ -11,7 +11,7 @@ import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.adapter.categoryAdapter
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentNoteBinding
 
-class Note : Fragment() {
+class Note(var BoardName:String="") : Fragment() {
      private  lateinit var binding: FragmentNoteBinding
     private lateinit var adapter:categoryAdapter
 
@@ -24,7 +24,7 @@ class Note : Fragment() {
 
 
         binding.NoteRecyclerView.layoutManager= GridLayoutManager(requireContext(),2)
-        adapter= categoryAdapter(homeClassObject.getData(),requireActivity())
+        adapter= categoryAdapter(homeClassObject.getData(),requireActivity(),BoardName)
         binding.NoteRecyclerView.adapter=adapter
         return binding.root
     }

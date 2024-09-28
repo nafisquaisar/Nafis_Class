@@ -4,19 +4,41 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.NoteItemCallback
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.NoteItemBinding
+import com.example.nafisquaisarcoachingcenter.databinding.PyqItemBinding
 import com.example.nafisquaisarcoachingcenter.model.NoteModel
 
-class NoteViewHolder(val binding: NoteItemBinding,val callback: NoteItemCallback):RecyclerView.ViewHolder(binding.root){
-
-    fun bind(item:NoteModel){
-         binding.apply {
-             ChapterName.text=item.title
-             date.text=item.date.toString()
-             pdfIcon.setImageResource(R.drawable.pdf_icon)
-             itemView.setOnClickListener {
-                   callback.onNoteClick(item, position = position)
-             }
-         }
+class NoteViewHolder(
+    private val binding: Any, // Use Any to allow both PyqItemBinding and NoteItemBinding
+    private val callback: NoteItemCallback,
+) : RecyclerView.ViewHolder(
+    when (binding) {
+        is PyqItemBinding -> binding.root
+        is NoteItemBinding -> binding.root
+        else -> throw IllegalArgumentException("Invalid binding type")
     }
+) {
 
+    fun bind(item: NoteModel) {
+        when (binding) {
+            is PyqItemBinding -> {
+                binding.apply {
+                    yearName.text = item.title
+                    Icon.setImageResource(R.drawable.pyq_icon)
+                    itemView.setOnClickListener {
+                        callback.onNoteClick(item, position = adapterPosition)
+                    }
+                }
+            }
+            is NoteItemBinding -> {
+                binding.apply {
+                    ChapterName.text = item.title
+                    date.text = item.date.toString()
+                    pdfIcon.setImageResource(R.drawable.pdf_icon)
+                    itemView.setOnClickListener {
+                        callback.onNoteClick(item, position = adapterPosition)
+                    }
+                }
+            }
+        }
+    }
 }

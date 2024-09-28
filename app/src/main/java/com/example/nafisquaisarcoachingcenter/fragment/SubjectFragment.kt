@@ -11,7 +11,7 @@ import com.example.nafisquaisarcoachingcenter.adapter.subjectcategoryAdapter
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentSubjectBinding
 
 
-class SubjectFragment(var className: String) : Fragment() {
+class SubjectFragment(var className: String,var BoardName:String?="" ) : Fragment() {
     private lateinit var binding: FragmentSubjectBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +22,7 @@ class SubjectFragment(var className: String) : Fragment() {
 
 //         *************   Recycler View of all subject  ****************
         binding.class8ththsubjectRecyler.layoutManager= GridLayoutManager(requireContext(),2)
-        var adapter= subjectcategoryAdapter(allSubjectObject.getSubjectData(className), requireActivity())
+        var adapter= subjectcategoryAdapter(allSubjectObject.getSubjectData(className ,BoardName), requireActivity(),BoardName)
         binding.class8ththsubjectRecyler.adapter=adapter
 
 

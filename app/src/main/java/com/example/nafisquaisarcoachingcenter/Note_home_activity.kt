@@ -23,7 +23,7 @@ class Note_home_activity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         binding.NoteRecyclerView.layoutManager= GridLayoutManager(this,2)
-        adapter= categoryAdapter(homeClassObject.getData(),this)
+        adapter= categoryAdapter(homeClassObject.getData(),this,"")
         binding.NoteRecyclerView.adapter=adapter
 
 
