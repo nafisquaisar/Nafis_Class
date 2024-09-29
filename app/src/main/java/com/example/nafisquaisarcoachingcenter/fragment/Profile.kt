@@ -1,19 +1,17 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
-import android.R.attr.finishOnCloseSystemDialogs
-import android.R.attr.name
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.nafisquaisarcoachingcenter.FrontVIew
@@ -25,9 +23,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlin.math.log
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 
 class Profile : Fragment() {
@@ -36,6 +37,9 @@ class Profile : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var databaseRefrence:DatabaseReference
+    private var imgUri: Uri?=null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,61 +61,9 @@ class Profile : Fragment() {
         })
 
 //*********************************  Profle Update ALl Detail Dialog Box start **********************************************************
-        databaseRefrence=FirebaseDatabase.getInstance().reference
 
         binding.profileEditButton.setOnClickListener{
-            val dialog = Dialog(requireContext())
-            dialog.setContentView(R.layout.edit_all_detail)
-            dialog.show()
-            var editTextupdateName= dialog.findViewById<EditText>(R.id.Update_name)
-            var editTextupdateNumber=dialog.findViewById<EditText>(R.id.Update_Number)
-            var editTextupdateCourse=dialog.findViewById<EditText>(R.id.Course_update)
-            val updateButton=dialog.findViewById<Button>(R.id.final_profile_update_button)
-            val canelButton=dialog.findViewById<Button>(R.id.final_profile_cancel_button)
-
-
-
-
-            updateButton.setOnClickListener{
-
-                val updateName=editTextupdateName.text.toString()
-                val updateNumber=editTextupdateNumber.text.toString()
-                val updateCourse=editTextupdateCourse.text.toString()
-
-
-                if (updateName.isEmpty() || updateNumber.isEmpty() || updateCourse.isEmpty()){
-                    Toast.makeText(context,"Please Fill all detail",Toast.LENGTH_SHORT).show()
-                }else{
-                    val currentUser=auth.currentUser
-                    currentUser?.let {user->
-                        val detail=databaseRefrence.child("users").child(user.uid).child("UserDetail").push().key
-
-
-                        val userDetail=userDetail(updateName,updateNumber,updateCourse)
-                        if(detail!=null){
-                            databaseRefrence.child("users").child(user.uid).child(detail).setValue(userDetail)
-                                .addOnCompleteListener{task->
-                                    if (task.isSuccessful){
-                                        Toast.makeText(context,"Profile Update Successfully",Toast.LENGTH_LONG).show()
-                                        dialog.hide()
-                                    }else{
-                                        Toast.makeText(context,"Fail to Update Profile",Toast.LENGTH_SHORT).show()
-                                    }
-
-                                }
-                        }
-                    }
-//                    binding.profileNumber.setText(updateNumber)
-//                    binding.profileId.setText(updateCourse)
-//                    binding.profileName.setText(updateName)
-                }
-
-            }
-
-            canelButton.setOnClickListener{
-                dialog.hide()
-            }
-
+            updateProfileDialogBox()
         }
 
 //*********************************  Profle Update ALl Detail Dialog Box End **********************************************************
@@ -119,6 +71,13 @@ class Profile : Fragment() {
 
 
 
+       profileSet()
+
+
+        return binding.root
+    }
+
+    private fun profileSet() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
@@ -176,12 +135,97 @@ class Profile : Fragment() {
                 binding.profilePhoto.setImageResource(R.drawable.profile) // Set a default image
             }
         }
+    }
+
+    private fun updateProfileDialogBox() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.edit_all_detail)
+        dialog.show()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
+        var email = acct?.email ?: ""
+        var Name = acct?.displayName ?: ""
+
+        databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
 
 
+        var img = dialog.findViewById<ImageView>(R.id.profile_image)
+        var selectImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            imgUri = it
+            img.setImageURI(imgUri)
+        }
+        img.setOnClickListener {
+            selectImage.launch("image/*")
+        }
 
+        var editTextupdateName = dialog.findViewById<EditText>(R.id.Update_name)
+        var editTextupdateNumber = dialog.findViewById<EditText>(R.id.Number_update)
+        var editTextShowEmail = dialog.findViewById<EditText>(R.id.showEmail)
+        var editTextupdateClass = dialog.findViewById<EditText>(R.id.Course_update)
+        val updateButton = dialog.findViewById<Button>(R.id.final_profile_update_button)
+        val cancelButton = dialog.findViewById<Button>(R.id.final_profile_cancel_button)
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val myRef = databaseRefrence.child(uid)
 
-        return binding.root
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val value = snapshot.getValue(userDetail::class.java)
+                value?.let {
+                    editTextupdateName.setText(it.Name)
+                    editTextupdateNumber.setText(it.Number)
+                    editTextupdateClass.setText(it.course)
+                    Glide.with(requireContext())
+                        .load(it.ProUrl)
+                        .into(img)
+                }
+                editTextShowEmail.setText(email)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error loading data", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        updateButton.setOnClickListener {
+            val updateName = editTextupdateName.text.toString()
+            val updateNumber = editTextupdateNumber.text.toString()
+            val updateClass = editTextupdateClass.text.toString()
+
+            if (updateName.isEmpty() || updateNumber.isEmpty() || updateClass.isEmpty()) {
+                Toast.makeText(context, "Please fill all details", Toast.LENGTH_SHORT).show()
+            } else {
+                val auth = FirebaseAuth.getInstance()
+                val currentUser = auth.currentUser
+                currentUser?.let { user ->
+                    if (imgUri != null) {
+                        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${uid}")
+                        storageRef.putFile(imgUri!!).addOnSuccessListener {
+                            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                                val imageUrl = uri.toString()
+                                val userDetail = userDetail(user.uid, updateName, email, updateNumber, updateClass, imageUrl)
+                                databaseRefrence.child("users").child(user.uid).child("UserDetail").setValue(userDetail)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_LONG).show()
+                                            dialog.hide()
+                                        } else {
+                                            Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.hide()
+        }
     }
 
 
