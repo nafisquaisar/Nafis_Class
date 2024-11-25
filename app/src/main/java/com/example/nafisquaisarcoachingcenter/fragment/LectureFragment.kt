@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.example.nafisquaisarcoachingcenter.adapter.ViewPagerAdapter
+import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentLectureBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -31,6 +32,8 @@ class LectureFragment(var classname: String?, var subname: String?, var chapname
         val fragmentManager = childFragmentManager
         adapter = ViewPagerAdapter(fragmentManager, lifecycle,classname,subname,chapname)
         viewPager2.adapter = adapter
+
+        (activity as ClassMainActivity).updateTitle(chapname.toString())
 
         //=========set tab=====================
         tabLayout.addTab(tabLayout.newTab().setText("Video"))

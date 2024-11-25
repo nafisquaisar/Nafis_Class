@@ -1,7 +1,7 @@
 package com.example.nafisquaisarcoachingcenter.DIffUtilCallBack
 
-import com.example.nafisquaisarcoachingcenter.model.NoteModel
+import com.example.nafisquaisarcoachingcenter.Object.TestObject
 
-interface NoteItemCallback {
-    fun onNoteClick(item: NoteModel,position:Int)
+interface TotalTestItemCallback {
+    fun onTotalTestClick(item: TestObject, position:Int)
 }

@@ -6,29 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.nafisquaisarcoachingcenter.Main_dashboard
 import com.example.nafisquaisarcoachingcenter.Note_home_activity
-import com.example.nafisquaisarcoachingcenter.Object.homeClassObject
 import com.example.nafisquaisarcoachingcenter.PYQActivity
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.Test_home_activity
 import com.example.nafisquaisarcoachingcenter.Video_Home_Activity
 import com.example.nafisquaisarcoachingcenter.adapter.categoryAdapter
 import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
-import com.example.nafisquaisarcoachingcenter.coursecclass.class10th
-import com.example.nafisquaisarcoachingcenter.coursecclass.class9th
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentHomeBinding
-import com.example.nafisquaisarcoachingcenter.model.categoryClass
-import com.google.android.gms.common.internal.Constants
-import com.google.android.material.search.SearchView
-import java.util.Locale
-import java.util.Locale.filter
 
 
 class Home : Fragment() {
@@ -76,6 +63,7 @@ class Home : Fragment() {
         // *********************** Image slide functionality Start **********************************
            var slideModel=ArrayList<SlideModel>()
 
+          slideModel.add(SlideModel(R.drawable.organizer_poster,ScaleTypes.FIT))
           slideModel.add(SlideModel(R.drawable.chem_home_slider,ScaleTypes.FIT))
           slideModel.add(SlideModel(R.drawable.math_home_slider,ScaleTypes.FIT))
           slideModel.add(SlideModel(R.drawable.bio_home_slider,ScaleTypes.FIT))

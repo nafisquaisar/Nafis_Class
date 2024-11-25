@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:padding="@dimen/_10sdp"
     android:layout_margin="@dimen/_5sdp"
-    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_3sdp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/_10sdp"
         android:background="@drawable/totaltestbg">
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,6 +19,7 @@
         android:layout_height="61dp"
         android:layout_marginStart="10dp"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         android:layout_marginEnd="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,22 +81,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/black" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginHorizontal="@dimen/_30sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Check Syllabus"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
-    </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

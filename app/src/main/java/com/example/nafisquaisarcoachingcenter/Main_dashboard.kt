@@ -9,30 +9,35 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityMainDashboardBinding
+import com.example.nafisquaisarcoachingcenter.fragment.Courses
 import com.example.nafisquaisarcoachingcenter.fragment.Home
 import com.example.nafisquaisarcoachingcenter.fragment.Note
 import com.example.nafisquaisarcoachingcenter.fragment.Profile
 import com.example.nafisquaisarcoachingcenter.fragment.Test
-import com.example.nafisquaisarcoachingcenter.fragment.Video
+import com.example.nafisquaisarcoachingcenter.model.userDetail
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class Main_dashboard : AppCompatActivity() {
     private lateinit var binding: ActivityMainDashboardBinding
     private val drawer by lazy { binding.drawerlayout }
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var databaseReference: DatabaseReference
 
 
 
@@ -60,6 +65,9 @@ class Main_dashboard : AppCompatActivity() {
         val toggle = ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.OpenDrawer, R.string.CloseDrawer
         )
+
+        // Set the white icon for the toggle
+        toggle.drawerArrowDrawable.color = resources.getColor(R.color.white)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -122,8 +130,8 @@ class Main_dashboard : AppCompatActivity() {
                 R.id.Home -> {
                     loadfragment(Home(), 0)
                 }
-                 R.id.Video-> {
-                    loadfragment(Video(), 1)
+                 R.id.course-> {
+                    loadfragment(Courses(),1)
                 }
 
                 R.id.Note-> {
@@ -156,63 +164,50 @@ class Main_dashboard : AppCompatActivity() {
         val profilePhoto: ImageView = headerView.findViewById(R.id.drawer_header_profile)
         val personNameText: TextView = headerView.findViewById(R.id.drawer_header_Name)
         val headerEmail: TextView = headerView.findViewById(R.id.drawer_header_email)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        val email = account?.email ?: ""
+        val googleDisplayName = account?.displayName ?: ""
+        val googleProfileUrl = account?.photoUrl?.toString() ?: ""
 
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        if (acct != null) {
-            val personName = acct.displayName
-            val personEmail = acct.email
-
-            headerEmail.setText(personEmail)
-
-            // List of titles to check for
-            val titles = listOf("MD", "Mr.", "Dr.", "Ms.", "Mrs.", "Prof.", "Sr.", "Jr.")
-
-            if (personName?.length ?: 0 > 13) {
-                val nameParts = personName?.split(" ") ?: listOf("")
-                var firstName = ""
-
-                if (nameParts.size >= 3) {
-                    // Combine the first two parts and check their length
-                    val combinedFirstTwo = "${nameParts[0]} ${nameParts[1]}"
-                    if (combinedFirstTwo.length <= 13) {
-                        firstName = combinedFirstTwo // Use first two parts
-                    } else {
-                        // Handle the title case
-                        if (titles.contains(nameParts[0])) {
-                            firstName = nameParts.getOrElse(1) { "" } // Get the second part if it exists
-                        } else {
-                            firstName = nameParts.firstOrNull() ?: "" // Use the first part if no title
-                        }
-                    }
-                } else if (nameParts.size == 2) {
-                    // If only two parts, use both as long as they are <= 13
-                    firstName = nameParts.joinToString(" ")
-                } else {
-                    firstName = nameParts.firstOrNull() ?: "" // Use the first part if only one part
-                }
-
-                personNameText.setText(firstName) // Set the extracted firstName
-            } else {
-                personNameText.setText(personName) // Set the full name if it's short
-            }
-
-            // Get the profile image URL
-            val profileImageUrl = acct.photoUrl
-
-            // Load the profile image into an ImageView using Glide
-            if (profileImageUrl != null) {
+        if (account != null) {
+            personNameText.setText(googleDisplayName)
+            headerEmail.setText(email)
+            if (googleProfileUrl != null) {
                 Glide.with(this)
-                    .load(profileImageUrl)
-                    .placeholder(R.drawable.profile) // Optional placeholder image
-                    .into(profilePhoto) // Assuming you have an ImageView in your layout
+                    .load(googleProfileUrl)
+                    .placeholder(R.drawable.user_profile_icon) // Optional placeholder image
+                    .into(profilePhoto)
             } else {
                 // Handle the case where there is no profile image
-                profilePhoto.setImageResource(R.drawable.profile) // Set a default image
+                profilePhoto.setImageResource(R.drawable.user_profile_icon) // Set a default image
             }
         }
 
+        val uid = auth.currentUser?.uid ?: return
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(userDetail::class.java)
+                user?.let {
+                    // Check if fragment is still attached before updating UI
+                        personNameText.setText(it.Name.ifEmpty { googleDisplayName })
+                        headerEmail.setText(it.Email.ifEmpty { email })
+
+                        Glide.with(this@Main_dashboard)
+                            .load(it.ProUrl.ifEmpty { googleProfileUrl })
+                            .placeholder(R.drawable.user_profile_icon)
+                            .into(profilePhoto)
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Check if fragment is still attached before showing a toast
+                    Toast.makeText(this@Main_dashboard, "Failed to load data: ${error.message}", Toast.LENGTH_SHORT).show()
+
+            }
+        })
     }
 
 
@@ -238,7 +233,9 @@ class Main_dashboard : AppCompatActivity() {
         }
         fragmentTransaction.commit()
     }
-
+    private fun shortenName(name: String): String {
+        return if (name.length > 13) name.split(" ").take(2).joinToString(" ") else name
+    }
 
 
 }

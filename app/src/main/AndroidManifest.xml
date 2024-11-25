@@ -17,10 +17,22 @@
         android:theme="@style/Base.Theme.NafisCoachingCenter"
         tools:targetApi="31">
         <activity
+            android:name=".DoubtActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpAndCare"
+            android:exported="false" />
+        <activity
+            android:name=".Internet.InternetNotAvailableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".coursecclass.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".coursecclass.VideoViewActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".coursecclass.PDFViewerActivity"
             android:exported="false" />
@@ -61,8 +73,8 @@
             android:exported="false" />
         <activity
             android:name=".Main_dashboard"
-            android:theme="@style/Base.Theme.NafisCoachingCenter"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.NafisCoachingCenter" />
         <activity
             android:name=".FrontVIew"
             android:exported="false" />

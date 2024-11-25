@@ -16,6 +16,7 @@ class DiffVideoCallback :DiffUtil.ItemCallback<VideoModel>() {
                            oldItem.time==newItem.time &&
                            oldItem.chapname==newItem.chapname &&
                            oldItem.date==newItem.date &&
-                           oldItem.videoUrl==newItem.videoUrl
+                           oldItem.videoUrl==newItem.videoUrl&&
+                           oldItem.des==newItem.des
     }
 }

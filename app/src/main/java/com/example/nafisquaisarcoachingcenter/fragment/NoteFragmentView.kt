@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
         object : NoteItemCallback {
             override fun onNoteClick(item: NoteModel, position: Int) {
                 Toast.makeText(requireContext(), "Note name is ${item.title}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Note name is ${item.pdfUrl}", Toast.LENGTH_SHORT).show()
                 openPdf(item.pdfUrl);
 
 
@@ -97,7 +99,7 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
 
                             if (list.isEmpty()) {
                                 if (isAdded) {
-                                    binding.noteWarning.visibility = View.VISIBLE
+                                    binding.helping.visibility = View.VISIBLE
                                     binding.progressbar.visibility=View.GONE
                                     binding.noteRecylerView.visibility = View.GONE
                                     Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
@@ -107,13 +109,13 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                                     // Update the adapter with the new list
                                     adapter.submitList(ArrayList(list))
                                     binding.noteRecylerView.visibility = View.VISIBLE
-                                    binding.noteWarning.visibility = View.GONE
+                                    binding.helping.visibility = View.GONE
                                     binding.progressbar.visibility=View.GONE
                                 }
                             }
                         } else {
                             if (isAdded) {
-                                binding.noteWarning.visibility = View.VISIBLE
+                                binding.helping.visibility = View.VISIBLE
                                 binding.noteRecylerView.visibility = View.GONE
                                 binding.progressbar.visibility=View.GONE
                                 Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
@@ -140,7 +142,8 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 // Handle the case where no PDF reader is installed
-                Toast.makeText(requireContext(), "No PDF reader installed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                Log.d("PDF" ,e.message.toString())
             }
         }
 

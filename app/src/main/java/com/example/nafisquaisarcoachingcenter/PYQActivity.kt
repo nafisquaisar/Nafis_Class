@@ -1,46 +1,48 @@
 package com.example.nafisquaisarcoachingcenter
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityPyqactivityBinding
 import com.example.nafisquaisarcoachingcenter.fragment.BoardFragment
-import com.example.nafisquaisarcoachingcenter.fragment.SubjectFragment
 
-class PYQActivity() : AppCompatActivity() {
-    private lateinit var binding:ActivityPyqactivityBinding
-
+class PYQActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPyqactivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityPyqactivityBinding.inflate(layoutInflater)
+        binding = ActivityPyqactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val toolbar= binding.toolbarforActivity.toolbarForAll
-        setSupportActionBar(toolbar)
 
+        // Set the initial title
+        binding.titleName.text = "PYQ"
 
+        // Add the BoardFragment on activity start and add it to the back stack
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.pyqWrapper, BoardFragment())
+            .addToBackStack("BoardFragment") // Add BoardFragment to the back stack
+            .commit()
 
-        if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.title = "Previous Year Question"
+        // Handle back button click
+        binding.backarrowbtn.setOnClickListener {
+            onBackPressed() // Handle back navigation
         }
-
-         supportFragmentManager.beginTransaction().replace(R.id.pyqWrapper,BoardFragment()).commit()
-
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id=item.itemId
-
-        if(id== android.R.id.home)
-        {
-            onBackPressed()
-        }
-
-        return super.onOptionsItemSelected(item)
+    // Update the title dynamically
+    fun updateTitle(title: String) {
+        binding.titleName.text = title
+        Log.d("PYQActivity", "Title updated to: $title")
     }
 
-
+    // Handle back navigation to ensure proper fragment transitions
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            // Pop the top fragment from the stack, go back to the previous fragment
+            supportFragmentManager.popBackStack()
+        } else {
+            // If no fragments left in the stack, finish the activity
+            super.onBackPressed()
+        }
+    }
 }

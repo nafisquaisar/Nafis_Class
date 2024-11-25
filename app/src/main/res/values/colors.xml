@@ -11,8 +11,18 @@
     <color name="selectedIconColor">#04E1F8</color>
     <color name="defaultIconColor">#F6F6F6</color>
     <color name="countTextColor">#fff</color>
+    <color name="holo_red_dark">#E32452</color>
+    <color name="border_green">#00552D</color>
+    <color name="grey">#E2E2E2</color>
 
-<!--    <color name="defaultIconColor">#F45E0B</color>-->
+    <color name="Excellent">#008476</color>
+    <color name="Outstanding">#2F9287</color>
+    <color name="VeryGood">#579C95</color>
+    <color name="Good">#E65100</color>
+    <color name="Bad">#E53935</color>
+    <color name="secondaryDeepGreen">#C7D2CC</color>
+
+    <!--    <color name="defaultIconColor">#F45E0B</color>-->
 <!--    <color name="defaultIconColor">#fff</color>-->
 <!--    <color name="defaultIconColor">#2E2E2E</color>-->
 </resources>

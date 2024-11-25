@@ -1,60 +1,145 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
+import AnsShowFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import com.airbnb.lottie.LottieAnimationView
 import com.example.nafisquaisarcoachingcenter.R
+import com.example.nafisquaisarcoachingcenter.databinding.FragmentResultBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ResultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class ResultFragment(
+    private var right: Int,
+    private var total: Int,
+    private var clasname: String?,
+    private var subname: String?,
+    private var chap: String?,
+    private var id: String,
+    private var correctans: HashMap<Int, Int>
+) : Fragment() {
+    private lateinit var binding: FragmentResultBinding
+    private lateinit var animationView: LottieAnimationView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
-    }
+        binding = FragmentResultBinding.inflate(inflater, container, false)
+        animationView = binding.animationView
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val totalQuestions = total
+        val percentage = ((right.toFloat() / totalQuestions.toFloat()) * 100).toInt()
+
+        binding.apply {
+            correct.text = "$right Correct"
+            incorrect.text = "${total - right} Incorrect"
+            resultscore.text = "You got $right out of $total"
+            scoreProgressIndicator.progress = percentage
+            scoreProgressText.text = "$percentage %"
+
+
+            when {
+                percentage > 90 -> {
+                    progresstext.text = "Excellent"
+                    progresstext.setTextColor(ContextCompat.getColor(requireContext(), R.color.Excellent))
+                }
+
+                percentage in 80..90 -> {
+                    progresstext.text = "Outstanding"
+                    progresstext.setTextColor(ContextCompat.getColor(requireContext(), R.color.Outstanding))
+                }
+
+                percentage in 70..79 -> {
+                    progresstext.text = "Very Good"
+                    progresstext.setTextColor(ContextCompat.getColor(requireContext(), R.color.VeryGood))
+                }
+
+                percentage in 50..69 -> {
+                    progresstext.text = "Good"
+                    progresstext.setTextColor(ContextCompat.getColor(requireContext(), R.color.Good))
+                }
+
+                else -> {
+                    progresstext.text = "Oops! You have failed"
+                    progresstext.setTextColor(ContextCompat.getColor(requireContext(), R.color.Bad))
                 }
             }
+
+            // Set animation based on percentage
+            updateAnimation(
+                if (percentage >= 50) "https://lottie.host/a8820a63-e95f-4a2e-84af-36d4912c42d2/Xb2VVh8YRT.json"
+                else "https://lottie.host/811f7a8d-c6f3-43e8-b2b8-9383cd77ef0b/QzA9Q3KgaQ.json"
+            )
+        }
+
+        binding.ExploreMore.setOnClickListener {
+            val fragmentManager = activity?.supportFragmentManager
+            fragmentManager?.let { fm ->
+                val backStackEntryCount = fm.backStackEntryCount
+                for (i in backStackEntryCount - 1 downTo 0) {
+                    val backStackEntry = fm.getBackStackEntryAt(i)
+                    if (backStackEntry.name == "QuizFragmentTag") {
+                        fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        break
+                    }
+                }
+                fm.beginTransaction()
+                    .replace(R.id.wrapper, TotalTestFragment(clasname, subname, chap))
+                    .commit()
+            }
+        }
+
+        binding.replay.setOnClickListener {
+            activity?.supportFragmentManager?.let { fm ->
+                val backStackEntryCount = fm.backStackEntryCount
+                for (i in backStackEntryCount - 1 downTo 0) {
+                    val backStackEntry = fm.getBackStackEntryAt(i)
+                    if (backStackEntry.name == "ResultFragment") {
+                        fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        break
+                    }
+                }
+                fm.beginTransaction()
+                    .replace(R.id.wrapper, QuizFragment(clasname, subname, chap, id))
+                    .addToBackStack("QuizFragmentTag")
+                    .commitAllowingStateLoss()
+            }
+        }
+
+        binding.ShowAns.setOnClickListener {
+            val fm = activity?.supportFragmentManager
+            if (fm != null) {
+
+                // Always start a new transaction to show AnsShowFragment
+                fm.beginTransaction()
+                    .replace(R.id.wrapper, AnsShowFragment(clasname, subname, chap, id, correctans))
+                    .addToBackStack("ResultFragment") // Add the fragment to the back stack
+                    .commit()
+            }
+        }
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fm = activity?.supportFragmentManager
+                if (fm != null && fm.backStackEntryCount > 1) {
+                    fm.popBackStack() // Pops ResultFragment
+                } else {
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
+
+        return binding.root
+    }
+
+    private fun updateAnimation(url: String) {
+        animationView.setAnimationFromUrl(url)
     }
 }

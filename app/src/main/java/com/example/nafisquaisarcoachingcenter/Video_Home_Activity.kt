@@ -2,6 +2,7 @@ package com.example.nafisquaisarcoachingcenter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +28,7 @@ class Video_Home_Activity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.title = "Video"
         }
+        toolbar.navigationIcon?.setTint(resources.getColor(android.R.color.white))
 
 
         binding.CourseRecyclerView.layoutManager= GridLayoutManager(this,2)
@@ -58,6 +60,11 @@ class Video_Home_Activity : AppCompatActivity() {
                     filteredList.add(i)
                 }
             }
+            for (i in homeClassObject.getData()){
+                if(i.catText.contains(query)){
+                    filteredList.add(i)
+                }
+            }
 
             if(filteredList.isEmpty()){
                 (Toast.makeText(this, "No data Found", Toast.LENGTH_SHORT)).show()
@@ -67,7 +74,17 @@ class Video_Home_Activity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        val id=item.itemId
+
+        if(id== android.R.id.home)
+        {
+            onBackPressed()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
 
 }

@@ -15,7 +15,7 @@ import com.example.nafisquaisarcoachingcenter.fragment.ChapterFragment
 import com.example.nafisquaisarcoachingcenter.fragment.PYQViewerFragment
 import com.example.nafisquaisarcoachingcenter.model.SubModel
 
-class subjectcategoryAdapter(private var dataList: ArrayList<SubModel>, var requireActivity:Activity,private var BoardName:String?): RecyclerView.Adapter<MySubjectCategory>() {
+class subjectcategoryAdapter(private var dataList: ArrayList<SubModel>, var requireActivity:Activity,private var BoardName:String?,private var Test:String?=""): RecyclerView.Adapter<MySubjectCategory>() {
     inner class MySubjectCategory(var binding: AllSubjectLayoutBinding):RecyclerView.ViewHolder(binding.root) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MySubjectCategory {
@@ -38,18 +38,18 @@ class subjectcategoryAdapter(private var dataList: ArrayList<SubModel>, var requ
        holder.itemView.setOnClickListener {
            val fragmentManager = (requireActivity as AppCompatActivity).supportFragmentManager
            val transaction = fragmentManager.beginTransaction()
-           val chapterFragment = ChapterFragment(dataList.SubjText,dataList.className) // Replace with your actual subFragment class
+           val chapterFragment = ChapterFragment(dataList.SubjText,dataList.className,Test) // Replace with your actual subFragment class
 
 
           if(BoardName!=null &&BoardName=="Bihar Board" || BoardName=="CBSE" ||BoardName=="MP Board"){
               // Replace the current fragment with the new one
               transaction.replace(R.id.wrapper, PYQViewerFragment(dataList.className,dataList.SubjText,"",BoardName))
-              transaction.addToBackStack(null) // Optional: to add this transaction to the back stack
+              transaction.addToBackStack("PYQFragment") // Optional: to add this transaction to the back stack
               transaction.commit()
           }else{
               // Replace the current fragment with the new one
               transaction.replace(R.id.wrapper, chapterFragment)
-              transaction.addToBackStack(null) // Optional: to add this transaction to the back stack
+              transaction.addToBackStack("ChapterFragment")
               transaction.commit()
           }
 

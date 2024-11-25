@@ -1,5 +1,6 @@
 package com.example.nafisquaisarcoachingcenter.adapter
 
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.NoteItemCallback
 import com.example.nafisquaisarcoachingcenter.R
@@ -23,6 +24,7 @@ class NoteViewHolder(
             is PyqItemBinding -> {
                 binding.apply {
                     yearName.text = item.title
+                    yearName.isSelected = true  // This is crucial for enabling the marquee effect
                     Icon.setImageResource(R.drawable.pyq_icon)
                     itemView.setOnClickListener {
                         callback.onNoteClick(item, position = adapterPosition)
@@ -32,6 +34,7 @@ class NoteViewHolder(
             is NoteItemBinding -> {
                 binding.apply {
                     ChapterName.text = item.title
+                    ChapterName.isSelected=true
                     date.text = item.date.toString()
                     pdfIcon.setImageResource(R.drawable.pdf_icon)
                     itemView.setOnClickListener {

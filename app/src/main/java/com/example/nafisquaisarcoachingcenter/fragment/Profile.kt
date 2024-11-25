@@ -13,247 +13,229 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.nafisquaisarcoachingcenter.DoubtActivity
 import com.example.nafisquaisarcoachingcenter.FrontVIew
+import com.example.nafisquaisarcoachingcenter.HelpAndCare
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentProfileBinding
 import com.example.nafisquaisarcoachingcenter.model.userDetail
+import com.example.nafisquaisarcoachingcenter.progress
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class Profile : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var databaseRefrence:DatabaseReference
-    private var imgUri: Uri?=null
+    private lateinit var databaseReference: DatabaseReference
+    private var imgUri: Uri? = null
+    private lateinit var imgDialog: ImageView
 
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private val selectImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        imgUri = uri
+        imgDialog.setImageURI(imgUri)
     }
-    override fun onCreateView(
 
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding= FragmentProfileBinding.inflate(inflater, container, false)
-        auth=FirebaseAuth.getInstance()
+    ): View {
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+        setupGoogleSignIn()
+        profileSet()
 
-        binding.logoutButton.setOnClickListener(View.OnClickListener {
-            signout()
-            Toast.makeText(context,"LogOut Successfully",Toast.LENGTH_SHORT).show()
-        })
+        binding.logoutButton.setOnClickListener {
+            signOut()
+            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+        }
 
-//*********************************  Profle Update ALl Detail Dialog Box start **********************************************************
-
-        binding.profileEditButton.setOnClickListener{
+        binding.profileEditButton.setOnClickListener {
             updateProfileDialogBox()
         }
 
-//*********************************  Profle Update ALl Detail Dialog Box End **********************************************************
+        binding.llHelpcare.setOnClickListener {
+            val intent=Intent(requireContext(),HelpAndCare::class.java)
+            startActivity(intent)
+        }
 
-
-
-
-       profileSet()
-
+        binding.llMydoubt.setOnClickListener {
+            startActivity(Intent(requireContext(),DoubtActivity::class.java))
+        }
 
         return binding.root
     }
 
-    private fun profileSet() {
+    private fun setupGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    }
 
-        val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
-        if (acct != null) {
-            val personName = acct.displayName
-            val personEmail = acct.email
-            val personid=acct.id
+    private fun profileSet() {
+        val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+        val email = account?.email ?: ""
+        val googleDisplayName = account?.displayName ?: ""
+        val googleProfileUrl = account?.photoUrl?.toString() ?: ""
 
-            binding.profileEmail.setText(personEmail)
+        // Check if fragment is attached before performing UI operations
+        if (isAdded) {
+            binding.personName.setText(shortenName(googleDisplayName))
+            binding.profileEmail.setText(email)
 
-            // List of titles to check for
-            val titles = listOf("MD", "Mr.", "Dr.", "Ms.", "Mrs.", "Prof.", "Sr.", "Jr.")
-
-            if (personName?.length ?: 0 > 13) {
-                val nameParts = personName?.split(" ") ?: listOf("")
-                var firstName = ""
-
-                if (nameParts.size >= 3) {
-                    // Combine the first two parts and check their length
-                    val combinedFirstTwo = "${nameParts[0]} ${nameParts[1]}"
-                    if (combinedFirstTwo.length <= 13) {
-                        firstName = combinedFirstTwo // Use first two parts
-                    } else {
-                        // Handle the title case
-                        if (titles.contains(nameParts[0])) {
-                            firstName = nameParts.getOrElse(1) { "" } // Get the second part if it exists
-                        } else {
-                            firstName = nameParts.firstOrNull() ?: "" // Use the first part if no title
-                        }
-                    }
-                } else if (nameParts.size == 2) {
-                    // If only two parts, use both as long as they are <= 13
-                    firstName = nameParts.joinToString(" ")
-                } else {
-                    firstName = nameParts.firstOrNull() ?: "" // Use the first part if only one part
-                }
-
-                binding.personName.setText(firstName) // Set the extracted firstName
-            } else {
-                binding.personName.setText(personName) // Set the full name if it's short
-            }
-
-            // Get the profile image URL
-            val profileImageUrl = acct.photoUrl
-
-            // Load the profile image into an ImageView using Glide
-            if (profileImageUrl != null) {
-                Glide.with(requireContext())
-                    .load(profileImageUrl)
-                    .placeholder(R.drawable.profile) // Optional placeholder image
-                    .into(binding.profilePhoto) // Assuming you have an ImageView in your layout
-            } else {
-                // Handle the case where there is no profile image
-                binding.profilePhoto.setImageResource(R.drawable.profile) // Set a default image
-            }
+            Glide.with(requireContext())
+                .load(googleProfileUrl)
+                .placeholder(R.drawable.user_profile)
+                .into(binding.profilePhoto)
         }
+
+        val uid = auth.currentUser?.uid ?: return
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(userDetail::class.java)
+                user?.let {
+                    // Check if fragment is still attached before updating UI
+                    if (isAdded) {
+                        binding.personName.setText(it.Name.ifEmpty { googleDisplayName })
+                        binding.profileEmail.setText(it.Email.ifEmpty { email })
+
+                        Glide.with(requireContext())
+                            .load(it.ProUrl.ifEmpty { googleProfileUrl })
+                            .placeholder(R.drawable.user_profile_icon)
+                            .into(binding.profilePhoto)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Check if fragment is still attached before showing a toast
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Failed to load data: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun updateProfileDialogBox() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.edit_all_detail)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.show()
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
-        var email = acct?.email ?: ""
-        var Name = acct?.displayName ?: ""
 
-        databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
-
-
-        var img = dialog.findViewById<ImageView>(R.id.profile_image)
-        var selectImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            imgUri = it
-            img.setImageURI(imgUri)
-        }
-        img.setOnClickListener {
-            selectImage.launch("image/*")
-        }
-
-        var editTextupdateName = dialog.findViewById<EditText>(R.id.Update_name)
-        var editTextupdateNumber = dialog.findViewById<EditText>(R.id.Number_update)
-        var editTextShowEmail = dialog.findViewById<EditText>(R.id.showEmail)
-        var editTextupdateClass = dialog.findViewById<EditText>(R.id.Course_update)
+        imgDialog = dialog.findViewById(R.id.profile_image)
+        val editButton = dialog.findViewById<FloatingActionButton>(R.id.edit_button)
+        val updateName = dialog.findViewById<EditText>(R.id.Update_name)
+        val updateNumber = dialog.findViewById<EditText>(R.id.Number_update)
+        val updateEmail=dialog.findViewById<EditText>(R.id.showEmail)
+        val updateClass = dialog.findViewById<EditText>(R.id.Course_update)
         val updateButton = dialog.findViewById<Button>(R.id.final_profile_update_button)
         val cancelButton = dialog.findViewById<Button>(R.id.final_profile_cancel_button)
 
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val myRef = databaseRefrence.child(uid)
+        val uid = auth.currentUser?.uid ?: return
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid)
 
-        myRef.addValueEventListener(object : ValueEventListener {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val value = snapshot.getValue(userDetail::class.java)
-                value?.let {
-                    editTextupdateName.setText(it.Name)
-                    editTextupdateNumber.setText(it.Number)
-                    editTextupdateClass.setText(it.course)
+                val user = snapshot.getValue(userDetail::class.java)
+                user?.let {
+                    updateName.setText(it.Name)
+                    updateNumber.setText(it.Number)
+                    updateClass.setText(it.course)
+                    updateEmail.setText(it.Email)
                     Glide.with(requireContext())
                         .load(it.ProUrl)
-                        .into(img)
+                        .placeholder(R.drawable.user_profile_icon)
+                        .into(imgDialog)
                 }
-                editTextShowEmail.setText(email)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error loading data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to load data", Toast.LENGTH_SHORT).show()
             }
         })
+
+        editButton.setOnClickListener {
+            selectImage.launch("image/*")
+        }
 
         updateButton.setOnClickListener {
-            val updateName = editTextupdateName.text.toString()
-            val updateNumber = editTextupdateNumber.text.toString()
-            val updateClass = editTextupdateClass.text.toString()
+            val name = updateName.text.toString()
+            val number = updateNumber.text.toString()
+            val course = updateClass.text.toString()
 
-            if (updateName.isEmpty() || updateNumber.isEmpty() || updateClass.isEmpty()) {
-                Toast.makeText(context, "Please fill all details", Toast.LENGTH_SHORT).show()
+            if (name.isEmpty() || number.isEmpty() || course.isEmpty()) {
+                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (imgUri != null) {
+                uploadImageAndUpdate(name, number, course)
             } else {
-                val auth = FirebaseAuth.getInstance()
-                val currentUser = auth.currentUser
-                currentUser?.let { user ->
-                    if (imgUri != null) {
-                        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${uid}")
-                        storageRef.putFile(imgUri!!).addOnSuccessListener {
-                            storageRef.downloadUrl.addOnSuccessListener { uri ->
-                                val imageUrl = uri.toString()
-                                val userDetail = userDetail(user.uid, updateName, email, updateNumber, updateClass, imageUrl)
-                                databaseRefrence.child("users").child(user.uid).child("UserDetail").setValue(userDetail)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_LONG).show()
-                                            dialog.hide()
-                                        } else {
-                                            Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-                            }
-                        }.addOnFailureListener {
-                            Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                userRef.child("ProUrl").get().addOnSuccessListener {
+                    val existingUrl = it.value.toString()
+                    updateData(name, number, course, Uri.parse(existingUrl))
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error fetching image URL", Toast.LENGTH_SHORT).show()
                 }
             }
+            dialog.dismiss()
         }
 
-        cancelButton.setOnClickListener {
-            dialog.hide()
+        cancelButton.setOnClickListener { dialog.dismiss() }
+    }
+
+    private fun uploadImageAndUpdate(name: String, number: String, course: String) {
+        val currentUserUid = auth.currentUser?.uid ?: return
+        val storageRef = FirebaseStorage.getInstance().getReference("UserProfile").child(currentUserUid).child("Profile.jpg")
+
+        lifecycleScope.launch {
+            try {
+                val uploadTask = storageRef.putFile(imgUri!!).await()
+                if (uploadTask.task.isSuccessful) {
+                    val downloadUrl = storageRef.downloadUrl.await()
+                    updateData(name, number, course, downloadUrl)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
+    private fun updateData(name: String, number: String, course: String, profileUrl: Uri?) {
+        val uid = auth.currentUser?.uid ?: return
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid)
 
-    fun signout(){
-       //  ******************** Logout through using Google Start ********************************
-        googleSignInClient.signOut().addOnCompleteListener(OnCompleteListener<Void?> {
-            activity?.finish()
-            startActivity(Intent(context, FrontVIew::class.java))
-        })
-       //   ******************** Logout through using Google End ********************************
+        val updatedUser = userDetail(uid, name, auth.currentUser?.email ?: "", number, "", course, profileUrl.toString())
 
-        //        ******************** Logout through using Email and password Start ********************************
-        if (auth.getCurrentUser() != null) {
-            auth.signOut()
-            val intent = Intent(context, FrontVIew::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            activity?.finish()
+        userRef.setValue(updatedUser).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+            }
         }
-        //        ******************** Logout through using Email and password End ********************************
     }
 
-
-    private fun getUserData(){
-        databaseRefrence=FirebaseDatabase.getInstance().reference
-
+    private fun signOut() {
+        googleSignInClient.signOut().addOnCompleteListener {
+            startActivity(Intent(requireContext(), FrontVIew::class.java))
+            requireActivity().finish()
+        }
+        auth.signOut()
     }
 
-
-
+    private fun shortenName(name: String): String {
+        return if (name.length > 13) name.split(" ").take(2).joinToString(" ") else name
+    }
 }

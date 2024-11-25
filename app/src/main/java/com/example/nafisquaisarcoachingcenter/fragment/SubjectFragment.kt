@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.nafisquaisarcoachingcenter.Object.allSubjectObject
 import com.example.nafisquaisarcoachingcenter.adapter.subjectcategoryAdapter
+import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentSubjectBinding
 
 
-class SubjectFragment(var className: String,var BoardName:String?="" ) : Fragment() {
+class SubjectFragment(var className: String,var BoardName:String?="" ,var Testfragment :String?="") : Fragment() {
     private lateinit var binding: FragmentSubjectBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,10 +23,10 @@ class SubjectFragment(var className: String,var BoardName:String?="" ) : Fragmen
 
 //         *************   Recycler View of all subject  ****************
         binding.class8ththsubjectRecyler.layoutManager= GridLayoutManager(requireContext(),2)
-        var adapter= subjectcategoryAdapter(allSubjectObject.getSubjectData(className ,BoardName), requireActivity(),BoardName)
+        var adapter= subjectcategoryAdapter(allSubjectObject.getSubjectData(className ,BoardName), requireActivity(),BoardName,Testfragment)
         binding.class8ththsubjectRecyler.adapter=adapter
 
-
+        (activity as ClassMainActivity).updateTitle(className)
         return binding.root
 
 

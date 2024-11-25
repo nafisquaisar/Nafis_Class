@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -17,7 +18,9 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityVideoViewBinding
+
 
 class VideoViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVideoViewBinding
@@ -31,6 +34,14 @@ class VideoViewActivity : AppCompatActivity() {
         binding = ActivityVideoViewBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
+        binding.animationView.setFailureListener { throwable ->
+            Log.e(
+                "LottieError",
+                "Error loading animation",
+                throwable
+            )
+        }
+
         // Full-screen container for custom view
         fullscreenContainer = FrameLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(
@@ -43,6 +54,7 @@ class VideoViewActivity : AppCompatActivity() {
         // Retrieve video URL and other data from Intent
         val url = intent.getStringExtra("VideoUrl") ?: ""
         val title = intent.getStringExtra("TitleName") ?: "Untitled"
+        val des = intent.getStringExtra("Des") ?: title
         val chapterName = intent.getStringExtra("ChapterName") ?: "Unknown Chapter"
         val toolbar=binding.toolbarforActivity.toolbarForAll
         setSupportActionBar(toolbar)
@@ -52,7 +64,7 @@ class VideoViewActivity : AppCompatActivity() {
         }
 
         binding.videotitle.text=title
-        binding.videodesc.text="${title} Good for this"
+        binding.videodesc.text=des
 
         binding.apply   {
             // Enable JavaScript for WebView

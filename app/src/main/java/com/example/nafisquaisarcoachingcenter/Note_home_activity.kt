@@ -3,11 +3,14 @@ package com.example.nafisquaisarcoachingcenter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.nafisquaisarcoachingcenter.Object.homeClassObject
 import com.example.nafisquaisarcoachingcenter.adapter.categoryAdapter
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityNoteHomeBinding
+import com.example.nafisquaisarcoachingcenter.model.categoryClass
+import java.util.Locale
 
 class Note_home_activity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteHomeBinding
@@ -31,8 +34,38 @@ class Note_home_activity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.title = "Note"
         }
+        toolbar.navigationIcon?.setTint(resources.getColor(android.R.color.white))
 
+        binding.SearchCourse.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filter(newText)
+                return true
+            }
+        })    }
+
+    private fun filter(query: String?) {
+
+        if(query!=null){
+            val filteredList=ArrayList<categoryClass>()
+
+            for (i in homeClassObject.getData()){
+                if(i.catText.lowercase(Locale.ROOT).contains(query) || i.catText.contains(query) ){
+                    filteredList.add(i)
+                }
+            }
+
+            if(filteredList.isEmpty()){
+                (Toast.makeText(this, "No data Found", Toast.LENGTH_SHORT)).show()
+            }else{
+                adapter.filterfun(filteredList)
+            }
+        }
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id=item.itemId

@@ -22,25 +22,48 @@
                 android:id="@+id/Search_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="1dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/search_bar_bg"
                 app:iconifiedByDefault="false"
                 app:queryHint="Search Here..." />
 
             <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/courses_icon"
+                    android:contentDescription="@string/message_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Classes"
+                    android:textSize="@dimen/_25sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-
+                android:layout_marginHorizontal="20dp"
                 >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/Course_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:background="#ffffff" />
 
 

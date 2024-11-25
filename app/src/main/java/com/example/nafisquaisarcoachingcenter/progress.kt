@@ -1,4 +1,4 @@
-package com.example.nafis.agrosewa
+package com.example.nafisquaisarcoachingcenter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -15,9 +15,9 @@ object progress {
         dialog!!.show()
     }
     fun hide(){
-      dialog?.hide()
+      dialog?.dismiss()
     }
-    fun toastShow(context: Context,message:String){
+    fun ToastShow(context: Context,message:String){
         Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
     }
 

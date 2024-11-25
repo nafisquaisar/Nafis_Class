@@ -25,7 +25,6 @@ class BoardFragment() : Fragment() {
     private val boardCallback by lazy {
         object :BoardItemCallback{
             override fun onBoardClick(item: categoryClass, position: Int) {
-                Toast.makeText(requireContext(),"Click ${item.catText}",Toast.LENGTH_SHORT).show()
                 var fm=(requireContext() as AppCompatActivity).supportFragmentManager
                 fm.beginTransaction().replace(R.id.pyqWrapper,Note(item.catText)).commit()
             }

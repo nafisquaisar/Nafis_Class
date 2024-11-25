@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
         binding.welcome.text=spannableString
 
 
-        val titlename="Nafis Coaching Center"
+        val titlename="Organizer Classes"
         val spannableStringtitle  =SpannableString(titlename)
         spannableStringtitle.setSpan(ForegroundColorSpan(Color.parseColor("#021029")),0,9,0)
         spannableStringtitle.setSpan(ForegroundColorSpan(Color.parseColor("#34A671")),9,titlename.length,0)

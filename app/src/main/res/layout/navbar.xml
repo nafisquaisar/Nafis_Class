@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:background="@color/welcome_green"
-        />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            app:navigationIconTint="@android:color/white"
+            app:titleTextAppearance="@style/ToolbarTitleStyle"
+            app:titleTextColor="@android:color/white"
+            android:background="@color/welcome_green" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-  <include layout="@layout/main_content"
-      android:id="@+id/main_content"
-      />
+    <!-- This layout is being included as the main content of your screen -->
+    <include layout="@layout/main_content"
+        android:id="@+id/main_content" />
 
 </LinearLayout>

@@ -5,7 +5,8 @@ data class userDetail(
     var Name:String,
     var Email:String,
     var Number:String,
+    var password:String,
     var course:String,
     var ProUrl:String){
-    constructor():this("","","","","","")
+    constructor():this("","","","","","","")
 }

@@ -10,19 +10,20 @@ import com.example.nafisquaisarcoachingcenter.databinding.ActivityTestHomeBindin
 
 class Test_home_activity : AppCompatActivity() {
     private lateinit var binding: ActivityTestHomeBinding
-    private lateinit var toolbar: Toolbar
     private lateinit var rvAdapter: testCategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityTestHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toolbar= binding.toolbarforActivity.toolbarForAll
 
-        setSupportActionBar(toolbar)
-        if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.title = "TEST SERIES"
+        binding.titleName.text="Test Series"
+        binding.backarrowbtn.setOnClickListener {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()  // Pops the last fragment from the stack
+            } else {
+                finish()  // Closes the activity if no fragments in the back stack
+            }
         }
 
         binding.testRecylerView.layoutManager= LinearLayoutManager(this)

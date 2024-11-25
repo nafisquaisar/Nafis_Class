@@ -1,41 +1,34 @@
 package com.example.nafis.nf.organizetestcenter.Adapter
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.nafis.nf.organizetestcenter.Model.TotalNoTestModel
-import com.example.nafis.nf.organizetestcenter.QuizFragment
-import com.example.nafis.nf.organizetestcenter.R
-import com.example.nafis.nf.organizetestcenter.databinding.NoOfTestModelBinding
+import androidx.recyclerview.widget.ListAdapter
+import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.DiffTotalCallback
+import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.TotalTestItemCallback
+import com.example.nafisquaisarcoachingcenter.Object.TestObject
+import com.example.nafisquaisarcoachingcenter.R
+import com.example.nafisquaisarcoachingcenter.databinding.NoOfTestModelBinding
+import com.example.nafisquaisarcoachingcenter.fragment.QuizFragment
 
-class TotalTestAdapter(val context: Context,val list:ArrayList<TotalNoTestModel>):
-    RecyclerView.Adapter<TotalTestViewHolder>() {
+
+class TotalTestAdapter(val context: Context,val list:ArrayList<TestObject>,var callback: TotalTestItemCallback):ListAdapter<TestObject,TotalTestViewHolder>(DiffTotalCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TotalTestViewHolder {
-        val view=NoOfTestModelBinding.inflate(LayoutInflater.from(context),parent,false)
-        return TotalTestViewHolder(view)
+        val view= NoOfTestModelBinding.inflate(LayoutInflater.from(context),parent,false)
+        return TotalTestViewHolder(view,callback)
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     override fun onBindViewHolder(holder: TotalTestViewHolder, position: Int) {
         val model=list[position]
         holder.bind(model)
-
-        holder.itemView.setOnClickListener{
-
-            val manager=(context as AppCompatActivity).supportFragmentManager
-            val transition=manager.beginTransaction()
-            val Quiz= QuizFragment(model.classname,model.subname,model.chapname,model.id)
-
-            transition.replace(R.id.wrapper,Quiz)
-            transition.addToBackStack("NoOfTestFragmentTag")
-            transition.commit()
-        }
     }
 }

@@ -1,9 +1,11 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +14,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.NoteItemCallback
 import com.example.nafisquaisarcoachingcenter.Object.PYQYear
+import com.example.nafisquaisarcoachingcenter.PYQActivity
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.adapter.NoteAdapter
+import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentNoteBinding
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentPYQViewerBinding
 import com.example.nafisquaisarcoachingcenter.model.NoteModel
@@ -38,6 +42,7 @@ class PYQViewerFragment(var classname:String,var subName:String,var chapterName:
             }
         }
     }
+
     override
     fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,85 +52,74 @@ class PYQViewerFragment(var classname:String,var subName:String,var chapterName:
         binding= FragmentPYQViewerBinding.inflate(inflater,container,false)
         binding.PyqYearRecycler.layoutManager=LinearLayoutManager(requireContext())
         adapter=NoteAdapter(callback = noteItemCallback,"PYQ Adapter")
-
         binding.PyqYearRecycler.adapter=adapter
         list= ArrayList()
         getPYQItem()
+
+        (activity as ClassMainActivity).updateTitle(subName)
+
+
         return binding.root
     }
 
     private fun getPYQItem() {
-        binding.progressbar.visibility=View.VISIBLE
-        if (isAdded) { // Check if the fragment is attached
+        binding.progressbar.visibility = View.VISIBLE
+        Log.d("Firestore", "Path: Class/$classname/Subjects/$subName/Board/$BoardName/PYQ")
+
+        if (isAdded) {
             firestore = FirebaseFirestore.getInstance()
 
             try {
                 firestore.collection("Class")
-                    .document(classname!!)
+                    .document(classname)
                     .collection("Subjects")
-                    .document(subName!!)
+                    .document(subName)
                     .collection("Board")
                     .document(BoardName!!)
-                    .collection("PYQ") // Assuming you have a subcollection of notes
+                    .collection("PYQ")
                     .orderBy("id", Query.Direction.ASCENDING)
-                    .addSnapshotListener { value, error ->
-                        if (error != null) {
-                            if (isAdded) {
-                                Toast.makeText(requireContext(), "Error loading notes: ${error.message}", Toast.LENGTH_LONG).show()
-                            }
-                            return@addSnapshotListener
-                        }
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        binding.progressbar.visibility = View.GONE
 
-                        if (value != null) {
-                            list.clear() // Clear list to avoid duplicates
+                        if (!documents.isEmpty) {
+                            list.clear()
 
-                            for (dc in value.documentChanges) {
-                                when (dc.type) {
-                                    DocumentChange.Type.ADDED -> {
-                                        val note = dc.document.toObject(NoteModel::class.java)
-                                        list.add(note)
-                                    }
-                                    DocumentChange.Type.MODIFIED -> {
-                                        // Handle modified notes if needed
-                                    }
-                                    DocumentChange.Type.REMOVED -> {
-                                        // Handle removed notes if needed
-                                    }
-                                }
+                            for (document in documents) {
+                                val note = document.toObject(NoteModel::class.java)
+                                list.add(note)
                             }
 
                             if (list.isEmpty()) {
-                                if (isAdded) {
-                                    binding.pyqWarning.visibility = View.VISIBLE
-                                    binding.progressbar.visibility=View.GONE
-                                    binding.PyqYearRecycler.visibility = View.GONE
-                                    Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
-                                }
+                                binding.helping.visibility = View.VISIBLE
+                                binding.PyqYearRecycler.visibility = View.GONE
+                                Toast.makeText(requireContext(), "No PYQs found", Toast.LENGTH_SHORT).show()
+                                Log.e("Firestore", "List empty")
                             } else {
-                                if (isAdded) {
-                                    // Update the adapter with the new list
-                                    adapter.submitList(ArrayList(list))
-                                    binding.PyqYearRecycler.visibility = View.VISIBLE
-                                    binding.pyqWarning.visibility = View.GONE
-                                    binding.progressbar.visibility=View.GONE
-                                }
+                                adapter.submitList(ArrayList(list))
+                                binding.PyqYearRecycler.visibility = View.VISIBLE
+                                binding.helping.visibility = View.GONE
                             }
                         } else {
-                            if (isAdded) {
-                                binding.pyqWarning.visibility = View.VISIBLE
-                                binding.PyqYearRecycler.visibility = View.GONE
-                                binding.progressbar.visibility=View.GONE
-                                Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
-                            }
+                            binding.helping.visibility = View.VISIBLE
+                            binding.PyqYearRecycler.visibility = View.GONE
+                            Toast.makeText(requireContext(), "No PYQs found", Toast.LENGTH_SHORT).show()
+                        Log.e("Firestore", "Document empty")
                         }
                     }
+                    .addOnFailureListener { exception ->
+                        binding.progressbar.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Error fetching PYQs: ${exception.message}", Toast.LENGTH_LONG).show()
+                        Log.e("Firestore", "Error fetching PYQs: ${exception.message}")
+                    }
             } catch (e: Exception) {
-                if (isAdded) {
-                    Toast.makeText(requireContext(), "Failed to load notes: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+                binding.progressbar.visibility = View.GONE
+                Toast.makeText(requireContext(), "Error loading PYQs: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("Firestore", "Error loading PYQs: ${e.message}")
             }
         }
     }
+
 
     fun openPdf(pdfUrl: String? ){
         val intent = Intent(Intent.ACTION_VIEW)
@@ -139,5 +133,12 @@ class PYQViewerFragment(var classname:String,var subName:String,var chapterName:
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        BoardName?.let {
+            Log.d("PYQViewerFragment", "Updating title to: $it")
+            (activity as? PYQActivity)?.updateTitle(it)
+        }
+    }
 
 }

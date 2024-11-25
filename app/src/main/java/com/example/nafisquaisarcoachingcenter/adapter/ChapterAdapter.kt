@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.HomeItemBinding
 import com.example.nafisquaisarcoachingcenter.fragment.LectureFragment
+import com.example.nafisquaisarcoachingcenter.fragment.TotalTestFragment
 import com.example.nafisquaisarcoachingcenter.model.ChapterModel
 
-class ChapterAdapter(private val context: Context, val list:ArrayList<ChapterModel>):
+class ChapterAdapter(private val context: Context, val list:ArrayList<ChapterModel>,private var testfrag:String?=""):
     RecyclerView.Adapter<ChapterViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
         val view: HomeItemBinding =
@@ -31,9 +32,16 @@ class ChapterAdapter(private val context: Context, val list:ArrayList<ChapterMod
             var transaction=fm.beginTransaction()
             var lectureFragment=LectureFragment(model.clasname,model.subname,model.chapname)
 
-            transaction.replace(R.id.wrapper,lectureFragment)
-            transaction.addToBackStack("lectureFragment")
-            transaction.commit()
+            if(testfrag?.isNotEmpty() == true){
+                transaction.replace(R.id.wrapper,TotalTestFragment(model.clasname,model.subname,model.chapname))
+                transaction.addToBackStack("totalTestFragment")
+                transaction.commit()
+            }else{
+                transaction.replace(R.id.wrapper,lectureFragment)
+                transaction.addToBackStack("lectureFragment")
+                transaction.commit()
+            }
+
 
         }
 

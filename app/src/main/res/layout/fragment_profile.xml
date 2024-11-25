@@ -56,7 +56,7 @@
                             android:id="@+id/personName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Nafis Quaisar"
+                            android:text="Name"
                             android:textSize="@dimen/_23sdp"
                             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                            android:singleLine="true"
-                        android:text="nafisnafis391@gmail.com"
+                        android:text="email@gmail.com"
                             android:textSize="@dimen/_15sdp" />
 
                     </LinearLayout>
