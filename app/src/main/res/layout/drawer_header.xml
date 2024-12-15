@@ -20,7 +20,7 @@
         android:text="Name"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:textColor="@color/white"
+        android:textColor="@color/defaultwhite"
         />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:textSize="18sp"
-        android:textColor="@color/white"
+        android:textColor="@color/defaultwhite"
         />
 
 </LinearLayout>

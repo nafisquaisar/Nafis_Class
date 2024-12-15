@@ -20,4 +20,45 @@
     <string name="animation_view_desc">Animation\n</string>
     <string name="message_icon">Message Icon</string>
 
+
+    <string name="terms_conditions">
+    <![CDATA[
+        <b>Terms and Conditions</b><br><br>
+        Welcome to Organizer Class App! By using our services, you agree to the following terms and conditions:<br><br>
+
+        <b>1. Acceptance of Terms</b><br>
+        By accessing or using the Organizer Class App, you acknowledge that you have read, understood, and agree to be bound by these terms.<br><br>
+
+        <b>2. Usage of the App</b><br>
+        - You may use this app for personal and educational purposes only.<br>
+        - Any misuse of the app for unlawful purposes is strictly prohibited.<br><br>
+
+        <b>3. User Accounts</b><br>
+        - Users must provide accurate and truthful information when creating an account.<br>
+        - You are responsible for maintaining the confidentiality of your login credentials.<br><br>
+
+        <b>4. Content Ownership</b><br>
+        - All content, including class schedules, assignments, and other materials, remains the intellectual property of Organizer Class App or its contributors.<br>
+        - Users may not reproduce, distribute, or modify content without prior permission.<br><br>
+
+        <b>5. Privacy Policy</b><br>
+        We respect your privacy. Any personal information collected will be handled in accordance with our Privacy Policy.<br><br>
+
+        <b>6. Limitation of Liability</b><br>
+        - The app is provided "as is." We make no guarantees regarding the availability, accuracy, or reliability of the app.<br>
+        - We are not responsible for any loss or damage caused by the use of this app.<br><br>
+
+        <b>7. Termination</b><br>
+        We reserve the right to suspend or terminate access to the app for any user who violates these terms.<br><br>
+
+        <b>8. Modifications to Terms</b><br>
+        Organizer Class App reserves the right to update these terms at any time. Continued use of the app constitutes agreement to the revised terms.<br><br>
+
+        For questions or concerns about these terms, please contact us at support@organizerclass.com.<br><br>
+
+        <b>Effective Date:</b> 1 December 2024
+    ]]>
+</string>
+
+
 </resources>

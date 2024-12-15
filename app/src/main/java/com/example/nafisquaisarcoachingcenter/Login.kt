@@ -3,6 +3,7 @@ package com.example.nafisquaisarcoachingcenter
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.nafisquaisarcoachingcenter.Internet.InternetNotAvailableActivity
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityLoginBinding
 import com.example.nafisquaisarcoachingcenter.databinding.ForgotPassLayoutBinding
+import com.example.nafisquaisarcoachingcenter.model.userDetail
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class Login : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
@@ -195,17 +198,64 @@ class Login : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 dismissAllDialogs()
                 if (task.isSuccessful) {
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val isNewUser = task.result?.additionalUserInfo?.isNewUser
+
+                    if (isNewUser == true) {
+                        // Show a Toast for new users
+                        uploadDetail()
+                        Toast.makeText(this, "Sign-up Successful! Welcome, ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Show a Toast for existing users
+                        Toast.makeText(this, "Login Successful. Welcome back, ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // Navigate to the main dashboard
                     startActivity(Intent(this, Main_dashboard::class.java))
-                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
+                    // Handle login failure
                     Toast.makeText(this, "Firebase Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
+
     override fun onBackPressed() {
         super.onBackPressed()
         dismissAllDialogs() // Dismiss dialogs when back is pressed
+    }
+
+    private fun uploadDetail() {
+        progress.show(this)
+
+        // Get the authenticated user's UID from Firebase Authentication
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (user != null) {
+            // Get Google Sign-In account details
+            val acct = GoogleSignIn.getLastSignedInAccount(this)
+            val gName = acct?.displayName ?: "Unknown"
+            val gEmail = acct?.email ?: "No Email"
+            val gProUrl = acct?.photoUrl ?: Uri.parse("default_url")
+
+            // Save user details in Firebase Realtime Database
+            val db = FirebaseDatabase.getInstance().getReference("Users").child(user)
+            val userDetails = userDetail(user, gName, gEmail, "", "", "", gProUrl.toString())
+            db.setValue(userDetails)
+                .addOnSuccessListener {
+                    progress.hide()
+                    Toast.makeText(this@Login, "Account Created Successfully", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                .addOnFailureListener {
+                    progress.hide()
+                    Toast.makeText(this@Login, "Account Creation Failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+        } else {
+            progress.hide()
+            Toast.makeText(this@Login, "User Not Found", Toast.LENGTH_SHORT).show()
+        }
     }
 }

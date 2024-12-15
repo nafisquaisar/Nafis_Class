@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#FFFFFF"/> <!-- Pure white background -->
+    <solid android:color="@color/white"/> <!-- Pure white background -->
     <corners android:radius="@dimen/_7sdp"/>
     <stroke android:width="1dp" android:color="@color/border_green"/> <!-- Light gray border for visibility -->
 </shape>

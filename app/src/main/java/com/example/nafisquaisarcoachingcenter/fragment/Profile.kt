@@ -15,13 +15,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.nafisquaisarcoachingcenter.AppSettingActivity
 import com.example.nafisquaisarcoachingcenter.DoubtActivity
+import com.example.nafisquaisarcoachingcenter.FeedBack
 import com.example.nafisquaisarcoachingcenter.FrontVIew
 import com.example.nafisquaisarcoachingcenter.HelpAndCare
 import com.example.nafisquaisarcoachingcenter.R
+import com.example.nafisquaisarcoachingcenter.SettingActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentProfileBinding
 import com.example.nafisquaisarcoachingcenter.model.userDetail
-import com.example.nafisquaisarcoachingcenter.progress
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -72,7 +74,12 @@ class Profile : Fragment() {
         binding.llMydoubt.setOnClickListener {
             startActivity(Intent(requireContext(),DoubtActivity::class.java))
         }
-
+        binding.llSetting.setOnClickListener {
+            startActivity(Intent(requireContext(),AppSettingActivity::class.java))
+        }
+        binding.llFeedback.setOnClickListener {
+            startActivity(Intent(requireContext(),FeedBack::class.java))
+        }
         return binding.root
     }
 

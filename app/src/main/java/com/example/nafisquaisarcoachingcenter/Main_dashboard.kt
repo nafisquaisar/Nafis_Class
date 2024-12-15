@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityMainDashboardBinding
+import com.example.nafisquaisarcoachingcenter.fragment.CourseTypeFragment
 import com.example.nafisquaisarcoachingcenter.fragment.Courses
 import com.example.nafisquaisarcoachingcenter.fragment.Home
 import com.example.nafisquaisarcoachingcenter.fragment.Note
@@ -67,7 +68,7 @@ class Main_dashboard : AppCompatActivity() {
         )
 
         // Set the white icon for the toggle
-        toggle.drawerArrowDrawable.color = resources.getColor(R.color.white)
+        toggle.drawerArrowDrawable.color = resources.getColor(R.color.defaultwhite)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -131,7 +132,7 @@ class Main_dashboard : AppCompatActivity() {
                     loadfragment(Home(), 0)
                 }
                  R.id.course-> {
-                    loadfragment(Courses(),1)
+                    loadfragment(CourseTypeFragment(),1)
                 }
 
                 R.id.Note-> {

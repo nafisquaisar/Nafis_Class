@@ -6,7 +6,7 @@
         <shape
             android:shape="rectangle"
             android:useLevel="false">
-            <stroke android:color="@color/welcome_green"
+            <stroke android:color="@color/checkbox"
                 android:width="2dp"
                 />
             <size android:height="18dp" android:width="18dp" />
@@ -23,7 +23,7 @@
             android:shape="rectangle">
 
             <corners android:radius="@dimen/_1sdp"/>
-            <solid android:color="@color/welcome_green"/>
+            <solid android:color="@color/checkbox"/>
         </shape>
     </item>
 

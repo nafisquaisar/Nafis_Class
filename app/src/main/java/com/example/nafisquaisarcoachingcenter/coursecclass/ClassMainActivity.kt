@@ -4,17 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import com.example.nafisquaisarcoachingcenter.PYQActivity
+import com.example.nafis.nf2024.organizeradminpanel.Fragment.CourseClassAndTestFragment
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityClassMainBinding
 import com.example.nafisquaisarcoachingcenter.fragment.SubjectFragment
 
 class ClassMainActivity() : AppCompatActivity() {
          private  lateinit var binding: ActivityClassMainBinding
-
+         private var courseId:String?=null
+         private var courseName:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityClassMainBinding.inflate(LayoutInflater.from(this))
@@ -24,7 +22,9 @@ class ClassMainActivity() : AppCompatActivity() {
         val BoardName = intent.getStringExtra("BoardName")
         val Test = intent.getStringExtra("test")
 
-        binding.titleName.text=className!!
+        courseId=intent.getStringExtra("courseId")
+        courseName=intent.getStringExtra("courseName")
+
         binding.backarrowbtn.setOnClickListener {
             if (supportFragmentManager.backStackEntryCount > 0) {
                 supportFragmentManager.popBackStack()  // Pops the last fragment from the stack
@@ -34,10 +34,28 @@ class ClassMainActivity() : AppCompatActivity() {
         }
 
 
-        // Check if className is not null before proceeding
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.wrapper, SubjectFragment(className,BoardName,Test))
-            .commit()
+        if (courseId != null) {
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.wrapper,
+                    CourseClassAndTestFragment(courseId = courseId!!, courseName = courseName) // Only passing `courseId` when it's not null
+                )
+                .commit()
+        } else {
+            // Proceed with className, BoardName, and Testfragment only when courseId is null
+            binding.titleName.text=className!!
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.wrapper,
+                    SubjectFragment(
+                        className = className,
+                        BoardName = BoardName,
+                        Testfragment = Test
+                    )
+                )
+                .commit()
+        }
+
 
 
     }

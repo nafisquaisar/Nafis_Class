@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/deep_green"
     app:cardCornerRadius="@dimen/_5sdp"
     android:layout_marginBottom="16dp"
     android:layout_height="wrap_content">
@@ -12,13 +11,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
+    android:background="@drawable/pyq_item_bg"
     android:padding="@dimen/_2sdp"
     >
     <ImageView
         android:id="@+id/pdfIcon"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_50sdp"
-        android:src="@drawable/default_video_thumbnail"
+        android:src="@drawable/dummyphoto"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +42,10 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/ChapterName"
+                android:id="@+id/videoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Math Test"
+                android:text=""
                 android:textColor="@color/deep_black"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
@@ -78,19 +78,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/videoTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:25:00"
+                android:text=""
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:textColor="@color/deep_black"
                 android:textSize="@dimen/_12sdp"
                 />
             <TextView
-                android:id="@+id/Date"
+                android:id="@+id/videoDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3 Aug 2024"
+                android:text=""
                 android:layout_marginStart="@dimen/_4sdp"
                 android:textColor="@color/deep_black"
                 android:textSize="@dimen/_12sdp"

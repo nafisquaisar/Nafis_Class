@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFFFC"
+    android:background="@color/white"
     android:scrollbars="none"
     tools:context=".fragment.Home">
 
@@ -16,7 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:paddingBottom="@dimen/_30sdp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <LinearLayout
@@ -76,7 +76,7 @@
                     android:layout_width="82dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-
+                    android:textColor="@color/black"
                     android:text="COURSE"
                     android:textSize="20dp"
                     android:textStyle="bold"
@@ -89,7 +89,7 @@
                 android:id="@+id/recyler_Container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff"
+                android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@id/QuickAcessLayout"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -109,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_margin="10dp"
-                    android:backgroundTint="#E6F8EF"
+                    android:backgroundTint="@color/card_bg_color"
                     app:cardCornerRadius="4dp"
 
                     >
@@ -133,18 +133,19 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
                                 <LinearLayout
                                     android:id="@+id/class10thcard"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/class10th" />
 
@@ -154,6 +155,7 @@
                                         android:layout_marginStart="18dp"
                                         android:text="Class 10"
                                         android:textSize="20dp"
+                                        android:textColor="@color/black"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -166,18 +168,19 @@
                                 android:layout_marginStart="40dp"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
                                 <LinearLayout
                                     android:id="@+id/class9thcard"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/class9" />
 
@@ -187,6 +190,7 @@
                                         android:layout_marginStart="18dp"
                                         android:text="Class 9"
                                         android:textSize="20dp"
+                                        android:textColor="@color/black"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -207,7 +211,6 @@
                                 android:layout_marginRight="20dp"
                                 android:backgroundTint="@color/welcome_green"
                                 android:text="More"
-                                android:textColor="@color/white"
                                 app:cornerRadius="30dp" />
 
                         </LinearLayout>
@@ -242,6 +245,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="QUICK ACCESS"
+                    android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -253,7 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="0dp"
-                android:background="#ffffff"
+                android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -269,7 +273,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_marginBottom="@dimen/_60sdp"
-                    android:backgroundTint="#E6F8EF"
+                    android:backgroundTint="@color/card_bg_color"
                     app:cardCornerRadius="4dp"
 
                     >
@@ -293,7 +297,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
 
                                 <LinearLayout
@@ -301,18 +305,19 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/test_home_icon" />
 
                                     <TextView
                                         android:layout_width="80dp"
                                         android:layout_height="wrap_content"
-
+                                        android:textColor="@color/black"
                                         android:paddingLeft="20dp"
                                         android:text="Test"
                                         android:textSize="20dp"
@@ -328,18 +333,19 @@
                                 android:layout_marginStart="40dp"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
                                 <LinearLayout
                                     android:id="@+id/note_layout_button"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/notes_home_icon" />
 
@@ -349,6 +355,7 @@
                                         android:layout_gravity="center"
                                         android:paddingLeft="20dp"
                                         android:text="Note"
+                                        android:textColor="@color/black"
                                         android:textSize="20dp"
                                         android:textStyle="bold" />
 
@@ -372,7 +379,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
 
                                 <LinearLayout
@@ -380,11 +387,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/pyq_home_icons" />
 
@@ -394,6 +402,7 @@
                                         android:paddingLeft="20dp"
                                         android:text="PYQ"
                                         android:textSize="20dp"
+                                        android:textColor="@color/black"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -406,18 +415,19 @@
                                 android:layout_marginStart="40dp"
                                 android:layout_marginTop="2dp"
                                 android:elevation="70dp"
-                                app:cardCornerRadius="20dp">
+                                app:cardCornerRadius="7dp">
 
                                 <LinearLayout
                                     android:id="@+id/video_home_button"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
+                                    android:background="@color/small_card_bg"
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/video_home_icon" />
 
@@ -428,6 +438,7 @@
                                         android:paddingLeft="17dp"
                                         android:text="Video"
                                         android:textSize="20dp"
+                                        android:textColor="@color/black"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>

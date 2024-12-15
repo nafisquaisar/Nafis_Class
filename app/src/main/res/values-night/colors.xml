@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#1C1B1B</color>
+    <color name="welcome_green">#444444</color>
+    <color name="green_Text">#ffffff</color>
+   <color name="card_bg_color">#444444</color>
+    <color name="small_card_bg">#787878</color>
+    <color name="deep_black">#ffffff</color>
+    <color name="grey">#1C1B1B</color>
+
+
+    <color name="welcome_blue">#FFFFFF</color>
+
+    <color name="selectedIconColor">#04E1F8</color>
+    <color name="defaultIconColor">#F6F6F6</color>
+    <color name="countTextColor">#fff</color>
+    <color name="holo_red_dark">#E32452</color>
+    <color name="border_green">#00552D</color>
+    <color name="checkbox">#34A671</color>
+
+
+    <color name="Excellent">#008476</color>
+    <color name="Outstanding">#2F9287</color>
+    <color name="VeryGood">#579C95</color>
+    <color name="Good">#E65100</color>
+    <color name="Bad">#E53935</color>
+    <color name="secondaryDeepGreen">#C7D2CC</color>
+
+
+</resources>

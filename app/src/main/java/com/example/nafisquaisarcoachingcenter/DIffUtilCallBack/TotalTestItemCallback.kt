@@ -4,4 +4,6 @@ import com.example.nafisquaisarcoachingcenter.Object.TestObject
 
 interface TotalTestItemCallback {
     fun onTotalTestClick(item: TestObject, position:Int)
+    fun onShareTest(item: TestObject)
+
 }

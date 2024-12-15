@@ -1,3 +1,4 @@
+import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -5,16 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.nafisquaisarcoachingcenter.Object.QuizModel
 import com.example.nafisquaisarcoachingcenter.Object.TestObject
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentAnsShowBinding
-import com.example.nafisquaisarcoachingcenter.fragment.QuizFragment
-import com.example.nafisquaisarcoachingcenter.fragment.TotalTestFragment
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.google.firebase.database.*
 
@@ -23,7 +22,8 @@ class AnsShowFragment(
     private var subname: String?,
     private var chap: String?,
     private var id: String,
-    private var selectedOptionsMap: HashMap<Int, Int>
+    private var selectedOptionsMap: HashMap<Int, Int>,
+    var courseId: String?=null
 ) : Fragment() {
 
     private lateinit var binding: FragmentAnsShowBinding
@@ -50,7 +50,7 @@ class AnsShowFragment(
             }
         }
 
-        (activity as? ClassMainActivity)?.updateTitle(chap!!)
+        (activity as? ClassMainActivity)?.updateTitle(clasname!!)
         // Set custom back button behavior
 
 
@@ -61,10 +61,14 @@ class AnsShowFragment(
 
     private fun loadQuestionsFromFirebase() {
         notVisibile()
-        val dbReference = FirebaseDatabase.getInstance().getReference("Class")
-            .child(clasname ?: "")
-            .child(subname ?: "")
-            .child(chap ?: "")
+        val dbReference= if(courseId!=null){
+            FirebaseDatabase.getInstance().getReference("CourseTest").child(courseId!!)
+        }else{
+            FirebaseDatabase.getInstance().getReference("Class")
+                .child(clasname ?: "")
+                .child(subname ?: "")
+                .child(chap ?: "")
+        }
 
         dbReference.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -151,6 +155,9 @@ class AnsShowFragment(
             Glide.with(requireContext())
                 .load(quizModel.imgUrl)
                 .into(binding.questionImg)
+            binding.questionImg.setOnClickListener {
+                showImageDialog(quizModel.imgUrl)
+            }
         }else{
             binding.questionImg.visibility=View.GONE
         }
@@ -221,7 +228,7 @@ class AnsShowFragment(
     private fun resetOptionStyles() {
         val radioButtons = listOf(binding.option1radio, binding.option2radio, binding.option3radio, binding.option4radio)
         radioButtons.forEach {
-            it.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+            it.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             it.isChecked = false
             updateDrawableStart(it, R.drawable.checkboxbg)
         }
@@ -246,5 +253,24 @@ class AnsShowFragment(
         binding.option2radio.isEnabled = true
         binding.option3radio.isEnabled = true
         binding.option4radio.isEnabled = true
+    }
+
+    //===============show Image Dialog Image in full size if we want then click on the photo ==================
+    private fun showImageDialog(QuesImgUrl: String) {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.image_view_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.show()
+
+        // Set the image in the dialog
+        val fullImageView = dialog.findViewById<ImageView>(R.id.fullImageView)
+        Glide.with(requireContext())
+            .load(QuesImgUrl)
+            .placeholder(R.drawable.pyq_icon)
+            .into(fullImageView)
+        // Dismiss the dialog when the image is clicked
+        fullImageView.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 }

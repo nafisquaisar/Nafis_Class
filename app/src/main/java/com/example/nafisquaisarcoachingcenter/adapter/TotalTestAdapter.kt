@@ -1,6 +1,7 @@
 package com.example.nafis.nf.organizetestcenter.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,7 @@ import com.example.nafisquaisarcoachingcenter.fragment.QuizFragment
 class TotalTestAdapter(val context: Context,val list:ArrayList<TestObject>,var callback: TotalTestItemCallback):ListAdapter<TestObject,TotalTestViewHolder>(DiffTotalCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TotalTestViewHolder {
         val view= NoOfTestModelBinding.inflate(LayoutInflater.from(context),parent,false)
-        return TotalTestViewHolder(view,callback)
+        return TotalTestViewHolder(view,callback,context)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -28,7 +29,12 @@ class TotalTestAdapter(val context: Context,val list:ArrayList<TestObject>,var c
     }
 
     override fun onBindViewHolder(holder: TotalTestViewHolder, position: Int) {
-        val model=list[position]
-        holder.bind(model)
+        if (list.isNotEmpty() && position < list.size) {
+            val model = list[position]
+            holder.bind(model)
+        } else {
+            Log.e("TotalTestAdapter", "List is empty or position is out of bounds: position=$position, listSize=${list.size}")
+        }
     }
+
 }

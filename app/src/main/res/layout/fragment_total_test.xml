@@ -27,7 +27,7 @@
             android:gravity="center"
             android:textSize="34sp"
             android:letterSpacing="0.1"
-            android:textColor="@color/white"
+            android:textColor="@color/defaultwhite"
             android:textStyle="bold"/>
 
         <TextView
@@ -36,7 +36,7 @@
             android:text="Organize your thoughts, challenge your mind, and grow your knowledge with this exciting quiz!"            android:gravity="center"
             android:textSize="18sp"
             android:layout_margin="16dp"
-            android:textColor="@color/white"
+            android:textColor="@color/defaultwhite"
             android:textStyle="bold"/>
 
 

@@ -23,11 +23,11 @@ class VideoViewHolder(val binding: VideoItemBinding, val callback: VideoItemCall
 
     fun bind(item: VideoModel) {
         val videoId = extractYouTubeId(item.videoUrl ?: "")
-        val apiKey = "AIzaSyC1jpxSu28Q4mTOJZ2SvjeGSF1JD42PU38"  // Replace with your API key
+        val apiKey = "AIzaSyC1jpxSu28Q4mTOJZ2SvjeGSF1JD42PU38"
         binding.apply {
-            ChapterName.text = item.title
-            ChapterName.isSelected = true
-            Date.text = item.date.toString()
+            videoTitle.text = item.title
+            videoDate.isSelected = true
+            videoTime.text = item.date.toString()
 
             if (videoId != null) {
                 // Load YouTube video thumbnail using Glide
@@ -37,12 +37,12 @@ class VideoViewHolder(val binding: VideoItemBinding, val callback: VideoItemCall
 
                 // Fetch YouTube video duration
                 getYouTubeVideoTime(videoId, apiKey) { duration ->
-                    time.text = duration
+                    videoTime.text = duration
                 }
             } else {
                 // Fallback thumbnail
                 pdfIcon.setImageResource(R.drawable.default_video_thumbnail)
-                time.text = "Unknown"
+                videoTime.text = "Unknown"
             }
 
             itemView.setOnClickListener {

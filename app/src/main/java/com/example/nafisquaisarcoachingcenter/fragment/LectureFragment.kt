@@ -1,10 +1,12 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.example.nafisquaisarcoachingcenter.adapter.ViewPagerAdapter
 import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
@@ -12,7 +14,15 @@ import com.example.nafisquaisarcoachingcenter.databinding.FragmentLectureBinding
 import com.google.android.material.tabs.TabLayout
 
 
-class LectureFragment(var classname: String?, var subname: String?, var chapname: String?) : Fragment() {
+class LectureFragment(
+    var classname: String?="",
+    var subname: String?="",
+    var chapname: String?="",
+    var courseId: String?=null,
+    var subjectId: String?=null,
+    var chapterId: String?=null,
+    var courseChapterName: String?=null
+) : Fragment() {
    private lateinit var binding: FragmentLectureBinding
    private lateinit var viewPager2: ViewPager2
    private lateinit var tabLayout: TabLayout
@@ -23,17 +33,25 @@ class LectureFragment(var classname: String?, var subname: String?, var chapname
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentLectureBinding.inflate(inflater,container,false)
-
         // =========Initialize ViewPager2 and TabLayout=========
         viewPager2 = binding.lectureContainer
         tabLayout = binding.tablayout
 
         // ============set adapter for viewpager2============
         val fragmentManager = childFragmentManager
-        adapter = ViewPagerAdapter(fragmentManager, lifecycle,classname,subname,chapname)
+
+
+        if(courseId!=null && subjectId!=null && chapterId!=null && courseChapterName!=null){
+            adapter = ViewPagerAdapter(fragmentmanager = fragmentManager, lifecycle=lifecycle,courseId=courseId, subjectId = subjectId, chapterId = chapterId, courseChapterName = courseChapterName)
+            (activity as ClassMainActivity).updateTitle(courseChapterName.toString())
+
+        }else{
+            adapter = ViewPagerAdapter(fragmentmanager =  fragmentManager,lifecycle= lifecycle, classname = classname, subName = subname, chapterName  = chapname)
+            (activity as ClassMainActivity).updateTitle(chapname.toString())
+        }
         viewPager2.adapter = adapter
 
-        (activity as ClassMainActivity).updateTitle(chapname.toString())
+
 
         //=========set tab=====================
         tabLayout.addTab(tabLayout.newTab().setText("Video"))

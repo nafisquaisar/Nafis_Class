@@ -9,29 +9,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.CourseVideoCallback
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.VideoItemCallback
+import com.example.nafisquaisarcoachingcenter.adapter.CourseVideoAdapter
 import com.example.nafisquaisarcoachingcenter.adapter.VideoAdapter
 import com.example.nafisquaisarcoachingcenter.coursecclass.VideoViewActivity
 
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentVideoViewBinding
+import com.example.nafisquaisarcoachingcenter.model.Video
 import com.example.nafisquaisarcoachingcenter.model.VideoModel
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.firestore
 
 
-class VideoFragmentView( var classname:String?,var subName:String?,var chapterName:String?) : Fragment() {
+class VideoFragmentView(
+    var classname:String?="",var subName:String?="",var chapterName:String?="",
+    var courseId: String?=null,
+    var subjectId: String?=null,
+    var chapterId: String?=null,
+    var courseChapterName: String?=null
+    ) : Fragment() {
     
     private lateinit var binding: FragmentVideoViewBinding
     private lateinit var adapter: VideoAdapter
     private lateinit var list: ArrayList<VideoModel>
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var courseVideoList :ArrayList<Video>
+    private lateinit var courseVideoAdapter: CourseVideoAdapter
+
 
     // Lazy initialization of the callback for note item clicks
     private val videoItemCallback by lazy {
         object  :VideoItemCallback{
             override fun onNoteClick(item: VideoModel, position: Int) {
-                Toast.makeText(requireContext(), "Note name is ${item.des}", Toast.LENGTH_SHORT).show()
                 var intent= Intent(requireContext(),VideoViewActivity::class.java)
                 intent.putExtra("VideoUrl",item.videoUrl)
                 intent.putExtra("ChapterName",item.chapname)
@@ -41,6 +54,20 @@ class VideoFragmentView( var classname:String?,var subName:String?,var chapterNa
             }
         }
     }
+
+    private val courseVideoCallback by lazy {
+        object : CourseVideoCallback{
+            override fun onVideoClick(item: Video) {
+                var intent= Intent(requireContext(),VideoViewActivity::class.java)
+                intent.putExtra("VideoUrl",item.videoUrl)
+                intent.putExtra("ChapterName",courseChapterName)
+                intent.putExtra("TitleName",item.videoTitle)
+                intent.putExtra("Des",item.des)
+                startActivity(intent)
+            }
+
+        }
+    }
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +75,64 @@ class VideoFragmentView( var classname:String?,var subName:String?,var chapterNa
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentVideoViewBinding.inflate(inflater,container,false)
-        adapter = VideoAdapter(videoItemCallback) // Initialize adapter with proper constructor or parameters
-        binding.videoRecylerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.videoRecylerView.adapter = adapter
-        list= ArrayList()
-        getVideoItem() // Fetch data
+
+
+
+
+        if(courseId!=null && subjectId!=null && chapterId!=null && courseChapterName!=null) {
+            courseVideoList= ArrayList()
+            courseVideoAdapter=CourseVideoAdapter(requireContext(),courseVideoCallback,courseVideoList)
+            binding.videoRecylerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.videoRecylerView.adapter = courseVideoAdapter
+            fetchVideo()
+
+        }else{
+            adapter = VideoAdapter(videoItemCallback) // Initialize adapter with proper constructor or parameters
+            binding.videoRecylerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.videoRecylerView.adapter = adapter
+            list= ArrayList()
+            getVideoItem() // Fetch data
+        }
+
+
         return binding.root
+
+    }
+
+    private fun fetchVideo() {
+        binding.progressbar.visibility=View.VISIBLE
+        val db= Firebase.firestore
+        courseVideoList.clear()
+        db.collection("courses")
+            .document(courseId!!)
+            .collection("subjects")
+            .document(subjectId!!)
+            .collection("Chapters")
+            .document(chapterId!!)
+            .collection("Videos")
+            .get()
+            .addOnSuccessListener {Videos->
+                for (vid in Videos){
+                    val video=vid.toObject(Video::class.java)
+                    courseVideoList.add(video)
+                }
+
+                if(courseVideoList.isEmpty()){
+                    binding.progressbar.visibility = View.GONE
+                    binding.helping.visibility=View.VISIBLE
+                } else {
+                    courseVideoAdapter.submitList(courseVideoList)
+                    courseVideoAdapter.notifyDataSetChanged()
+                    binding.progressbar.visibility = View.GONE
+                    binding.helping.visibility=View.GONE
+                }
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to fetch Video: ${it.message}", Toast.LENGTH_SHORT).show()
+                binding.progressbar.visibility = View.GONE
+                binding.helping.visibility=View.VISIBLE
+            }
 
     }
 
@@ -125,7 +204,6 @@ class VideoFragmentView( var classname:String?,var subName:String?,var chapterNa
                                     binding.helping.visibility = View.VISIBLE
                                     binding.progressbar.visibility=View.GONE
                                     binding.videoRecylerView.visibility = View.GONE
-                                    Toast.makeText(requireContext(), "No Video found", Toast.LENGTH_SHORT).show()
                                 }
                             } else {
                                 if (isAdded) {
@@ -141,13 +219,14 @@ class VideoFragmentView( var classname:String?,var subName:String?,var chapterNa
                                 binding.helping.visibility = View.VISIBLE
                                 binding.videoRecylerView.visibility = View.GONE
                                 binding.progressbar.visibility=View.GONE
-                                Toast.makeText(requireContext(), "No Video found", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
             } catch (e: Exception) {
                 if (isAdded) {
                     Toast.makeText(requireContext(), "Failed to load notes: ${e.message}", Toast.LENGTH_SHORT).show()
+                    binding.helping.visibility = View.VISIBLE
+                    binding.progressbar.visibility=View.GONE
                 }
             }
         }

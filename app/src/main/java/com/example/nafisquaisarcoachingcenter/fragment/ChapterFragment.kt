@@ -1,21 +1,52 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nafis.nf2024.organizeradminpanel.DiffutilCallBack.ChapterCallback
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.adapter.ChapterAdapter
+import com.example.nafisquaisarcoachingcenter.adapter.CourseChapterAdapter
 import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentChapterBinding
+import com.example.nafisquaisarcoachingcenter.model.Chapter
 import com.example.nafisquaisarcoachingcenter.model.ChapterModel
+import com.google.firebase.firestore.FirebaseFirestore
 
-class ChapterFragment (private val subject: String?, private val clas:String? ,private var testfrag:String?="") : Fragment() {
+class ChapterFragment (
+    private val subject: String?="",
+    private val clas:String?="" ,
+    private var testfrag:String?="",
+    private var courseId:String?=null,
+    private var subjectId:String?=null,
+    private var subjectName:String?=null
+) : Fragment() {
     private lateinit var binding: FragmentChapterBinding
     private lateinit var list:ArrayList<ChapterModel>
     private lateinit var adapter: ChapterAdapter
+    private var db = FirebaseFirestore.getInstance()
+    private lateinit var chapterList:ArrayList<Chapter>
+    private lateinit var courseChapAdapter:CourseChapterAdapter
+
+    private val callback by lazy {
+        object: ChapterCallback {
+            override fun onChapterClick(item: Chapter) {
+                var fm=(context as AppCompatActivity).supportFragmentManager
+                var transaction=fm.beginTransaction()
+                var lectureFragment=LectureFragment(courseId =courseId, subjectId = subjectId, chapterId = item.chapId, courseChapterName = item.chapName)
+                transaction.replace(R.id.wrapper,lectureFragment)
+                transaction.addToBackStack("lectureFragment")
+                transaction.commit()
+            }
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,12 +54,56 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
         // Inflate the layout for this fragment
 
         binding= FragmentChapterBinding.inflate(inflater,container,false)
-        (activity as ClassMainActivity).updateTitle(subject.toString())
 
 
-        LoadData()
+        courseId?.let { Log.d("courseId", it) }
+        subjectId?.let { Log.d("subjectId", it) }
+
+       if(courseId!=null && subjectId!=null){
+           subjectName?.let { (activity as ClassMainActivity).updateTitle(it) }
+           chapterList= ArrayList()
+           binding.chapterRecyclerview.layoutManager=LinearLayoutManager(requireContext())
+           courseChapAdapter=CourseChapterAdapter(requireContext(),callback,chapterList)
+           binding.chapterRecyclerview.adapter=courseChapAdapter
+           fetchChapters()
+
+       }else{
+           (activity as ClassMainActivity).updateTitle(subject.toString())
+           LoadData()
+       }
 
         return binding.root
+    }
+
+    private fun fetchChapters() {
+        binding.progressbar.visibility = View.VISIBLE
+        chapterList.clear()
+        db.collection("courses")
+            .document(courseId!!)
+            .collection("subjects")
+            .document(subjectId!!)
+            .collection("Chapters")
+            .get()
+            .addOnSuccessListener {Chapters->
+                for(chap in Chapters){
+                    val chapter=chap.toObject(Chapter::class.java)
+                    chapterList.add(chapter)
+                }
+                if (chapterList.isEmpty()) {
+                    binding.helping.visibility=View.VISIBLE
+                } else {
+                    courseChapAdapter.submitList(chapterList)
+                    courseChapAdapter.notifyDataSetChanged()
+                    binding.helping.visibility=View.GONE
+                }
+                binding.progressbar.visibility = View.GONE
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to fetch Subject: ${it.message}", Toast.LENGTH_SHORT).show()
+                binding.progressbar.visibility = View.GONE
+                binding.helping.visibility=View.VISIBLE
+            }
+
     }
 
     private fun LoadData() {
@@ -442,7 +517,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 12" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -501,7 +576,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 11" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -577,7 +652,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 10" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -638,7 +713,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 9" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -727,7 +802,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 8" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -782,7 +857,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 7" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -864,7 +939,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 6" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -930,7 +1005,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 5" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -978,7 +1053,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 4" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -1026,7 +1101,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 3" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -1067,7 +1142,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     "Class 2" -> {
                         list.add(
                             ChapterModel(
-                                "All Chapters",
+                                "All Chapter",
                                 "Improve Your Ability",
                                 clas,
                                 subject
@@ -1105,7 +1180,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                     }
 
                     "Class 1" -> {
-                        list.add(ChapterModel("All Chapters", "Improve Your Ability", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Improve Your Ability", clas, subject))
                         list.add(ChapterModel("Numbers", "Learn Counting", clas, subject))
                         list.add(ChapterModel("Addition", "Basic Addition Skills", clas, subject))
                         list.add(ChapterModel("Subtraction", "Basic Subtraction Skills", clas, subject))
@@ -1281,8 +1356,44 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
 
             "Science" -> {
                 when (clas) {
+                    "Class 10" -> {
+                        list.add(ChapterModel("All Chapter", "Sharpen your skills", clas, subject))
+                        list.add(ChapterModel("Chemical Reactions", "Transformations in chemistry", clas, subject))
+                        list.add(ChapterModel("Acids and Bases", "Discover their nature", clas, subject))
+                        list.add(ChapterModel("Metals and Non-metals", "Explore their properties", clas, subject))
+                        list.add(ChapterModel("Carbon Compounds", "Organic chemistry basics", clas, subject))
+                        list.add(ChapterModel("Periodic Table", "Organizing elements", clas, subject))
+                        list.add(ChapterModel("Life Processes", "Understand vital functions", clas, subject))
+                        list.add(ChapterModel("Control & Coordination", "Nervous and hormonal systems", clas, subject))
+                        list.add(ChapterModel("Reproduction", "Reproduction in detail", clas, subject))
+                        list.add(ChapterModel("Heredity & Evolution", "Genetics and change over time", clas, subject))
+                        list.add(ChapterModel("Light", "Reflection and refraction", clas, subject))
+                        list.add(ChapterModel("Human Eye", "Vision and dispersion", clas, subject))
+                        list.add(ChapterModel("Electricity", "Flow of charges", clas, subject))
+                        list.add(ChapterModel("Magnetic Effects", "Electromagnetic concepts", clas, subject))
+                        list.add(ChapterModel("Energy Sources", "Renewable and non-renewable", clas, subject))
+                    }
+
+                    "Class 9" -> {
+                        list.add(ChapterModel("All Chapter", "Sharpen your skills", clas, subject))
+                        list.add(ChapterModel("Matter", "Understand physical states", clas, subject))
+                        list.add(ChapterModel("Atoms", "Basic building blocks", clas, subject))
+                        list.add(ChapterModel("Atomic Structure", "Discover atomic models", clas, subject))
+                        list.add(ChapterModel("Cell", "Explore cells", clas, subject))
+                        list.add(ChapterModel("Tissues", "Different cell groups", clas, subject))
+                        list.add(ChapterModel("Diversity", "Variety of life forms", clas, subject))
+                        list.add(ChapterModel("Motion", "Study of movement", clas, subject))
+                        list.add(ChapterModel("Force", "Physics in action", clas, subject))
+                        list.add(ChapterModel("Gravitation", "Universal force", clas, subject))
+                        list.add(ChapterModel("Work & Energy", "Concepts of physics", clas, subject))
+                        list.add(ChapterModel("Sound", "Waves, vibrations, and energy", clas, subject))
+                        list.add(ChapterModel("Health", "Learn about diseases", clas, subject))
+                        list.add(ChapterModel("Resources", "Earth's treasures", clas, subject))
+                    }
+
+
                     "Class 8" -> {
-                        list.add(ChapterModel("All Chapters", "Sharpen your skills", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Sharpen your skills", clas, subject))
                         list.add(ChapterModel("Crop Production", "Modern farming techniques", clas, subject))
                         list.add(ChapterModel("Microorganisms", "Explore tiny life forms", clas, subject))
                         list.add(ChapterModel("Fibers & Plastics", "Everyday materials explained", clas, subject))
@@ -1293,7 +1404,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Sound", "Waves, vibrations, and energy", clas, subject))
                     }
                     "Class 7" -> {
-                        list.add(ChapterModel("All Chapters", "Boost your learning", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Boost your learning", clas, subject))
                         list.add(ChapterModel("Plant Nutrition", "How plants nourish themselves", clas, subject))
                         list.add(ChapterModel("Animal Nutrition", "Feeding for survival", clas, subject))
                         list.add(ChapterModel("Fiber to Fabric", "Journey from threads", clas, subject))
@@ -1304,7 +1415,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Motion & Time", "Speed and its measure", clas, subject))
                     }
                     "Class 6" -> {
-                        list.add(ChapterModel("All Chapters", "Kickstart your science journey", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Kickstart your science journey", clas, subject))
                         list.add(ChapterModel("Food Source", "Where our meals begin", clas, subject))
                         list.add(ChapterModel("Food Components", "What meals are made of", clas, subject))
                         list.add(ChapterModel("Separation", "Purify with techniques", clas, subject))
@@ -1315,7 +1426,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Electricity", "Powering our lives", clas, subject))
                     }
                     "Class 5" -> {
-                        list.add(ChapterModel("All Chapters", "Explore science basics", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Explore science basics", clas, subject))
                         list.add(ChapterModel("Living Things", "Plants and animals", clas, subject))
                         list.add(ChapterModel("Plant Parts", "Understanding the structure", clas, subject))
                         list.add(ChapterModel("Animal Homes", "Habitats and shelters", clas, subject))
@@ -1326,7 +1437,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Force & Energy", "Understanding power", clas, subject))
                     }
                     "Class 4" -> {
-                        list.add(ChapterModel("All Chapters", "Begin your science adventure", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Begin your science adventure", clas, subject))
                         list.add(ChapterModel("Plants Around Us", "Nature's green wonder", clas, subject))
                         list.add(ChapterModel("Animals Around Us", "Diverse creatures", clas, subject))
                         list.add(ChapterModel("Water Cycle", "Nature's recycling", clas, subject))
@@ -1337,7 +1448,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Simple Machines", "Everyday tools explained", clas, subject))
                     }
                     "Class 3" -> {
-                        list.add(ChapterModel("All Chapters", "Start exploring science", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Start exploring science", clas, subject))
                         list.add(ChapterModel("Living & Non-Living", "Understanding life", clas, subject))
                         list.add(ChapterModel("Plants & Trees", "Life forms around us", clas, subject))
                         list.add(ChapterModel("Animals & Insects", "Diversity of life", clas, subject))
@@ -1348,7 +1459,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Forces Around Us", "Exploring force", clas, subject))
                     }
                     "Class 2" -> {
-                        list.add(ChapterModel("All Chapters", "Science for young minds", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Science for young minds", clas, subject))
                         list.add(ChapterModel("Our Body", "Basic parts and senses", clas, subject))
                         list.add(ChapterModel("Plants & Animals", "Understanding life forms", clas, subject))
                         list.add(ChapterModel("Weather & Seasons", "Nature’s patterns", clas, subject))
@@ -1359,7 +1470,7 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Simple Experiments", "Hands-on learning", clas, subject))
                     }
                     "Class 1" -> {
-                        list.add(ChapterModel("All Chapters", "Fun with science", clas, subject))
+                        list.add(ChapterModel("All Chapter", "Fun with science", clas, subject))
                         list.add(ChapterModel("My Body", "Simple body parts", clas, subject))
                         list.add(ChapterModel("Plants & Trees", "Life around us", clas, subject))
                         list.add(ChapterModel("Animals & Birds", "Understanding animals", clas, subject))
@@ -1370,6 +1481,39 @@ class ChapterFragment (private val subject: String?, private val clas:String? ,p
                         list.add(ChapterModel("Simple Machines", "Tools we use", clas, subject))
                     }
                 }
+            }
+
+            "Urdu"->{
+               when(clas){
+                   "Class 9" -> {
+                       list.add(ChapterModel("All Chapter", "اپنی اردو مہارت کو بہتر بنائیں", clas, subject))
+                       list.add(ChapterModel("قاضی کی کہانی", "دانائی اور انصاف کی کہانی", clas, subject))
+                       list.add(ChapterModel("شہیدوں کی دنیا", "شہداء سے حوصلہ افزائی", clas, subject))
+                       list.add(ChapterModel("مٹی کی محبت", "اپنی زمین سے تعلق", clas, subject))
+                       list.add(ChapterModel("خدا کی کرشمہ", "زندگی میں الہی برکتیں", clas, subject))
+                       list.add(ChapterModel("نظامِ طبیعت", "فطرت کے نظام کو سمجھنا", clas, subject))
+                       list.add(ChapterModel("علم کی برکت", "علم اور سیکھنے کی اہمیت", clas, subject))
+                       list.add(ChapterModel("حمد", "اللہ کی تعریف", clas, subject))
+                       list.add(ChapterModel("نعت", "نبی کی شان میں اشعار", clas, subject))
+                       list.add(ChapterModel("غزل", "روایتی اردو شاعری", clas, subject))
+                       list.add(ChapterModel("نظم", "قومی اور اخلاقی موضوعات", clas, subject))
+                   }
+                   "Class 10" -> {
+                       list.add(ChapterModel("All Chapter", "اپنی اردو مہارت کو بہتر بنائیں", clas, subject))
+                       list.add(ChapterModel("تہذیب اور تعمیر", "ثقافت سے معاشرے کی ترقی", clas, subject))
+                       list.add(ChapterModel("سوانح سر سید", "سر سید احمد خان کی زندگی", clas, subject))
+                       list.add(ChapterModel("مضامین اور رسائل", "مشہور اردو مصنفین کے مضامین", clas, subject))
+                       list.add(ChapterModel("سائنس اور اسلام", "اسلام میں سائنسی تعلیم کی اہمیت", clas, subject))
+                       list.add(ChapterModel("زبان اور تعلیم", "تعلیم میں اردو کا کردار", clas, subject))
+                       list.add(ChapterModel("تصورِ حیات", "زندگی کے فلسفے پر روشنی", clas, subject))
+                       list.add(ChapterModel("مرثیہ", "قربانی اور غم کے موضوع پر", clas, subject))
+                       list.add(ChapterModel("نظم", "سماجی اصلاح اور حب الوطنی پر اشعار", clas, subject))
+                       list.add(ChapterModel("غزل", "علامہ اقبال اور دیگر شعرا کے کلام", clas, subject))
+                       list.add(ChapterModel("رباعیات", "اخلاقی اور روحانی سبق", clas, subject))
+                   }
+
+               }
+
             }
 
         }

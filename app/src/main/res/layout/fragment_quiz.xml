@@ -71,7 +71,7 @@
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:layout_weight="2"
                         android:text="Electricity"
-                        android:textColor="@color/welcome_green"
+                        android:textColor="@color/green_Text"
                         android:textSize="@dimen/_20sdp"
                         android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bggreen1"
                         android:text="Submit"
-                        android:textColor="@color/white"
+                        android:textColor="@color/defaultwhite"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -149,17 +149,16 @@
                    android:background="@drawable/bggreen1"
                    android:padding="@dimen/_10sdp"
                    android:text="Q1. Which of the following materials is a good conductor of electricity?"
-                   android:textColor="@color/white"
+                   android:textColor="@color/defaultwhite"
                    android:textSize="@dimen/_16sdp" />
                <ImageView
                    android:id="@+id/question_img"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
+                   android:layout_width="@dimen/_150sdp"
+                   android:layout_height="@dimen/_100sdp"
                    android:layout_gravity="center"
-                   android:visibility="gone"
                    android:layout_marginHorizontal="@dimen/_20sdp"
                    android:src="@drawable/question_img2"
-
+                   android:visibility="gone"
                    />
            </LinearLayout>
 
@@ -241,7 +240,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bggreen1"
                     android:text="Previous"
-                    android:textColor="@color/white"
+                    android:textColor="@color/defaultwhite"
                     android:textSize="@dimen/_16sdp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -252,7 +251,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bggreen1"
                     android:text="Next/Skip"
-                    android:textColor="@color/white"
+                    android:textColor="@color/defaultwhite"
                     android:textSize="@dimen/_16sdp" />
             </LinearLayout>
 

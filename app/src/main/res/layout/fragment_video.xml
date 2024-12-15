@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     android:scrollbars="none"
     tools:context=".fragment.Video">
 
@@ -26,6 +26,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/search_bar_bg"
                 app:iconifiedByDefault="false"
+                android:textAppearance="@color/black"
                 app:queryHint="Search Here..." />
 
             <LinearLayout
@@ -64,7 +65,7 @@
                     android:id="@+id/Course_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff" />
+                    android:background="#00000000" />
 
 
             </LinearLayout>

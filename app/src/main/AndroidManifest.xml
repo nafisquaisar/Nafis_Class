@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,6 +18,21 @@
         android:theme="@style/Base.Theme.NafisCoachingCenter"
         tools:targetApi="31">
         <activity
+            android:name=".FeedBack"
+            android:exported="false" />
+        <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
+            android:name=".AppSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TermsAndConditionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DoubtActivity"
             android:exported="false" />
         <activity
@@ -26,7 +42,7 @@
             android:name=".Internet.InternetNotAvailableActivity"
             android:exported="false" />
         <activity
-            android:name=".coursecclass.ChatActivity"
+            android:name=".coursecclass.CourseOpenActivity"
             android:exported="false" />
         <activity
             android:name=".coursecclass.VideoViewActivity"
@@ -36,11 +52,27 @@
         <activity
             android:name=".coursecclass.PDFViewerActivity"
             android:exported="false" />
+
+
         <activity
             android:name=".coursecclass.ClassMainActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_class_main"
-            android:theme="@style/Theme.NafisCoachingCenter" />
+            android:theme="@style/Theme.NafisCoachingCenter">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="organizerclasses.netlify.app" />
+                <data android:pathPrefix="/share/test" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".Test_home_activity"
             android:exported="false" />
@@ -50,24 +82,7 @@
         <activity
             android:name=".Video_Home_Activity"
             android:exported="false" />
-        <activity
-            android:name=".coursecclass.class5th"
-            android:exported="false" />
-        <activity
-            android:name=".coursecclass.class6th"
-            android:exported="false" />
-        <activity
-            android:name=".coursecclass.class7th"
-            android:exported="false" />
-        <activity
-            android:name=".coursecclass.class8th"
-            android:exported="false" />
-        <activity
-            android:name=".coursecclass.class9th"
-            android:exported="false" />
-        <activity
-            android:name=".coursecclass.class10th"
-            android:exported="false" />
+
         <activity
             android:name=".PYQActivity"
             android:exported="false" />

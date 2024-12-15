@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Math Test"
-                android:textColor="@color/welcome_green"
+                android:textColor="@color/green_Text"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
                 android:ellipsize="marquee"
@@ -67,7 +67,7 @@
             app:layout_constraintHorizontal_bias="0.916"
             app:layout_constraintStart_toEndOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/welcome_green" />
+            app:tint="@color/green_Text" />
 
     </LinearLayout>
 

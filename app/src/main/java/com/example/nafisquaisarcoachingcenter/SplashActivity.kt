@@ -25,18 +25,32 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val welcometext="Welcome"
-        val spannableString=SpannableString(welcometext)
-        spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#34A671")),0,3,0)
-        spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#021029")),3,welcometext.length,0)
-        binding.welcome.text=spannableString
+        val welcomeText="Welcome"
+        // Set welcome text with colors
+        val spannableString = SpannableString(welcomeText)
+        spannableString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.green_Text, theme)),
+            0, 3, 0
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.black, theme)),
+            3, welcomeText.length, 0
+        )
+        binding.welcome.text = spannableString
 
 
-        val titlename="Organizer Classes"
-        val spannableStringtitle  =SpannableString(titlename)
-        spannableStringtitle.setSpan(ForegroundColorSpan(Color.parseColor("#021029")),0,9,0)
-        spannableStringtitle.setSpan(ForegroundColorSpan(Color.parseColor("#34A671")),9,titlename.length,0)
-        binding.coachingTitle.text=spannableStringtitle
+        val titleName="Organizer Classes"
+        val spannableStringTitle = SpannableString(titleName).apply {
+            setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.black)),
+                0, 9, 0
+            )
+            setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.green_Text)),
+                9, titleName.length, 0
+            )
+        }
+        binding.coachingTitle.text = spannableStringTitle
 
 
         val animation=AnimationUtils.loadAnimation(this,R.anim.splashanim)

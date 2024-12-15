@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_20sdp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- TextView on the left -->
+                <TextView
+                    android:id="@+id/positionId"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="1"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_7sdp" />
+
+                <!-- ImageView on the right -->
+                <ImageView
+                    android:id="@+id/moreOption"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/more"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                     />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/stud_ques_img"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/math_home_slider"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/stud_ques_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_20sdp"
+                />
+
+            <TextView
+                android:id="@+id/stud_ques_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_16sdp"
+                />
+            <ImageView
+                android:id="@+id/solution_down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/down_arrow"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/llSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginVertical="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:src="@drawable/line"
+                />
+
+            <TextView
+                android:id="@+id/solution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solution"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_14sdp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/teach_ans_img"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/math_home_slider"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/teach_ans_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_16sdp"
+                />
+            <TextView
+                android:id="@+id/warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload solution quickly,\n check back soon"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_16sdp"
+                />
+
+            <ImageView
+                android:id="@+id/sol_up_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/up_arrow"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

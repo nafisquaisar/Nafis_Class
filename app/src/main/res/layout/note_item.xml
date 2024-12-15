@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/deep_green"
     app:cardCornerRadius="@dimen/_5sdp"
     android:layout_marginBottom="16dp"
 
@@ -13,6 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/pyq_item_bg"
     android:padding="@dimen/_5sdp"
     >
     <ImageView
@@ -22,7 +22,8 @@
         android:src="@drawable/pdf_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,7 +41,7 @@
             android:id="@+id/ChapterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Math Test"
+            android:text=""
             android:textColor="@color/deep_black"
             android:singleLine="true"
             android:ellipsize="marquee"
@@ -55,7 +56,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Math Test"
+            android:text=""
             android:textColor="@color/deep_black"
             android:textSize="@dimen/_15sdp" />
     </LinearLayout>

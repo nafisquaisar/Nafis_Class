@@ -1,11 +1,14 @@
 package com.example.nafisquaisarcoachingcenter.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -19,7 +22,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class QuizFragment(private val clasname: String?, private val subname: String?, private val chap: String?, private val id: String) : Fragment() {
+class QuizFragment(private val clasname: String?,
+                   private val subname: String?
+                   , private val chap: String?,
+                   private val id: String,
+                   private val courseId :String?=null
+    ) : Fragment() {
    private lateinit var binding: FragmentQuizBinding
     private var list = ArrayList<QuizModel>()
     private var totalQes = 0
@@ -30,6 +38,7 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
     private var totalTimeInMillis: Long = 60 * 1000 // 60 seconds for demo; adjust as needed
     private val selectedOptionsMap = HashMap<Int, Int>() // Store selected options
     private val correctAnswersMap = HashMap<Int, Boolean>() // Store correctness of each answer
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +46,7 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
         // Inflate the layout for this fragment
         binding=FragmentQuizBinding.inflate(inflater,container,false)
 
+        Log.d("testId",id)
         (activity as ClassMainActivity).updateTitle(clasname.toString())
 
         loadDataFromFirebase()
@@ -51,10 +61,15 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
         notVisibile()
         list = ArrayList()
         try {
-            val dbReference = FirebaseDatabase.getInstance().getReference("Class")
-                .child(clasname ?: "")
-                .child(subname ?: "")
-                .child(chap ?: "")
+
+            val dbReference= if(courseId!=null){
+                FirebaseDatabase.getInstance().getReference("CourseTest").child(courseId!!)
+           }else{
+                 FirebaseDatabase.getInstance().getReference("Class")
+                   .child(clasname ?: "")
+                   .child(subname ?: "")
+                   .child(chap ?: "")
+           }
 
             dbReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -141,23 +156,63 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
         binding.questionSubmitbtn.setOnClickListener {
             saveSelectedOption()
             calculateScore()
-            // Navigate to result fragment
-            val fm = activity?.supportFragmentManager
-            fm?.let { fragmentManager ->
-                // Check if there are more than 1 fragments in the back stack, pop the QuizFragment
-                if (fragmentManager.backStackEntryCount > 1) {
-                    fragmentManager.popBackStack() // Pops QuizFragment
-                }
 
-                // Replace the current fragment with ResultFragment and add the transaction to back stack
-                fragmentManager.beginTransaction().apply {
-                    replace(R.id.wrapper, ResultFragment(right, totalQes, clasname, subname, chap, id, selectedOptionsMap))
-                    addToBackStack("ResultFragment") // Add ResultFragment to back stack
-                    commit()
-                }
-            }
+            // Navigate to ResultFragment
+           if(courseId!=null){
+               val fm = activity?.supportFragmentManager
+               fm?.let { fragmentManager ->
+                   // Check if QuizFragment exists in the back stack and pop it
+                   while (fragmentManager.backStackEntryCount > 0) {
+                       fragmentManager.popBackStackImmediate()
+                   }
 
-            // Clear data
+                   // Replace current fragment with ResultFragment and add the transaction to back stack
+                   fragmentManager.beginTransaction().apply {
+                       replace(
+                           R.id.wrapper, ResultFragment(
+                               right,
+                               totalQes,
+                               clasname,
+                               subname,
+                               chap,
+                               id,
+                               selectedOptionsMap,
+                               courseId
+                           )
+                       )
+                       addToBackStack("ResultFragment") // Add ResultFragment to back stack
+                       commit()
+                   }
+               }
+           }else{
+               val fm = activity?.supportFragmentManager
+               fm?.let { fragmentManager ->
+                   // Check if QuizFragment exists in the back stack and pop it
+                   if (fragmentManager.backStackEntryCount > 1) {
+                       fragmentManager.popBackStack() // Pops QuizFragment
+                   }
+
+                   // Replace current fragment with ResultFragment and add the transaction to back stack
+                   fragmentManager.beginTransaction().apply {
+                       replace(
+                           R.id.wrapper, ResultFragment(
+                               right,
+                               totalQes,
+                               clasname,
+                               subname,
+                               chap,
+                               id,
+                               selectedOptionsMap,
+                               courseId
+                           )
+                       )
+                       addToBackStack("ResultFragment") // Add ResultFragment to back stack
+                       commit()
+                   }
+               }
+           }
+
+            // Clear data after the transaction
             list.clear()
             position = 0
             countDownTimer.cancel()
@@ -184,6 +239,9 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
             Glide.with(requireContext())
                 .load(quizModel.imgUrl)
                 .into(binding.questionImg)
+            binding.questionImg.setOnClickListener {
+                showImageDialog(quizModel.imgUrl)
+            }
         }else{
             binding.questionImg.visibility=View.GONE
         }
@@ -275,7 +333,7 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(
                         R.id.wrapper,
-                        ResultFragment(right, totalQes, clasname, subname, chap, id, selectedOptionsMap)
+                        ResultFragment(right, totalQes, clasname, subname, chap, id, selectedOptionsMap,courseId)
                     )
                     ?.addToBackStack(null)
                     ?.commit()
@@ -303,6 +361,24 @@ class QuizFragment(private val clasname: String?, private val subname: String?, 
     //============ Make the Timer funtion end after end the test end =====================
 
 
+    //===============show Image Dialog Image in full size if we want then click on the photo ==================
+    private fun showImageDialog(QuesImgUrl: String) {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.image_view_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.show()
+
+        // Set the image in the dialog
+        val fullImageView = dialog.findViewById<ImageView>(R.id.fullImageView)
+        Glide.with(requireContext())
+            .load(QuesImgUrl)
+            .placeholder(R.drawable.pyq_icon)
+            .into(fullImageView)
+        // Dismiss the dialog when the image is clicked
+        fullImageView.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
 
 
 

@@ -23,9 +23,12 @@ class PYQActivity : AppCompatActivity() {
             .addToBackStack("BoardFragment") // Add BoardFragment to the back stack
             .commit()
 
-        // Handle back button click
         binding.backarrowbtn.setOnClickListener {
-            onBackPressed() // Handle back navigation
+            if (supportFragmentManager.backStackEntryCount > 1) {
+                supportFragmentManager.popBackStack()  // Pops the last fragment from the stack
+            } else {
+                finish()  // Closes the activity if no fragments in the back stack
+            }
         }
     }
 
@@ -35,14 +38,18 @@ class PYQActivity : AppCompatActivity() {
         Log.d("PYQActivity", "Title updated to: $title")
     }
 
-    // Handle back navigation to ensure proper fragment transitions
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
-            // Pop the top fragment from the stack, go back to the previous fragment
+            // Pop the top fragment from the stack
             supportFragmentManager.popBackStack()
         } else {
-            // If no fragments left in the stack, finish the activity
+            // Call super to handle default back behavior (e.g., closing the activity)
+            finish()
             super.onBackPressed()
         }
     }
+
+
+
 }

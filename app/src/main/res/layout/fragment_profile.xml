@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.Profile">
 
 
@@ -57,6 +58,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Name"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_23sdp"
                             android:textStyle="bold" />
 
@@ -66,7 +68,8 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                           android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:singleLine="true"
                         android:text="email@gmail.com"
                             android:textSize="@dimen/_15sdp" />
 
@@ -119,6 +122,7 @@
                         android:layout_margin="10dp"
                         android:backgroundTint="@color/welcome_green"
                         android:text="Edit"
+                        android:textColor="@color/defaultwhite"
                         android:textSize="20sp"
                         app:cornerRadius="5dp" />
 
@@ -132,8 +136,9 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:tint="@color/black"
                             android:layout_marginStart="@dimen/_2sdp"
                             android:layout_marginEnd="@dimen/_8sdp"
                             android:src="@drawable/mydoubt" />
@@ -142,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="My Doubt"
-                            android:textSize="@dimen/_22sdp"
+                            android:textSize="@dimen/_18sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -156,8 +161,9 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:tint="@color/black"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:src="@drawable/settings" />
 
@@ -165,7 +171,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Setting"
-                            android:textSize="@dimen/_22sdp"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFeedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/feedback"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FeedBack"
+                            android:textSize="@dimen/_18sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -179,16 +209,17 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:src="@drawable/help_care" />
+                            app:tint="@color/black"
+                            android:src="@drawable/helpandcare_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Help and Care"
-                            android:textSize="@dimen/_22sdp"
+                            android:textSize="@dimen/_18sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -202,8 +233,9 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:tint="@color/black"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:src="@drawable/rating" />
 
@@ -211,7 +243,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rating"
-                            android:textSize="@dimen/_22sdp"
+                            android:textSize="@dimen/_18sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -224,8 +256,9 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:tint="@color/black"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:src="@drawable/share" />
 
@@ -233,7 +266,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Share"
-                            android:textSize="@dimen/_22sdp"
+                            android:textSize="@dimen/_18sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -263,13 +296,14 @@
                                 android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginEnd="15dp"
+                                app:tint="@color/defaultwhite"
                                 android:src="@drawable/baseline_logout_24" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="LogOut"
-                                android:textColor="@color/white"
+                                android:textColor="@color/defaultwhite"
 
                                 android:textSize="20sp"
                                 android:textStyle="bold" />

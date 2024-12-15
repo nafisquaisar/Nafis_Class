@@ -20,8 +20,10 @@ class ChapterViewHolder(private val binding: HomeItemBinding): RecyclerView.View
             binding.subjectChapterIcon.setImageResource(R.drawable.eng_chapter_icon)
         }else  if(item.subname=="Social Science"){
             binding.subjectChapterIcon.setImageResource(R.drawable.social_chap_icon)
-        }else{
-            binding.subjectChapterIcon.setImageResource(R.drawable.chapter_science_icon)
+        }else if(item.subname=="Urdu"){
+            binding.subjectChapterIcon.setImageResource(R.drawable.urdu_icon)
+       }else if(item.subname=="Bio"){
+            binding.subjectChapterIcon.setImageResource(R.drawable.bio_icon)
        }
     }
 }

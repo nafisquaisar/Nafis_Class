@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.airbnb.lottie.LottieAnimationView
+import com.example.nafis.nf2024.organizeradminpanel.Fragment.CourseClassAndTestFragment
 import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentResultBinding
 
@@ -17,11 +18,12 @@ import com.example.nafisquaisarcoachingcenter.databinding.FragmentResultBinding
 class ResultFragment(
     private var right: Int,
     private var total: Int,
-    private var clasname: String?,
-    private var subname: String?,
-    private var chap: String?,
+    private var clasname: String?="",
+    private var subname: String?="",
+    private var chap: String?="",
     private var id: String,
-    private var correctans: HashMap<Int, Int>
+    private var correctans: HashMap<Int, Int>,
+    private var courseId: String?=null
 ) : Fragment() {
     private lateinit var binding: FragmentResultBinding
     private lateinit var animationView: LottieAnimationView
@@ -78,49 +80,64 @@ class ResultFragment(
         }
 
         binding.ExploreMore.setOnClickListener {
-            val fragmentManager = activity?.supportFragmentManager
-            fragmentManager?.let { fm ->
-                val backStackEntryCount = fm.backStackEntryCount
-                for (i in backStackEntryCount - 1 downTo 0) {
-                    val backStackEntry = fm.getBackStackEntryAt(i)
-                    if (backStackEntry.name == "QuizFragmentTag") {
-                        fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                        break
-                    }
-                }
-                fm.beginTransaction()
-                    .replace(R.id.wrapper, TotalTestFragment(clasname, subname, chap))
-                    .commit()
-            }
+           if(courseId!=null){
+               val fragmentManager = activity?.supportFragmentManager
+               fragmentManager?.let { fm ->
+                   val backStackEntryCount = fm.backStackEntryCount
+                   for (i in backStackEntryCount - 1 downTo 0) {
+                       val backStackEntry = fm.getBackStackEntryAt(i)
+                       if (backStackEntry.name == "QuizFragmentTag") {
+                           fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                           break
+                       }
+                   }
+                   fm.beginTransaction()
+                       .replace(R.id.wrapper, CourseClassAndTestFragment(courseId = courseId!!,courseName = null))
+                       .commit()
+               }
+           }else{
+               val fragmentManager = activity?.supportFragmentManager
+               fragmentManager?.let { fm ->
+                   val backStackEntryCount = fm.backStackEntryCount
+                   for (i in backStackEntryCount - 1 downTo 0) {
+                       val backStackEntry = fm.getBackStackEntryAt(i)
+                       if (backStackEntry.name == "QuizFragmentTag") {
+                           fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                           break
+                       }
+                   }
+                   fm.beginTransaction()
+                       .replace(R.id.wrapper, TotalTestFragment(clasname, subname, chap,))
+                       .commit()
+               }
+           }
         }
 
         binding.replay.setOnClickListener {
-            activity?.supportFragmentManager?.let { fm ->
-                val backStackEntryCount = fm.backStackEntryCount
-                for (i in backStackEntryCount - 1 downTo 0) {
-                    val backStackEntry = fm.getBackStackEntryAt(i)
-                    if (backStackEntry.name == "ResultFragment") {
-                        fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                        break
-                    }
-                }
-                fm.beginTransaction()
-                    .replace(R.id.wrapper, QuizFragment(clasname, subname, chap, id))
-                    .addToBackStack("QuizFragmentTag")
-                    .commitAllowingStateLoss()
-            }
+               activity?.supportFragmentManager?.let { fm ->
+                   val backStackEntryCount = fm.backStackEntryCount
+                   for (i in backStackEntryCount - 1 downTo 0) {
+                       val backStackEntry = fm.getBackStackEntryAt(i)
+                       if (backStackEntry.name == "ResultFragment") {
+                           fm.popBackStack(backStackEntry.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                           break
+                       }
+                   }
+                   fm.beginTransaction()
+                       .replace(R.id.wrapper, QuizFragment(clasname, subname, chap, id,courseId=courseId))
+                       .addToBackStack("QuizFragmentTag")
+                       .commitAllowingStateLoss()
+           }
         }
 
         binding.ShowAns.setOnClickListener {
-            val fm = activity?.supportFragmentManager
-            if (fm != null) {
-
-                // Always start a new transaction to show AnsShowFragment
-                fm.beginTransaction()
-                    .replace(R.id.wrapper, AnsShowFragment(clasname, subname, chap, id, correctans))
-                    .addToBackStack("ResultFragment") // Add the fragment to the back stack
-                    .commit()
-            }
+               val fm = activity?.supportFragmentManager
+               if (fm != null) {
+                   fm.beginTransaction()
+                       .replace(R.id.wrapper, AnsShowFragment(clasname, subname, chap, id, correctans,courseId))
+                       .addToBackStack("ResultFragment") // Add the fragment to the back stack
+                       .commit()
+           }
         }
 
 

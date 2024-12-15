@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/deep_green"
     app:cardCornerRadius="@dimen/_5sdp"
     android:layout_marginBottom="16dp"
     android:layout_height="wrap_content">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="@drawable/pyq_item_bg"
     android:padding="@dimen/_2sdp"
     >
     <ImageView
         android:id="@+id/subjectChapterIcon"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/chapter_science_icon"
+        android:src="@drawable/sciencelogo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +26,9 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="1"
         android:layout_marginStart="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/subjectChapterIcon"
@@ -37,7 +39,7 @@
             android:id="@+id/miansubname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Math Test"
+            android:text=""
             android:textColor="@color/deep_black"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold" />
@@ -46,7 +48,7 @@
             android:id="@+id/maindesp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Math Test"
+            android:text=""
             android:textColor="@color/deep_black"
             android:textSize="@dimen/_15sdp" />
     </LinearLayout>
@@ -61,8 +63,8 @@
         app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/deep_black" />
+        app:tint="@color/black" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 
 </androidx.cardview.widget.CardView>

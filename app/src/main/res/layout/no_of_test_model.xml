@@ -70,10 +70,10 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/clickview"
+        android:id="@+id/clickmore"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
-        android:src="@drawable/next"
+        android:src="@drawable/more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.916"

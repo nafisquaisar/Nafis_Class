@@ -11,31 +11,47 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.CourseNoteCallback
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.NoteItemCallback
+import com.example.nafisquaisarcoachingcenter.adapter.CourseNoteAdapter
 import com.example.nafisquaisarcoachingcenter.adapter.NoteAdapter
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentNoteViewBinding
+import com.example.nafisquaisarcoachingcenter.model.Note
 import com.example.nafisquaisarcoachingcenter.model.NoteModel
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.firestore.firestore
 
-class NoteFragmentView (  var classname:String?,var subName:String?,var chapterName:String?): Fragment() {
+class NoteFragmentView (  var classname:String?="",var subName:String?="",var chapterName:String?="",
+                          var courseId: String?=null,
+                          var subjectId: String?=null,
+                          var chapterId: String?=null,
+                          var courseChapterName: String?=null
+): Fragment() {
     private lateinit var binding: FragmentNoteViewBinding
     private lateinit var adapter: NoteAdapter
     private lateinit var list: ArrayList<NoteModel>
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var courseNoteList :ArrayList<Note>
+    private lateinit var courseNoteAdapter:CourseNoteAdapter
 
-    // Lazy initialization of the callback for note item clicks
+
     private val noteItemCallback by lazy {
         object : NoteItemCallback {
             override fun onNoteClick(item: NoteModel, position: Int) {
-                Toast.makeText(requireContext(), "Note name is ${item.title}", Toast.LENGTH_SHORT).show()
-                Toast.makeText(requireContext(), "Note name is ${item.pdfUrl}", Toast.LENGTH_SHORT).show()
                 openPdf(item.pdfUrl);
-
-
             }
+        }
+    }
+
+    private val courseNoteCallback by lazy{
+        object :CourseNoteCallback{
+            override fun onNoteClick(item: Note) {
+                openPdf(item.noteUrl);
+            }
+
         }
     }
 
@@ -46,17 +62,74 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
         // Inflate the layout for this fragment
         binding = FragmentNoteViewBinding.inflate(inflater, container, false)
 
-        adapter = NoteAdapter(noteItemCallback) // Initialize adapter with proper constructor or parameters
-        binding.noteRecylerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.noteRecylerView.adapter = adapter
-        list= ArrayList()
-        getNoteItem() // Fetch data
+
+        if(courseId!=null && subjectId!=null && chapterId!=null && courseChapterName!=null){
+            courseNoteList= ArrayList()
+            courseNoteAdapter = CourseNoteAdapter(requireContext(),courseNoteCallback,courseNoteList)
+            binding.noteRecylerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.noteRecylerView.adapter = courseNoteAdapter
+            fetchNoteFromFirebase()
+        }else{
+            adapter = NoteAdapter(noteItemCallback)
+            binding.noteRecylerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.noteRecylerView.adapter = adapter
+            list= ArrayList()
+            getNoteItem() // Fetch data
+        }
 
         return binding.root
     }
 
 
+    // ===========fetch the note of course from firebase ==============
+    private fun fetchNoteFromFirebase() {
+        if (courseId.isNullOrEmpty() || subjectId.isNullOrEmpty() || chapterId.isNullOrEmpty()) {
+            Log.e("Course", "Invalid IDs: courseId=$courseId, subjectId=$subjectId, chapterId=$chapterId")
+            Toast.makeText(requireContext(), "Invalid data provided.", Toast.LENGTH_SHORT).show()
+            binding.progressbar.visibility = View.GONE
+            binding.helping.visibility = View.VISIBLE
+            return
+        }
 
+        Log.d("Course", "Fetching Notes for path: courses/$courseId/subjects/$subjectId/Chapters/$chapterId/Notes")
+
+        val db = Firebase.firestore
+        courseNoteList.clear() // Clear the list before fetching
+        binding.progressbar.visibility = View.VISIBLE
+
+        db.collection("courses")
+            .document(courseId!!)
+            .collection("subjects")
+            .document(subjectId!!)
+            .collection("Chapters")
+            .document(chapterId!!)
+            .collection("Notes")
+            .get()
+            .addOnSuccessListener { notes ->
+                Log.d("Course", "Fetched Notes: ${notes.documents.size}")
+                for (note in notes) {
+                    Log.d("Course", "Note data: ${note.data}")
+                    val fetchedNote = note.toObject(Note::class.java)
+                    courseNoteList.add(fetchedNote)
+                }
+
+                if (courseNoteList.isEmpty()) {
+                    binding.helping.visibility = View.VISIBLE
+                    Log.d("Course", "No notes found.")
+                } else {
+                    val updatedList = ArrayList(courseNoteList)
+                    courseNoteAdapter.submitList(updatedList)
+                    binding.helping.visibility = View.GONE
+                }
+                binding.progressbar.visibility = View.GONE
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Course", "Error fetching notes: ", exception)
+                Toast.makeText(requireContext(), "Failed to fetch Notes: ${exception.localizedMessage}", Toast.LENGTH_SHORT).show()
+                binding.progressbar.visibility = View.GONE
+                binding.helping.visibility = View.VISIBLE
+            }
+    }
     private fun getNoteItem() {
         binding.progressbar.visibility=View.VISIBLE
         if (isAdded) { // Check if the fragment is attached
@@ -102,7 +175,6 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                                     binding.helping.visibility = View.VISIBLE
                                     binding.progressbar.visibility=View.GONE
                                     binding.noteRecylerView.visibility = View.GONE
-                                    Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
                                 }
                             } else {
                                 if (isAdded) {
@@ -118,13 +190,14 @@ class NoteFragmentView (  var classname:String?,var subName:String?,var chapterN
                                 binding.helping.visibility = View.VISIBLE
                                 binding.noteRecylerView.visibility = View.GONE
                                 binding.progressbar.visibility=View.GONE
-                                Toast.makeText(requireContext(), "No notes found", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
             } catch (e: Exception) {
                 if (isAdded) {
                     Toast.makeText(requireContext(), "Failed to load notes: ${e.message}", Toast.LENGTH_SHORT).show()
+                    binding.helping.visibility = View.VISIBLE
+                    binding.progressbar.visibility=View.GONE
                 }
             }
         }

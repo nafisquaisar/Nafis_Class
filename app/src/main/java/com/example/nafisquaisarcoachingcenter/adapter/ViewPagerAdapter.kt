@@ -9,7 +9,11 @@ import com.example.nafisquaisarcoachingcenter.fragment.NoteFragmentView
 import com.example.nafisquaisarcoachingcenter.fragment.VideoFragmentView
 
 class ViewPagerAdapter(fragmentmanager:FragmentManager,lifecycle:Lifecycle,
-                       var classname:String?,var subName:String?,var chapterName:String?
+                       var classname:String?="",var subName:String?="",var chapterName:String?="",
+                       var courseId: String?=null,
+                       var subjectId: String?=null,
+                       var chapterId: String?=null,
+                       var courseChapterName: String?=null
 
 ):FragmentStateAdapter(fragmentmanager,lifecycle) {
     override fun getItemCount(): Int {
@@ -17,12 +21,22 @@ class ViewPagerAdapter(fragmentmanager:FragmentManager,lifecycle:Lifecycle,
     }
 
     override fun createFragment(position: Int): Fragment {
-        return if(position==0){
-            VideoFragmentView(classname,subName,chapterName)
-        }else if(position==1){
-            NoteFragmentView(classname,subName,chapterName)
-        }else{
-            DppFragmentVIew()
-        }
+       if(courseId!=null && subjectId!=null && chapterId!=null && courseChapterName!=null){
+           return if(position==0){
+               VideoFragmentView(courseId=courseId, subjectId = subjectId, chapterId = chapterId, courseChapterName = courseChapterName)
+           }else if(position==1){
+               NoteFragmentView(courseId=courseId, subjectId = subjectId, chapterId = chapterId, courseChapterName = courseChapterName   )
+           }else{
+               DppFragmentVIew(courseId=courseId, subjectId = subjectId, chapterId = chapterId, courseChapterName = courseChapterName)
+           }
+       }else{
+           return if(position==0){
+               VideoFragmentView(classname,subName,chapterName)
+           }else if(position==1){
+               NoteFragmentView(classname,subName,chapterName)
+           }else{
+               DppFragmentVIew(classname,subName,chapterName)
+           }
+       }
     }
 }
