@@ -2,9 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
 
     <application
         android:name=".MyApplication"
@@ -16,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.NafisCoachingCenter"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <activity
             android:name=".FeedBack"
             android:exported="false" />
@@ -56,21 +62,17 @@
 
         <activity
             android:name=".coursecclass.ClassMainActivity"
-            android:exported="true"
-            android:label="@string/title_activity_class_main"
-            android:theme="@style/Theme.NafisCoachingCenter">
-
-            <intent-filter android:autoVerify="true">
+            android:exported="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https" />
-                <data android:host="organizerclasses.netlify.app" />
-                <data android:pathPrefix="/share/test" />
+                <data
+                    android:scheme="https"
+                    android:host="organizerclasses.page.link" />
             </intent-filter>
         </activity>
+
 
 
         <activity
@@ -115,6 +117,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

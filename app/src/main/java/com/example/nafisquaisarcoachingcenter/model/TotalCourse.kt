@@ -11,6 +11,7 @@ data class TotalCourse(
     var courseImgUrl: String = "",
     var isCourseDisable:Boolean,
     var courseDate: Date? = null,
+    val isBuy:Boolean=false,
     var subjects: List<Subject> = listOf()
 )
 

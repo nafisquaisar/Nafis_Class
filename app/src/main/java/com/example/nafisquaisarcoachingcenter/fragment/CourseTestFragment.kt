@@ -32,7 +32,7 @@ private lateinit var binding:FragmentCourseTestBinding
             override fun onTotalTestClick(item: TestObject, position: Int) {
                 val manager=(context as AppCompatActivity).supportFragmentManager
                 val transition=manager.beginTransaction()
-                val Quiz= QuizFragment(item.classname,item.subname,item.chapname,item.id, courseId = courseId)
+                val Quiz= QuizFragment(item.classname,item.subname,item.chapname,item.id, item.title,courseId = courseId)
 
                 transition.replace(R.id.wrapper,Quiz)
                 transition.addToBackStack("QuizFragmentTag")
@@ -40,6 +40,10 @@ private lateinit var binding:FragmentCourseTestBinding
             }
 
             override fun onShareTest(item: TestObject) {
+            }
+
+            override fun markIsComplete(item: TestObject) {
+
             }
 
 

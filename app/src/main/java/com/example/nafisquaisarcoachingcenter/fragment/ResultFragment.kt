@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.nafis.nf2024.organizeradminpanel.Fragment.CourseClassAndTestFragment
 import com.example.nafisquaisarcoachingcenter.R
+import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentResultBinding
 
 
@@ -23,7 +24,8 @@ class ResultFragment(
     private var chap: String?="",
     private var id: String,
     private var correctans: HashMap<Int, Int>,
-    private var courseId: String?=null
+    private var courseId: String?=null,
+    private var testTitle:String
 ) : Fragment() {
     private lateinit var binding: FragmentResultBinding
     private lateinit var animationView: LottieAnimationView
@@ -36,6 +38,8 @@ class ResultFragment(
 
         val totalQuestions = total
         val percentage = ((right.toFloat() / totalQuestions.toFloat()) * 100).toInt()
+
+        (activity as ClassMainActivity).updateTitle("Result")
 
         binding.apply {
             correct.text = "$right Correct"
@@ -124,7 +128,7 @@ class ResultFragment(
                        }
                    }
                    fm.beginTransaction()
-                       .replace(R.id.wrapper, QuizFragment(clasname, subname, chap, id,courseId=courseId))
+                       .replace(R.id.wrapper, QuizFragment(clasname, subname, chap, id, testTitle = testTitle, courseId=courseId))
                        .addToBackStack("QuizFragmentTag")
                        .commitAllowingStateLoss()
            }
@@ -134,7 +138,7 @@ class ResultFragment(
                val fm = activity?.supportFragmentManager
                if (fm != null) {
                    fm.beginTransaction()
-                       .replace(R.id.wrapper, AnsShowFragment(clasname, subname, chap, id, correctans,courseId))
+                       .replace(R.id.wrapper, AnsShowFragment(clasname, subname, chap, id, correctans,courseId,testTitle))
                        .addToBackStack("ResultFragment") // Add the fragment to the back stack
                        .commit()
            }

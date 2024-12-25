@@ -26,7 +26,9 @@ class QuizFragment(private val clasname: String?,
                    private val subname: String?
                    , private val chap: String?,
                    private val id: String,
+                   private val testTitle: String,
                    private val courseId :String?=null
+
     ) : Fragment() {
    private lateinit var binding: FragmentQuizBinding
     private var list = ArrayList<QuizModel>()
@@ -47,7 +49,8 @@ class QuizFragment(private val clasname: String?,
         binding=FragmentQuizBinding.inflate(inflater,container,false)
 
         Log.d("testId",id)
-        (activity as ClassMainActivity).updateTitle(clasname.toString())
+        (activity as ClassMainActivity).updateTitle(testTitle)
+        binding.quizchapName.text=chap
 
         loadDataFromFirebase()
         setupQuiz()
@@ -177,7 +180,8 @@ class QuizFragment(private val clasname: String?,
                                chap,
                                id,
                                selectedOptionsMap,
-                               courseId
+                               courseId,
+                               testTitle
                            )
                        )
                        addToBackStack("ResultFragment") // Add ResultFragment to back stack
@@ -203,7 +207,8 @@ class QuizFragment(private val clasname: String?,
                                chap,
                                id,
                                selectedOptionsMap,
-                               courseId
+                               courseId,
+                               testTitle
                            )
                        )
                        addToBackStack("ResultFragment") // Add ResultFragment to back stack
@@ -333,7 +338,7 @@ class QuizFragment(private val clasname: String?,
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(
                         R.id.wrapper,
-                        ResultFragment(right, totalQes, clasname, subname, chap, id, selectedOptionsMap,courseId)
+                        ResultFragment(right, totalQes, clasname, subname, chap, id, selectedOptionsMap,courseId,testTitle)
                     )
                     ?.addToBackStack(null)
                     ?.commit()

@@ -3,12 +3,13 @@ package com.example.nafisquaisarcoachingcenter.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nafis.nf.organizetestcenter.Adapter.TotalTestAdapter
 import com.example.nafisquaisarcoachingcenter.DIffUtilCallBack.TotalTestItemCallback
@@ -17,211 +18,179 @@ import com.example.nafisquaisarcoachingcenter.R
 import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.FragmentTotalTestBinding
 import com.example.nafisquaisarcoachingcenter.progress
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import java.net.URLEncoder
 
 class TotalTestFragment(
-    private var clasname:String?,private var subname:String?,private var chap:String?
+    private var clasname: String?,
+    private var subname: String?,
+    private var chap: String?
 ) : Fragment() {
+
     private lateinit var binding: FragmentTotalTestBinding
     private lateinit var adapter: TotalTestAdapter
-    private lateinit var list: ArrayList<TestObject>
+    private val list = ArrayList<TestObject>()
 
     private val callback by lazy {
-        object :TotalTestItemCallback{
+        object : TotalTestItemCallback {
             override fun onTotalTestClick(item: TestObject, position: Int) {
-                val manager=(context as AppCompatActivity).supportFragmentManager
-                val transition=manager.beginTransaction()
-                val Quiz= QuizFragment(item.classname,item.subname,item.chapname,item.id)
-
-                transition.replace(R.id.wrapper,Quiz)
-                transition.addToBackStack("QuizFragmentTag")
-                transition.commit()
+                val quizFragment = QuizFragment(clasname = item.classname, subname = item.subname, chap =item.chapname, id=item.id, testTitle = item.title)
+                (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.wrapper, quizFragment)
+                    .addToBackStack("QuizFragmentTag")
+                    .commit()
             }
 
             override fun onShareTest(item: TestObject) {
                 shareTest(item)
             }
 
+            override fun markIsComplete(item: TestObject) {
+                markTestComplete(item)
+            }
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentTotalTestBinding.inflate(inflater, container, false)
 
-//        list = getData()
-        // Initialize the adapter
-        list= ArrayList()
-        adapter = TotalTestAdapter(requireContext(),list,callback)
-        binding.totaltestAdapter.layoutManager = LinearLayoutManager(context)
+        setupRecyclerView()
         loadDataFromFirebase()
-        // Fetch data and set it to the adapter
 
-        // Update toolbar title
         (activity as? ClassMainActivity)?.updateTitle("Test Series")
-
-        val intent = activity?.intent
-        val data: Uri? = intent?.data
-
-        if (data != null) {
-            // Extract query parameters from the URI
-            val testId = data.getQueryParameter("id")         // "id" parameter
-            val className = data.getQueryParameter("class")   // "class" parameter
-            val subjectName = data.getQueryParameter("subject") // "subject" parameter
-            val chapterName = data.getQueryParameter("chapter") // "chapter" parameter
-
-            // Use the data as needed
-            if (testId != null && className != null && subjectName != null && chapterName != null) {
-                loadSpecificTest(testId,className,subjectName,chapterName)
-            } else {
-                Toast.makeText(requireContext(),"test ${testId} class ${className} subject${subjectName} ${chapterName}",Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
-
-
-
-
         return binding.root
     }
 
-
+    private fun setupRecyclerView() {
+        adapter = TotalTestAdapter(requireContext(), list, callback)
+        binding.totaltestAdapter.layoutManager = LinearLayoutManager(context)
+        binding.totaltestAdapter.adapter = adapter
+    }
 
     private fun loadDataFromFirebase() {
         binding.progressbar.visibility = View.VISIBLE
-        binding.helping.visibility = View.GONE
-        list = ArrayList()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (clasname == null || subname == null || chap == null) {
+        if (clasname.isNullOrBlank() || subname.isNullOrBlank() || chap.isNullOrBlank()) {
+            showEmptyState()
             binding.progressbar.visibility = View.GONE
-            binding.helping.visibility = View.VISIBLE
             return
         }
 
+        val dbReference = FirebaseDatabase.getInstance()
+            .getReference("Class")
+            .child(clasname!!)
+            .child(subname!!)
+            .child(chap!!)
+        val completedRef = FirebaseDatabase.getInstance()
+            .getReference("Users")
+            .child(userId!!)
+            .child("completedTests")
 
-        val dbReference = clasname?.let { FirebaseDatabase.getInstance().getReference("Class").child(it) }
-            ?.child(subname ?: "")
-            ?.child(chap ?: "")
+        list.clear()
 
-        try {
-            dbReference?.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        for (snap in snapshot.children) {
-                            val testPaper = snap.getValue(TestObject::class.java)
-                            if (testPaper != null) {
-                                list.add(testPaper)
+        dbReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val tests = snapshot.children.mapNotNull { it.getValue(TestObject::class.java) }
+
+                    // Fetch completed status for all tests
+                    completedRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(completedSnapshot: DataSnapshot) {
+                            tests.forEach { test ->
+                                test.isCompleted = completedSnapshot.child(test.id)
+                                    .getValue(Boolean::class.java) ?: false
+                                list.add(test)
                             }
+
+                            // Submit the updated list to the adapter
+                            adapter.submitList(list.toList()) // Use toList() to trigger DiffUtil updates
+                            binding.helping.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                            binding.progressbar.visibility = View.GONE
                         }
 
-                        if (isAdded) { // Ensure fragment is still attached to the activity
-                            if (list.isNotEmpty()) {
-                                adapter = context?.let { TotalTestAdapter(it, list,callback) }!!
-                                binding.totaltestAdapter.adapter = adapter
-                                adapter.submitList(list)
-                            } else {
-                                showEmptyState()
-                            }
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e("Firebase", "Error fetching completed status: ${error.message}")
+                            showEmptyState()
                         }
-                    } else {
-                        showEmptyState()
-                    }
-                    binding.progressbar.visibility = View.GONE
+                    })
+                } else {
+                    showEmptyState()
                 }
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    binding.progressbar.visibility = View.GONE
-                    binding.helping.visibility = View.VISIBLE
-                }
-            })
-        }catch (e:Exception){
-            progress.ToastShow(requireContext(),e.message.toString())
-            binding.progressbar.visibility = View.GONE
-            binding.helping.visibility = View.VISIBLE
-        }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error fetching tests: ${error.message}")
+                showEmptyState()
+            }
+        })
     }
 
-    private fun loadSpecificTest(testId: String, className: String, subjectName: String, chapterName: String) {
-        binding.progressbar.visibility = View.VISIBLE
-        binding.helping.visibility = View.GONE
-        list = ArrayList()
 
-        if (clasname == null || subname == null || chap == null) {
-            binding.progressbar.visibility = View.GONE
-            binding.helping.visibility = View.VISIBLE
+    private fun markTestComplete(item: TestObject) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
+            Toast.makeText(requireContext(), "Please log in to mark the test as complete", Toast.LENGTH_SHORT).show()
             return
         }
 
+        val completedTestRef = FirebaseDatabase.getInstance()
+            .getReference("Users")
+            .child(userId)
+            .child("completedTests")
+            .child(item.id)
 
-        val dbReference = clasname?.let { FirebaseDatabase.getInstance().getReference("Class").child(it) }
-            ?.child(subname ?: "")
-            ?.child(chap ?: "")
+        // Toggle completion status
+        val newStatus = !(item.isCompleted ?: false)
 
-        try {
-            dbReference?.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        for (snap in snapshot.children) {
-                            val testPaper = snap.getValue(TestObject::class.java)
-                            if (testPaper != null) {
-                                list.add(testPaper)
-                            }
-                        }
-
-                        if (isAdded) { // Ensure fragment is still attached to the activity
-                            if (list.isNotEmpty()) {
-                                adapter = context?.let { TotalTestAdapter(it, list,callback) }!!
-                                binding.totaltestAdapter.adapter = adapter
-                                adapter.submitList(list)
-                            } else {
-                                showEmptyState()
-                            }
-                        }
-                    } else {
-                        showEmptyState()
-                    }
-
-                    binding.progressbar.visibility = View.GONE
+        completedTestRef.setValue(newStatus).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Update the item's state in the local list
+                item.isCompleted = newStatus
+                val position = list.indexOfFirst { it.id == item.id }
+                if (position != -1) {
+                    list[position] = item
+                    adapter.notifyItemChanged(position)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Handle any errors here, like showing a message to the user
-                    binding.progressbar.visibility = View.GONE
-                    binding.helping.visibility = View.VISIBLE
-                }
-            })
-        }catch (e:Exception){
-            progress.ToastShow(requireContext(),e.message.toString())
-            binding.progressbar.visibility = View.GONE
-            binding.helping.visibility = View.VISIBLE
+                val statusMessage = if (newStatus) "marked as complete" else "marked as incomplete"
+                Toast.makeText(requireContext(), "Test $statusMessage", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed to update test status", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("markTestComplete", "Error updating status: ${exception.message}")
         }
     }
 
-    private fun shareTest(testObject: TestObject) {
-        val encodedClassName = Uri.encode(testObject.classname)
-        val encodedSubjectName = Uri.encode(testObject.subname)
-        val encodedChapterName = Uri.encode(testObject.chapname)
+    private fun shareTest(item: TestObject) {
+        // Append query parameters to the base dynamic link
+        val dynamicLink = Uri.parse(
+            "https://organiczerclasses.page.link/Test" +
+                    "?testId=${URLEncoder.encode(item.id, "UTF-8")}" +
+                    "&class=${URLEncoder.encode(item.classname, "UTF-8")}" +
+                    "&subject=${URLEncoder.encode(item.subname, "UTF-8")}"
+        )
 
-        val testLink = "https://organizerclasses.netlify.app/share/test?id=${testObject.id}&class=$encodedClassName&subject=$encodedSubjectName&chapter=$encodedChapterName"
+        // Log the generated link for debugging
+        Log.d("DynamicLink", "Generated dynamic link: $dynamicLink")
 
+        // Share the link
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Check out this test: $testLink")
+            putExtra(Intent.EXTRA_TEXT, "Check out this test: $dynamicLink")
             type = "text/plain"
         }
-        startActivity(Intent.createChooser(shareIntent, "Share Test via"))
+        startActivity(Intent.createChooser(shareIntent, "Share Link"))
     }
 
     private fun showEmptyState() {
-        binding.totaltestAdapter.visibility = View.GONE
+        binding.progressbar.visibility = View.GONE
         binding.helping.visibility = View.VISIBLE
     }
-
 }

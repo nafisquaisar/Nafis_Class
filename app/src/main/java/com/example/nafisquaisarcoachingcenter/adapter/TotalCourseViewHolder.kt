@@ -21,7 +21,6 @@ class TotalCourseViewHolder(var binding: CourseItemBinding, var callback: TotalC
             showtitleOfCourse.isSelected=true
             Glide.with(context)
                 .load(item.courseImgUrl)
-                .placeholder(R.drawable.biharboardbanner)
                 .into(courseBanner)
         }
 

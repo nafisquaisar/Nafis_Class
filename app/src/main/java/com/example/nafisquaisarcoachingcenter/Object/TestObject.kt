@@ -9,6 +9,7 @@ data class TestObject(
     val classname: String = "",
     val subname: String = "",
     val chapname: String = "",
+    var isCompleted: Boolean? = null,
     val questions: List<QuizModel> = listOf()
 )
 

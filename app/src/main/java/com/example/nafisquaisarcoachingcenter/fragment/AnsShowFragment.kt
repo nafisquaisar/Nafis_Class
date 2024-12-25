@@ -23,7 +23,8 @@ class AnsShowFragment(
     private var chap: String?,
     private var id: String,
     private var selectedOptionsMap: HashMap<Int, Int>,
-    var courseId: String?=null
+    var courseId: String?=null,
+    var testTitle: String
 ) : Fragment() {
 
     private lateinit var binding: FragmentAnsShowBinding
@@ -50,12 +51,12 @@ class AnsShowFragment(
             }
         }
 
-        (activity as? ClassMainActivity)?.updateTitle(clasname!!)
+        (activity as? ClassMainActivity)?.updateTitle(testTitle)
         // Set custom back button behavior
-
-
-
         binding.quizchapName.text=chap
+
+
+
         return binding.root
     }
 

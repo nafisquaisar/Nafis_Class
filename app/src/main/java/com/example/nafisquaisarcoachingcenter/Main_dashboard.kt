@@ -2,8 +2,10 @@ package com.example.nafisquaisarcoachingcenter
 
 //import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.nafisquaisarcoachingcenter.coursecclass.ClassMainActivity
 import com.example.nafisquaisarcoachingcenter.databinding.ActivityMainDashboardBinding
 import com.example.nafisquaisarcoachingcenter.fragment.CourseTypeFragment
 import com.example.nafisquaisarcoachingcenter.fragment.Courses
@@ -32,6 +35,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 
 class Main_dashboard : AppCompatActivity() {
     private lateinit var binding: ActivityMainDashboardBinding
@@ -55,6 +59,29 @@ class Main_dashboard : AppCompatActivity() {
         }
 
         setPorfile()
+
+        // Check if the intent contains a dynamic link
+        FirebaseDynamicLinks.getInstance()
+            .getDynamicLink(intent)
+            .addOnSuccessListener { pendingDynamicLinkData ->
+                val deepLink: Uri? = pendingDynamicLinkData?.link
+
+                deepLink?.let {
+                    // Redirect to ClassMainActivity with attributes from the link
+                    val intent = Intent(this, ClassMainActivity::class.java).apply {
+                        putExtra("testId", it.getQueryParameter("testId"))
+                        putExtra("class", it.getQueryParameter("class"))
+                        putExtra("subject", it.getQueryParameter("subject"))
+                        putExtra("chapter", it.getQueryParameter("chapter"))
+                    }
+                    startActivity(intent)
+                    finish() // Close MainDashboardActivity
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("DynamicLink", "Error retrieving dynamic link", e)
+            }
+
         // find id of drawer
 //    *************************** drawer start ******************************************
 

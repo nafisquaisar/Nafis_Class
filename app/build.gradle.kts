@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -80,6 +81,16 @@ dependencies {
     // lotti animation
     implementation ("com.airbnb.android:lottie:3.4.0")
 
+    //dynamic links
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+
+    // Add the dependencies for the Dynamic Links and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation ("com.google.firebase:firebase-dynamic-links")
+    implementation ("com.google.firebase:firebase-analytics")
+
+    implementation ("com.razorpay:checkout:1.6.40")
+    implementation ("com.itextpdf:itext7-core:7.2.5") // Or the latest version
 
 
 
