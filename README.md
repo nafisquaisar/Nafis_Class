@@ -36,23 +36,48 @@ Welcome to the **Organizer Classes App**! This app contains **videos**, **notes*
 
 Here are some screenshots showcasing the app features:
 
-| ![Home Screen](./screenshort/homescreen.jpg) | ![Doubt Section](./screenshort/doubt.jpg) | ![Course Purchase](./screenshort/paymentscreen.jpg) |
-|----------------------------------------------|-------------------------------------------|-----------------------------------------------------|
-| **Home Screen**                               | **Doubt Section**                          | **Course Purchase**                                 |
+<table>
+  <tr>
+    <td><img src="./screenshort/homescreen.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/doubt.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/paymentscreen.jpg" width="150" height="250"/></td>
+  </tr>
+  <tr>
+    <td><b>Home Screen</b></td>
+    <td><b>Doubt Section</b></td>
+    <td><b>Course Purchase</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshort/test.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/pyq.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/notification.jpg" width="150" height="250"/></td>
+  </tr>
+  <tr>
+    <td><b>Test Section</b></td>
+    <td><b>PYQ Test</b></td>
+    <td><b>Notifications</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshort/quiz.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/video.jpg" width="150" height="250"/></td>
+    <td><img src="./screenshort/result.jpg" width="150" height="250"/></td>
+  </tr>
+  <tr>
+    <td><b>Quiz Section</b></td>
+    <td><b>Video Section</b></td>
+    <td><b>Result Analysis</b></td>
+  </tr>
+</table>
 
-| ![Test Screen](./screenshort/test.jpg) | ![PYQ Test](./screenshort/pyq.jpg) | ![Notifications](./screenshort/notification.jpg) |
-|----------------------------------------|------------------------------------|--------------------------------------------------|
-| **Test Section**                       | **PYQ Test**                        | **Notifications**                                |
-
-| ![Quiz](./screenshort/quiz.jpg) | ![Video](./screenshort/video.jpg) | ![Result](./screenshort/result.jpg) |
-|----------------------------------|------------------------------------|--------------------------------------|
-| **Quiz Section**                 | **Video Section**                  | **Result Analysis**                  |
-
----
 
 ## 🎥 Project Video
 
-[![Watch the project demo](https://img.youtube.com/vi/GX8EeADmYEQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=GX8EeADmYEQ)
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=GX8EeADmYEQ" target="_blank">
+    <img src="https://img.youtube.com/vi/GX8EeADmYEQ/maxresdefault.jpg" width="320" height="180" alt="Watch the project demo"/>
+  </a>
+</p>
 
 ---
 
@@ -63,31 +88,31 @@ Here are some screenshots showcasing the app features:
 ---
 
 ## 🛠️ Technologies Used
-### 👨‍💻 Frontend
+#### 👨‍💻 Frontend
 - **Android** with **Kotlin** and **XML layouts**
 
-### ☁️ Backend / Cloud Services
+#### ☁️ Backend / Cloud Services
 - **Firebase Authentication** – Secure login and registration
 - **Firebase Realtime Database** – Real-time data sync
 - **Firebase Firestore** – Structured data storage for quizzes, users, etc.
 - **Firebase Cloud Messaging (FCM)** – Push notifications
 
-### 📊 Data Visualization
+#### 📊 Data Visualization
 - [`MPAndroidChart`](https://github.com/PhilJay/MPAndroidChart) – For rendering pie charts, bar graphs, etc.
 
-### 🔐 Authentication & API
+#### 🔐 Authentication & API
 - `google-auth-library-oauth2-http` – Google OAuth integration
 - `okhttp` – Making HTTP requests
 - `gson` – JSON parsing and serialization
 
-### 📧 Communication
+#### 📧 Communication
 - `javax.mail` (Sun Mail) – For sending emails (registration confirmation, receipts, etc.)
 
-### 📄 PDF Handling
+#### 📄 PDF Handling
 - `iText 7` – For generating dynamic PDF bills/invoices
 ---
 
-## 📩 Contact
+### 📩 Contact
 
 For queries, support, or feedback:  
 📧 **Email**: [nafisnafis391@gmail.com]  
