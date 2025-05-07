@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">Organizer Classes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="OpenDrawer">Open navigation drawer</string>
+    <string name="CloseDrawer">Close navigation drawer</string>
+    <string name="title_activity_class_main">ClassMainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
+    <string name="video_upload_soon">Video Upload soon</string>
+    <string name="note_upload_soon">Note Upload Soon</string>
+    <string name="logout_button">LogOut Button\n</string>
+    <string name="default_web_client_id">997019209453-asnqus5tircjg54c45jkmvajd3gj782o.apps.googleusercontent.com</string>
+    <string name="todo">back button</string>
+    <string name="animation_view_desc">Animation\n</string>
+    <string name="message_icon">Message Icon</string>
+
+
+    <string name="terms_conditions">
+    <![CDATA[
+        <b>Terms and Conditions</b><br><br>
+        Welcome to Organizer Class App! By using our services, you agree to the following terms and conditions:<br><br>
+
+        <b>1. Acceptance of Terms</b><br>
+        By accessing or using the Organizer Class App, you acknowledge that you have read, understood, and agree to be bound by these terms.<br><br>
+
+        <b>2. Usage of the App</b><br>
+        - You may use this app for personal and educational purposes only.<br>
+        - Any misuse of the app for unlawful purposes is strictly prohibited.<br><br>
+
+        <b>3. User Accounts</b><br>
+        - Users must provide accurate and truthful information when creating an account.<br>
+        - You are responsible for maintaining the confidentiality of your login credentials.<br><br>
+
+        <b>4. Content Ownership</b><br>
+        - All content, including class schedules, assignments, and other materials, remains the intellectual property of Organizer Class App or its contributors.<br>
+        - Users may not reproduce, distribute, or modify content without prior permission.<br><br>
+
+        <b>5. Privacy Policy</b><br>
+        We respect your privacy. Any personal information collected will be handled in accordance with our Privacy Policy.<br><br>
+
+        <b>6. Limitation of Liability</b><br>
+        - The app is provided "as is." We make no guarantees regarding the availability, accuracy, or reliability of the app.<br>
+        - We are not responsible for any loss or damage caused by the use of this app.<br><br>
+
+        <b>7. Termination</b><br>
+        We reserve the right to suspend or terminate access to the app for any user who violates these terms.<br><br>
+
+        <b>8. Modifications to Terms</b><br>
+        Organizer Class App reserves the right to update these terms at any time. Continued use of the app constitutes agreement to the revised terms.<br><br>
+
+        For questions or concerns about these terms, please contact us at organizerclasses@gmail.com.<br><br>
+
+        <b>Effective Date:</b> 1 December 2024
+    ]]>
+</string>
+
+    <string name="Refund_Policy">
+        <![CDATA[
+              <b>1. Non-Refundable Items</b><br>
+            - Fully accessed or downloaded courses.<br>
+            - Purchases made under promotional offers.<br><br>
+
+            <b>2. Cancellation Terms</b><br>
+            - Subscriptions cannot be canceled once activated.<br>
+            - Cancellations are allowed for one-time purchases before accessing course materials.<br><br>
+
+            <b>3. Refund Process</b><br>
+            - Submit refund requests via organizerclasses@gmail.com with your transaction ID and reason.<br>
+            - Refunds will be initiated within 2 working days and credited within 5-7 working days.<br><br>
+
+            <b>Contact:</b> For refund-related queries, email us at organizerclasses@gmail.com.<br><br>
+
+            <b>Effective Date:</b> 1 December 2024
+            ]]>
+    </string>
+
+    <string name="Privacy_Policy">
+            <![CDATA[
+            <b>1. Information Collection</b><br>
+            - We collect personal information, including your name, email ID, and payment details, during registration or purchase.<br>
+            - Usage data, such as access logs and activity, is also collected to improve the App’s functionality.<br><br>
+
+            <b>2. Use of Information</b><br>
+            - To provide and enhance App services.<br>
+            - To process payments and manage subscriptions.<br>
+            - To communicate updates and offers.<br><br>
+
+            <b>3. Data Protection</b><br>
+            - We implement robust security measures to safeguard your information.<br>
+            - Despite these measures, no system is entirely secure, and we cannot guarantee absolute protection.<br><br>
+
+            <b>4. Sharing Information</b><br>
+            - Information is not sold or shared with third parties, except service providers essential for App operations (e.g., payment processors).<br><br>
+
+            <b>5. User Rights</b><br>
+            - You may request access, correction, or deletion of your personal data by contacting support@organizerclasses.com.<br><br>
+
+            <b>6. Cookies</b><br>
+            - The App uses cookies to enhance user experience. Cookies can be disabled in browser settings.<br><br>
+
+            <b>7. Policy Updates</b><br>
+            Changes to this policy will be communicated through the App or via email.<br><br>
+
+            <b>Contact:</b> For privacy concerns, contact us at organizerclasses@gmail.com.<br><br>
+
+            <b>Effective Date:</b> 1 December 2024
+             ]]>
+    </string>
+
+    <string name="Term_Condition2">
+            <![CDATA[
+               <b>1. Acceptance of Terms</b><br>
+               By accessing or using the Organizer Classes App, you acknowledge that you have read, understood, and agree to be bound by these terms.<br><br>
+
+               <b>2. Usage of the App</b><br>
+                - You may use this app for personal and educational purposes only.<br>
+                - Any misuse of the app for unlawful purposes is strictly prohibited.<br><br>
+
+                <b>3. User Accounts</b><br>
+            -   Users must provide accurate and truthful information when creating an account.<br>
+            - You are responsible for maintaining the confidentiality of your login credentials.<br><br>
+
+            <b>4. Content Ownership</b><br>
+            - All content, including video lectures, notes, PYQs, and tests, remains the intellectual property of Organizer Classes App or its contributors.<br>
+            - Users may not reproduce, distribute, or modify content without prior permission.<br><br>
+
+            <b>5. Privacy Policy</b><br>
+            We respect your privacy. Any personal information collected will be handled in accordance with our Privacy Policy.<br><br>
+
+            <b>6. Limitation of Liability</b><br>
+            - The app is provided "as is." We make no guarantees regarding the availability, accuracy, or reliability of the app.<br>
+            - We are not responsible for any loss or damage caused by the use of this app.<br><br>
+
+            <b>7. Termination</b><br>
+            We reserve the right to suspend or terminate access to the app for any user who violates these terms.<br><br>
+
+            <b>8. Modifications to Terms</b><br>
+            Organizer Classes App reserves the right to update these terms at any time. Continued use of the app constitutes agreement to the revised terms.<br><br>
+
+            For questions or concerns about these terms, please contact us at organizerclasses@gmail.com.<br><br>
+
+            <b>Effective Date:</b> 1 December 2024
+             ]]>
+    </string>
+
+</resources>

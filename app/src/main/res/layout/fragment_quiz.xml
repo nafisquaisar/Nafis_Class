@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".QuizFragment">
+
+
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--            not found header-->
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                android:padding="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/questionNoll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/currQuestionNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/totalQuestion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/"
+                            android:textSize="@dimen/_14sdp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/quizchapName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_weight="2"
+                        android:text=""
+                        android:textColor="@color/green_Text"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/questionSubmitbtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bggreen1"
+                        android:text="Submit"
+                        android:textColor="@color/defaultwhite"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.94"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header"
+                    app:layout_constraintVertical_bias="1.0">
+
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="2sp"
+                        android:src="@drawable/baseline_av_timer_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            question progress bar -->
+            <LinearLayout
+                android:id="@+id/progredssll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/question_progress_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:indicatorColor="@color/welcome_green"
+                    tools:progress="40" />
+            </LinearLayout>
+<!--            //question set-->
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               >
+               <TextView
+                   android:id="@+id/Question"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   android:layout_marginBottom="@dimen/_10sdp"
+                   android:background="@drawable/bggreen1"
+                   android:padding="@dimen/_10sdp"
+                   android:text=""
+                   android:textColor="@color/defaultwhite"
+                   android:textSize="@dimen/_16sdp" />
+               <ImageView
+                   android:id="@+id/question_img"
+                   android:layout_width="@dimen/_150sdp"
+                   android:layout_height="@dimen/_100sdp"
+                   android:layout_gravity="center"
+                   android:layout_marginHorizontal="@dimen/_20sdp"
+                   android:src="@drawable/question_img2"
+                   android:visibility="gone"
+                   />
+           </LinearLayout>
+
+            <!-- Use RadioGroup to manage the RadioButton selections -->
+            <RadioGroup
+                android:id="@+id/optionsRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/option1radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableStart="@drawable/checkboxbg"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/option2radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableStart="@drawable/checkboxbg"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/option3radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableStart="@drawable/checkboxbg"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/option4radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableStart="@drawable/checkboxbg"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </RadioGroup>
+            <LinearLayout
+                android:id="@+id/btnll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/questionPreviousbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bggreen1"
+                    android:text="Previous"
+                    android:textColor="@color/defaultwhite"
+                    android:textSize="@dimen/_16sdp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/questionNextSkipbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bggreen1"
+                    android:text="Next/Skip"
+                    android:textColor="@color/defaultwhite"
+                    android:textSize="@dimen/_16sdp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notQuestionFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView3">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/sorry"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:lottie_loop="true"
+            android:contentDescription="@string/animation_view_desc"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:text="Tests are not uploaded yet, please wait for them. "
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/welcome_green"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_home2"
+    tools:context=".FrontVIew">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="WELCOME TO \n ORGANIZER CLASSES"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:text="Your trusted learning hub for  Classes \n 1 to 12th.
+Access 📚 notes , 🎥 videos ,\n  and 📝 test problems to\n excel in your studies! 🚀"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/login_home_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:backgroundTint="@color/welcome_green"
+        android:text="Login"
+        android:textSize="20sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.697" />
+
+<!--    <Button-->
+<!--        android:id="@+id/login_UsingNumeber_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:backgroundTint="@color/welcome_green"-->
+<!--        android:text="Login Using Number"-->
+<!--        android:textSize="20sp"-->
+<!--        app:cornerRadius="15dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.593" />-->
+
+    <Button
+        android:id="@+id/signup_home_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#295CB6"
+        android:text="SIgn Up"
+        android:textSize="20sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_home_button"
+        app:layout_constraintVertical_bias="0.197" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:scrollbars="none"
+    tools:context=".fragment.Home">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/_30sdp"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/imageSlideLayout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/home_image_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:iss_auto_cycle="true"
+                    app:iss_corner_radius="20"
+                    app:iss_delay="1000"
+                    app:iss_period="1000"
+                    app:iss_title_background="@color/welcome_green" />
+
+            </LinearLayout>
+
+            <!--           **************** Course Card view End*************-->
+
+            <!--   **************** quick acccess Title ANd logo Start ****************************          -->
+
+
+            <!--   **************** quick acccess Title ANd logo End ****************************          -->
+
+
+            <!-- ************************** All the other QUick access card start ******************-->
+
+            <LinearLayout
+                android:id="@+id/course_icon_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/recyler_Container"
+                app:layout_constraintHorizontal_bias="0.04"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageSlideLayout"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/course_icon" />
+
+                <TextView
+                    android:layout_width="82dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:text="COURSE"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/recyler_Container"
+                    app:layout_constraintHorizontal_bias="0.132" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/recyler_Container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/QuickAcessLayout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/course_icon_title"
+                app:layout_constraintVertical_bias="0.0">
+
+<!--                           <androidx.recyclerview.widget.RecyclerView-->
+<!--                               android:id="@+id/Course_recyclerView"-->
+<!--                               android:layout_width="match_parent"-->
+<!--                               android:layout_height="wrap_content"-->
+<!--                               />-->
+
+                <!--  **************** Course Card view start *************-->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="4dp"
+
+                    >
+
+                    <!--          ******************* Class card start *****************-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cardbg"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+                                <LinearLayout
+                                    android:id="@+id/class10thcard"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/class10th" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="18dp"
+                                        android:text="Class 10"
+                                        android:textSize="20dp"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+                                <LinearLayout
+                                    android:id="@+id/class9thcard"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/class9" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="18dp"
+                                        android:text="Class 9"
+                                        android:textSize="20dp"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right">
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/moreClassBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:backgroundTint="@color/welcome_green"
+                                android:text="More"
+                                app:cornerRadius="30dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!-- ******************* Class card End *****************-->
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/QuickAcessLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toTopOf="@id/AllOtherContainer"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.04"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyler_Container"
+                app:layout_constraintVertical_bias="1.0">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/course_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="QUICK ACCESS"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/AllOtherContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/QuickAcessLayout"
+                app:layout_constraintVertical_bias="0.0">
+
+
+                <!--  **************** Course Card view start *************-->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="@dimen/_60sdp"
+                    app:cardCornerRadius="4dp"
+
+                    >
+
+                    <!--          ******************* Class card start *****************-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cardbg"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+
+                                <LinearLayout
+                                    android:id="@+id/test_layout_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/test_home_icon" />
+
+                                    <TextView
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/black"
+                                        android:paddingLeft="20dp"
+                                        android:text="Test"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+                                <LinearLayout
+                                    android:id="@+id/note_layout_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/notes_home_icon" />
+
+                                    <TextView
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingLeft="20dp"
+                                        android:text="Note"
+                                        android:textColor="@color/black"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+
+                                <LinearLayout
+                                    android:id="@+id/PYQ_home_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/pyq_home_icons" />
+
+                                    <TextView
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="20dp"
+                                        android:text="PYQ"
+                                        android:textSize="20dp"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_marginTop="2dp"
+                                android:elevation="70dp"
+                                app:cardCornerRadius="7dp">
+
+                                <LinearLayout
+                                    android:id="@+id/video_home_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:background="@color/small_card_bg"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="80dp"
+                                        android:layout_height="80dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/video_home_icon" />
+
+                                    <TextView
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingLeft="17dp"
+                                        android:text="Video"
+                                        android:textSize="20dp"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!--            ************************** All the other QUick access card End ******************-->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

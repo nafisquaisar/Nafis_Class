@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            app:navigationIconTint="@android:color/white"
+            app:titleTextAppearance="@style/ToolbarTitleStyle"
+            app:titleTextColor="@android:color/white"
+            android:elevation="@dimen/_10sdp"
+            android:background="@color/welcome_green" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- This layout is being included as the main content of your screen -->
+    <include layout="@layout/main_content"
+        android:id="@+id/main_content" />
+
+</LinearLayout>

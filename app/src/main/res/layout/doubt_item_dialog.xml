@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/secondaryDeepGreen"
+       >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/studUploadDoubtPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_url="https://lottie.host/436279e9-1447-4faa-8a26-6a94250c6e96/3RwKNfodDw.json" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Select image of question"
+            android:textSize="@dimen/_16sdp" />
+
+        <EditText
+            android:id="@+id/doubtEditTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/edit_text_shape"
+            android:hint="Enter the Title"
+            />
+
+        <EditText
+            android:id="@+id/doubtEditDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/edit_text_shape"
+            android:hint="Enter the Description"
+            />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           >
+           <androidx.appcompat.widget.AppCompatButton
+               android:id="@+id/doubtSubmit"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Submit"
+               android:layout_weight="1"
+               android:textColor="@color/black"
+               android:background="@drawable/btn_bg2"
+               android:layout_marginHorizontal="@dimen/_10sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginBottom="@dimen/_20sdp"
+               />
+
+           <androidx.appcompat.widget.AppCompatButton
+               android:id="@+id/doubtCancel"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Cancel"
+               android:layout_weight="1"
+               android:textColor="@color/black"
+               android:background="@drawable/btn_bg2"
+               android:layout_marginHorizontal="@dimen/_10sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginBottom="@dimen/_20sdp"
+               />
+
+       </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

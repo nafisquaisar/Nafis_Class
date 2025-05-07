@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/welcome_blue"/> <!-- Active oval color -->
+    <size
+        android:width="50dp"
+        android:height="40dp"/> <!-- Adjust the size of the oval -->
+</shape>
+

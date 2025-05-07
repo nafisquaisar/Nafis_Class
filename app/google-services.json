@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "997019209453",
+    "firebase_url": "https://nafis-coaching-center-default-rtdb.firebaseio.com",
+    "project_id": "nafis-coaching-center",
+    "storage_bucket": "nafis-coaching-center.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997019209453:android:feb8f235c32c1e90a4c6e4",
+        "android_client_info": {
+          "package_name": "com.example.nafis.nf2024.organizeradminpanel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997019209453-08sbmdu4h43p113ttpqa54buc7j4c8va.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nafis.nf2024.organizeradminpanel",
+            "certificate_hash": "181b1c59c585699fd1d58f48571633c8f1118c5d"
+          }
+        },
+        {
+          "client_id": "997019209453-a3tft3g1tpp894jdtvtvjdj5aid4m05k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nafis.nf2024.organizeradminpanel",
+            "certificate_hash": "6c887a6fb0e9cb034412858d289bc378d57150de"
+          }
+        },
+        {
+          "client_id": "997019209453-fgf2v35knl9sch44hldcja8fjncnjsn0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nafis.nf2024.organizeradminpanel",
+            "certificate_hash": "70e0d41027d164df30dde22609cbec8dd72adc0e"
+          }
+        },
+        {
+          "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSnsYfEnA9sZO_91kZ5YMSyrr7AcP2_RY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997019209453:android:ab6ad55528e8206ba4c6e4",
+        "android_client_info": {
+          "package_name": "com.example.nafisquaisarcoachingcenter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997019209453-asnqus5tircjg54c45jkmvajd3gj782o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nafisquaisarcoachingcenter",
+            "certificate_hash": "70e0d41027d164df30dde22609cbec8dd72adc0e"
+          }
+        },
+        {
+          "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSnsYfEnA9sZO_91kZ5YMSyrr7AcP2_RY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997019209453:android:0a4f565f7969ffa8a4c6e4",
+        "android_client_info": {
+          "package_name": "com.nafis.organizerclasses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997019209453-4t24roprfbf4nlvbjepgmsqk9jeq3oir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nafis.organizerclasses",
+            "certificate_hash": "6c887a6fb0e9cb034412858d289bc378d57150de"
+          }
+        },
+        {
+          "client_id": "997019209453-72t9r71ajh0asol87kercfg0rprd5anc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nafis.organizerclasses",
+            "certificate_hash": "70e0d41027d164df30dde22609cbec8dd72adc0e"
+          }
+        },
+        {
+          "client_id": "997019209453-d1lm98i4k8804jl63vsveuknnmth807d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nafis.organizerclasses",
+            "certificate_hash": "181b1c59c585699fd1d58f48571633c8f1118c5d"
+          }
+        },
+        {
+          "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSnsYfEnA9sZO_91kZ5YMSyrr7AcP2_RY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997019209453-u4ens8tetujtfi0393vh3kghee07rj7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

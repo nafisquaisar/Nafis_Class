@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/grey"
+    tools:context=".Test.SupportResult">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:id="@+id/progresstext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conguratulation"
+            android:textSize="@dimen/_25sdp"
+            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score_progress_indicator"
+                android:layout_centerVertical="true"
+                app:trackColor="#BEDEDB"
+                app:indicatorColor="@color/welcome_green"
+                tools:progress="50"
+                app:trackCornerRadius="20dp"
+                app:trackThickness="8dp"
+                app:indicatorSize="90dp"/>
+
+            <TextView
+                android:id="@+id/score_progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:textColor="@color/deep_black"
+                android:textStyle="bold"
+                tools:text="50%" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/resultscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You got the 5 out of 10"
+            android:textColor="@color/deep_black"
+            android:textSize="@dimen/_16sdp"
+            />
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:src="@drawable/correct" />
+
+            <TextView
+                android:id="@+id/correct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 correct"
+                android:textColor="@color/deep_black"
+                android:textSize="@dimen/_16sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:src="@drawable/cross" />
+
+            <TextView
+                android:id="@+id/incorrect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 incorrect"
+                android:textColor="@color/deep_black"
+                android:textSize="@dimen/_16sdp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ExploreMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Explore More Knowledge"
+        android:background="@drawable/bggreen1"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="#FFFFFF"
+        android:layout_margin="@dimen/_10sdp"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ShowAns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Ans"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:background="@drawable/bggreen1"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="#FFFFFF"
+        android:layout_margin="@dimen/_10sdp"
+        />
+
+    <LinearLayout
+        android:id="@+id/replay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:src="@drawable/baseline_replay_24"
+            app:tint="@color/deep_black" />
+
+        <TextView
+            android:id="@+id/replaybtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Replay again"
+            android:textColor="@color/deep_black"
+            android:textSize="@dimen/_16sdp" />
+    </LinearLayout>
+
+
+</LinearLayout>

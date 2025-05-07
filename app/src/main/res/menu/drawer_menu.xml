@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <item android:id="@+id/Video_menu_drawer"-->
+<!--          android:title="Video"-->
+<!--        android:icon="@drawable/video_logo1"-->
+<!--        />-->
+
+<!--    <item android:id="@+id/Note_menu_drawer"-->
+<!--          android:title="Note"-->
+<!--        android:icon="@drawable/baseline_menu_book_24"-->
+<!--        />-->
+
+    <item android:id="@+id/Pyq_menu_drawer"
+          android:title="PYQ"
+        android:icon="@drawable/baseline_library_books_24"
+        />
+    <item android:id="@+id/MyDoubt_drawer"
+          android:title="My Doubt"
+        android:icon="@drawable/mydoubt"
+        />
+
+    <item android:id="@+id/TermAndCond_drawer"
+          android:title="Term &amp; Condition"
+        android:icon="@drawable/term_condition"
+        />
+
+    <item android:id="@+id/Privay_Policy_Drawer"
+          android:title="Privacy Policy"
+        android:icon="@drawable/privacy_policy_icon"
+        />
+
+    <item android:id="@+id/RefundPolicy_drawer"
+          android:title="Refund &amp; Cancellation Policy"
+        android:icon="@drawable/refund_icon"
+        />
+
+
+
+    <item android:id="@+id/Logout_menu_drawer"
+          android:title="LogOut"
+        android:icon="@drawable/on_off_button"
+        />
+
+
+</menu>

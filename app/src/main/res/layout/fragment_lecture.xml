@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".fragment.LectureFragment">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/_5sdp"
+        app:tabSelectedTextColor="@color/welcome_green"
+        app:tabIndicatorColor="@color/welcome_green"
+        />
+
+    <!-- Use ViewPager2 instead of ViewPager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/lecture_container"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

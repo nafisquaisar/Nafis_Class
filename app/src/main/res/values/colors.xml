@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="defaultwhite">#FFFFFFFF</color>
+    <color name="cardbg">#DDEBE4</color>
+
+
+    <color name="welcome_green">#34A671</color>
+    <color name="green_Text">#34A671</color>
+    <color name="deep_green">#6BD3B4</color>
+    <color name="card_bg_color">#A0D6BB</color>
+    <color name="small_card_bg">#FFFFFF</color>
+    <color name="deep_black">#272727</color>
+    <color name="grey">#CCCBCB</color>
+    <color name="checkbox">#34A671</color>
+
+
+
+    <color name="welcome_blue">#4631C9</color>
+
+    <color name="selectedIconColor">#04E1F8</color>
+    <color name="defaultIconColor">#F6F6F6</color>
+    <color name="countTextColor">#fff</color>
+    <color name="holo_red_dark">#E32452</color>
+    <color name="border_green">#00552D</color>
+
+    <color name="Excellent">#008476</color>
+    <color name="Outstanding">#2F9287</color>
+    <color name="VeryGood">#579C95</color>
+    <color name="Good">#E65100</color>
+    <color name="Bad">#E53935</color>
+    <color name="secondaryDeepGreen">#C7D2CC</color>
+
+    <!--    <color name="defaultIconColor">#F45E0B</color>-->
+<!--    <color name="defaultIconColor">#fff</color>-->
+<!--    <color name="defaultIconColor">#2E2E2E</color>-->
+</resources>
